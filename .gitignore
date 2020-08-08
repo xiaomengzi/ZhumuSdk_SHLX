@@ -10,3 +10,8 @@ ZhumuSdkEx/Bin/x64/Debug/ZhumuSdkEx/*
 ZhumuSdkEx/Bin/x64/Release/ZhumuSdkEx/*
 ZhumuSdkEx/Build/.vs/*
 ZhumuSdkEx/Build/ZhumuSdkEx.VC.db
+ZhumuSdkProgress/.vs/ZhumuSdkProgress/v14/.suo
+ZhumuSdkProgress/Bin/Debug/ZhumuSdkProgress/*
+ZhumuSdkProgress/Bin/Release/ZhumuSdkProgress/*
+ZhumuSdkProgress/Build/.vs/*
+ZhumuSdkProgress/Build/ZhumuSdkProgress.VC.db
