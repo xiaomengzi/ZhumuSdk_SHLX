@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Depends">
+      <UniqueIdentifier>{20f5a805-cc4c-46fa-a93f-e1d2dba00dfb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{f29e8bd8-c4fd-47bd-89f8-e963f20aac54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\impl">
+      <UniqueIdentifier>{97963029-5048-4cbb-a21f-3b83e39b1563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\include">
+      <UniqueIdentifier>{c00b1d18-28b1-4bc3-8d77-6472669f2b1a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Src\dllmain.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\stdafx.cpp">
+      <Filter>Src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\impl\ZhumuSdkEx.cpp">
+      <Filter>Src\impl</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Src\ReadMe.txt">
+      <Filter>Src</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Src\stdafx.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\targetver.h">
+      <Filter>Src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\include\ZhumuSdkEx.h">
+      <Filter>Src\include</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

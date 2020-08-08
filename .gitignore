@@ -1,0 +1,12 @@
+
+*.exp
+*.ilk
+*.iobj
+*.ipdb
+*.opendb
+ZhumuSdkEx/Bin/Win32/Debug/ZhumuSdkEx/*
+ZhumuSdkEx/Bin/Win32/Release/ZhumuSdkEx/*
+ZhumuSdkEx/Bin/x64/Debug/ZhumuSdkEx/*
+ZhumuSdkEx/Bin/x64/Release/ZhumuSdkEx/*
+ZhumuSdkEx/Build/.vs/*
+ZhumuSdkEx/Build/ZhumuSdkEx.VC.db
