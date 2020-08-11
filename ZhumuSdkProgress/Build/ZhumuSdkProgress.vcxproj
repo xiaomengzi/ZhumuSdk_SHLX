@@ -19,30 +19,101 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Src\ReadMe.txt" />
+    <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h" />
+    <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h" />
+    <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\calender_service_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_resource_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_annotation.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_local_recording.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_share_render.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_ui_mgr.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_video_container.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zoom_customized_ui.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\direct_share_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\embedded_browser_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_annotation_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_audio_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface_v2.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_chat_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_closedcaption_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_configuration_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_h323_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_live_stream_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_participants_ctrl_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_phone_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_qa_ctrl_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_recording_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_remote_ctrl_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_sharing_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_ui_ctrl_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_video_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_waiting_room_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_webinar_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\network_connection_handler_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\outlook_plugin_integration_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\premeeting_service_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\setting_service_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\ui_hook_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_def.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_ext.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_platform.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_def.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_sms_helper_interface.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_util_define.h" />
+    <ClInclude Include="..\Src\Business\BusinessLogic.h" />
+    <ClInclude Include="..\Src\Business\CustomData.h" />
+    <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h" />
+    <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h" />
+    <ClInclude Include="..\Src\UI\Resource.h" />
+    <ClInclude Include="..\Src\UI\stdafx.h" />
+    <ClInclude Include="..\Src\UI\targetver.h" />
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgress.h" />
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgressDlg.h" />
+    <ClInclude Include="..\Src\Utils\DirectoryUtil.h" />
+    <ClInclude Include="..\Src\Utils\FileUtil.h" />
+    <ClInclude Include="..\Src\Utils\Utils.h" />
+    <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Src\Resource.h" />
-    <ClInclude Include="..\Src\stdafx.h" />
-    <ClInclude Include="..\Src\targetver.h" />
-    <ClInclude Include="..\Src\ZhumuSdkProgress.h" />
+    <ClCompile Include="..\Src\Business\BusinessLogic.cpp" />
+    <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp" />
+    <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp" />
+    <ClCompile Include="..\Src\UI\stdafx.cpp" />
+    <ClCompile Include="..\Src\UI\ZhumuSdkProgress.cpp" />
+    <ClCompile Include="..\Src\UI\ZhumuSdkProgressDlg.cpp" />
+    <ClCompile Include="..\Src\Utils\DirectoryUtil.cpp" />
+    <ClCompile Include="..\Src\Utils\FileUtil.cpp" />
+    <ClCompile Include="..\Src\Utils\Utils.cpp" />
+    <ClCompile Include="..\Src\Zhumu\ZhumuSdkAgency.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="..\Src\small.ico" />
-    <Image Include="..\Src\ZhumuSdkProgress.ico" />
+    <Image Include="..\Src\UI\logo.ico" />
+    <Image Include="..\Src\UI\res\ZhumuSdkProgress.ico" />
+    <Image Include="..\Src\UI\small.ico" />
+    <Image Include="logo.ico" />
+    <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Src\stdafx.cpp" />
-    <ClCompile Include="..\Src\ZhumuSdkProgress.cpp" />
+    <None Include="..\Src\UI\res\ZhumuSdkProgress.rc2" />
+    <None Include="..\Src\UI\ZhumuSdkProgress.aps" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="..\Src\ZhumuSdkProgress.rc" />
+    <Text Include="..\Src\UI\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Src\UI\ZhumuSdkProgress.rc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{5795C00C-8D37-403A-AF65-E87AF75244FB}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
+    <ProjectGuid>{B8B16D32-3DB3-4058-8503-0B3D48DE3029}</ProjectGuid>
     <RootNamespace>ZhumuSdkProgress</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <Keyword>MFCProj</Keyword>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -50,6 +121,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -57,12 +129,14 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -70,6 +144,7 @@
     <PlatformToolset>v140</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -110,26 +185,47 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\ZhumuSDK\include;..\Src;..\Src\Business;..\Src\Net;..\Src\Utils;..\Src\Zhumu;..\Src\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>..\Depends\HPSocket\Win32;..\Depends\jsoncpp\lib\win32;..\Depends\ZhumuSDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>HPSocket_x86UD.lib;jsoncpp_staticd.lib;sdk.lib</AdditionalDependencies>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -138,15 +234,27 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\ZhumuSDK\include;..\Src;..\Src\Business;..\Src\Net;..\Src\Utils;..\Src\Zhumu;..\Src\UI;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>HPSocket_x86U.lib;jsoncpp_static.lib;sdk.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\Depends\HPSocket\Win32;..\Depends\jsoncpp\lib\win32;..\Depends\ZhumuSDK\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -155,15 +263,24 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_WINDOWS;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <ValidateAllParameters>true</ValidateAllParameters>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0804</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

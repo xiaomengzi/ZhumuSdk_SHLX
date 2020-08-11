@@ -2,50 +2,287 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Depends">
-      <UniqueIdentifier>{a2d9e4f8-1fe3-41ec-9b49-c9919bbd08b0}</UniqueIdentifier>
+      <UniqueIdentifier>{3d61114b-133c-4123-9bc5-25f6b0545353}</UniqueIdentifier>
     </Filter>
     <Filter Include="Src">
-      <UniqueIdentifier>{21fb7259-33cf-407a-a242-f30723ba7f93}</UniqueIdentifier>
+      <UniqueIdentifier>{f642701c-d398-4bda-b70f-b8100169f60f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Business">
+      <UniqueIdentifier>{d1c0f855-89f0-4f2b-8a72-583227e96dc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net">
+      <UniqueIdentifier>{036e3cf4-955a-4e9d-b0e2-39a532b624b5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utils">
+      <UniqueIdentifier>{2dd7a523-0306-4ed4-9be4-1e620559d647}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Zhumu">
+      <UniqueIdentifier>{6d5a6b42-aebb-4068-b3cd-1a24478c7119}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpClient">
+      <UniqueIdentifier>{8df22a9f-daa4-4c62-ac10-276e855e894b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpServer">
+      <UniqueIdentifier>{28b9372d-3795-41e6-be04-2d00dea96d7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\HPSocket">
+      <UniqueIdentifier>{58030c6d-8099-45d5-a2ef-a87ccab2926b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\UI">
+      <UniqueIdentifier>{2aa97aaa-476f-416f-97a5-d4f4ab48fd1d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\UI\res">
+      <UniqueIdentifier>{610a412f-55c9-4393-b2a1-88cd7bd0d034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\ZhumuSDK">
+      <UniqueIdentifier>{f036be8b-4279-4f7b-9c7b-d29913ba2d2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\ZhumuSDK\customized_ui">
+      <UniqueIdentifier>{f6460c66-bb55-4d8d-8ebf-22370e93f50e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\ZhumuSDK\meeting_service_components">
+      <UniqueIdentifier>{628a7cef-f158-446d-aa45-d20414c268e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\Src\ReadMe.txt">
-      <Filter>Src</Filter>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Business\CustomData.h">
+      <Filter>Src\Business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h">
+      <Filter>Src\Net\TcpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\Resource.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\stdafx.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\targetver.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgress.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgressDlg.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h">
+      <Filter>Src\Zhumu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Utils\DirectoryUtil.h">
+      <Filter>Src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Utils\FileUtil.h">
+      <Filter>Src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Utils\Utils.h">
+      <Filter>Src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Business\BusinessLogic.h">
+      <Filter>Src\Business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\calender_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_resource_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\direct_share_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\embedded_browser_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\network_connection_handler_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\outlook_plugin_integration_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\premeeting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\setting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\ui_hook_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_def.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_ext.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_platform.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_def.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_sms_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_util_define.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_annotation.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_local_recording.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_share_render.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_ui_mgr.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_video_container.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zoom_customized_ui.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_annotation_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_audio_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface_v2.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_chat_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_closedcaption_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_configuration_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_h323_helper_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_live_stream_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_participants_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_phone_helper_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_qa_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_recording_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_remote_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_sharing_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_ui_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_video_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_waiting_room_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_webinar_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp">
+      <Filter>Src\Net\TcpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\UI\stdafx.cpp">
+      <Filter>Src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\UI\ZhumuSdkProgress.cpp">
+      <Filter>Src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\UI\ZhumuSdkProgressDlg.cpp">
+      <Filter>Src\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Zhumu\ZhumuSdkAgency.cpp">
+      <Filter>Src\Zhumu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Utils\DirectoryUtil.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Utils\FileUtil.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Utils\Utils.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Business\BusinessLogic.cpp">
+      <Filter>Src\Business</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Src\UI\res\ZhumuSdkProgress.ico">
+      <Filter>Src\UI\res</Filter>
+    </Image>
+    <Image Include="small.ico" />
+    <Image Include="logo.ico" />
+    <Image Include="..\Src\UI\small.ico" />
+    <Image Include="..\Src\UI\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Src\UI\res\ZhumuSdkProgress.rc2">
+      <Filter>Src\UI\res</Filter>
+    </None>
+    <None Include="..\Src\UI\ZhumuSdkProgress.aps">
+      <Filter>Src\UI</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Src\UI\ReadMe.txt">
+      <Filter>Src\UI</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Src\Resource.h">
-      <Filter>Src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\stdafx.h">
-      <Filter>Src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\targetver.h">
-      <Filter>Src</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\ZhumuSdkProgress.h">
-      <Filter>Src</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\Src\small.ico">
-      <Filter>Src</Filter>
-    </Image>
-    <Image Include="..\Src\ZhumuSdkProgress.ico">
-      <Filter>Src</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\Src\stdafx.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Src\ZhumuSdkProgress.cpp">
-      <Filter>Src</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="..\Src\ZhumuSdkProgress.rc">
-      <Filter>Src</Filter>
+    <ResourceCompile Include="..\Src\UI\ZhumuSdkProgress.rc">
+      <Filter>Src\UI</Filter>
     </ResourceCompile>
   </ItemGroup>
 </Project>
