@@ -13,6 +13,27 @@
     <Filter Include="Src\include">
       <UniqueIdentifier>{c00b1d18-28b1-4bc3-8d77-6472669f2b1a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Depends\HPSocket">
+      <UniqueIdentifier>{4c36269c-4775-481f-907b-4411c119a943}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\plog">
+      <UniqueIdentifier>{b6f84c72-232e-448f-90b1-c2a7c14d7d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net">
+      <UniqueIdentifier>{54059cb2-5221-470e-a5d3-8c6317a6bf01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpServer">
+      <UniqueIdentifier>{17629281-86c5-4f7f-8032-ad4942d4026e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpClient">
+      <UniqueIdentifier>{e4c623e0-b305-436b-bfe1-60e639c612a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Utils">
+      <UniqueIdentifier>{dcd1802b-507a-4aad-95ee-05bfe13b4534}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Business">
+      <UniqueIdentifier>{7abd7de8-20a6-4fb5-aa7f-27d2e51ec8aa}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\dllmain.cpp">
@@ -23,6 +44,21 @@
     </ClCompile>
     <ClCompile Include="..\Src\impl\ZhumuSdkEx.cpp">
       <Filter>Src\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\impl\ZhumuSdkImpl.cpp">
+      <Filter>Src\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp">
+      <Filter>Src\Net\TcpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Utils\Utils.cpp">
+      <Filter>Src\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Utils\DirectoryUtil.cpp">
+      <Filter>Src\Utils</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -39,6 +75,39 @@
     </ClInclude>
     <ClInclude Include="..\Src\include\ZhumuSdkEx.h">
       <Filter>Src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\include\ZhumuSdkEx_def.h">
+      <Filter>Src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\include\ZhumuSdkEx_Event.h">
+      <Filter>Src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\impl\ZhumuSdkImpl.h">
+      <Filter>Src\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h">
+      <Filter>Src\Net\TcpServer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Utils\Utils.h">
+      <Filter>Src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Utils\DirectoryUtil.h">
+      <Filter>Src\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Business\CustomData.h">
+      <Filter>Src\Business</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

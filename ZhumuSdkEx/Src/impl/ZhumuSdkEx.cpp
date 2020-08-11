@@ -3,20 +3,92 @@
 
 #include "stdafx.h"
 #include "ZhumuSdkEx.h"
+#include "ZhumuSdkImpl.h"
+#include "plog/Log.h"
+#include "Utils.h"
 
 
-// 这是导出变量的一个示例
-ZHUMUSDKEX_API int nZhumuSdkEx=0;
+CZhumuSdkImpl* g_pZhumuSdkImpl = nullptr;
 
-// 这是导出函数的一个示例。
-ZHUMUSDKEX_API int fnZhumuSdkEx(void)
+BEGIN_ZHUMUSDKEX_NAMESPACE
+
+ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam)
 {
-    return 42;
+    bool bRet = false;
+    // 初始化日志
+    plog::init(plog::info, CUtils::GetLogFilePath().c_str(), 1000000, 5);
+
+    // 创建接口代理
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        g_pZhumuSdkImpl = new CZhumuSdkImpl;
+        g_pZhumuSdkImpl->SetEvent((ZhumuSdkEx_Event*)crateParam.event);
+        // 启动tcp服务
+        if (false == g_pZhumuSdkImpl->StartTcpServer())
+        {
+            return SDKERR_UNKNOWN;
+        }
+
+        //// 启动进程
+        //if (false == g_pZhumuSdkImpl->StartSdkProcess(crateParam.pPaht))
+        //{
+        //    return SDKERR_UNKNOWN;
+        //}
+    }
+
+    return SDKERR_SUCCESS;
 }
 
-// 这是已导出类的构造函数。
-// 有关类定义的信息，请参阅 ZhumuSdkEx.h
-CZhumuSdkEx::CZhumuSdkEx()
+ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam)
 {
-    return;
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->InitSDK(initParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
 }
+
+ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->DestorySDK();
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->LoginSDK(loginParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+END_ZHUMUSDKEX_NAMESPACE

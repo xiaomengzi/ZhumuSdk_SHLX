@@ -1,22 +1,55 @@
-// 下列 ifdef 块是创建使从 DLL 导出更简单的
-// 宏的标准方法。此 DLL 中的所有文件都是用命令行上定义的 ZHUMUSDKEX_EXPORTS
-// 符号编译的。在使用此 DLL 的
-// 任何其他项目上不应定义此符号。这样，源文件中包含此文件的任何其他项目都会将
-// ZHUMUSDKEX_API 函数视为是从 DLL 导入的，而此 DLL 则将用此宏定义的
-// 符号视为是被导出的。
-#ifdef ZHUMUSDKEX_EXPORTS
-#define ZHUMUSDKEX_API __declspec(dllexport)
-#else
-#define ZHUMUSDKEX_API __declspec(dllimport)
-#endif
+#ifndef _ZHUMUSDKEX_H_
+#define _ZHUMUSDKEX_H_
 
-// 此类是从 ZhumuSdkEx.dll 导出的
-class ZHUMUSDKEX_API CZhumuSdkEx {
-public:
-	CZhumuSdkEx(void);
-	// TODO:  在此添加您的方法。
-};
+#include "ZhumuSdkEx_def.h"
 
-extern ZHUMUSDKEX_API int nZhumuSdkEx;
+class ZhumuSdkEx_Event;
 
-ZHUMUSDKEX_API int fnZhumuSdkEx(void);
+BEGIN_ZHUMUSDKEX_NAMESPACE
+
+extern "C"
+{
+    /************************************************************************/
+    /* 创建sdk                                                              */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam);
+
+    /************************************************************************/
+    /* 初始化SDK                                                             */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam);
+
+    /************************************************************************/
+    /* SLogin SDK                                                           */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam);
+
+    /************************************************************************/
+    /* SJoin Meeting                                                        */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_SJoinMeeting(const char* meegtingNumber, const char* joinName, const char* meetingPassword = "", const bool videoon = true, const bool audioon = true, const char*bandingName = "zhumu", SDK_LANGUAGE_ID language = LANGUAGE_Chinese_Simplified);
+
+    /************************************************************************/
+    /* start App exit                                                       */
+    /************************************************************************/
+    ZHUMUSDKEX_API void Zhumu_AppExit();
+
+    /************************************************************************/
+    /* Set Active Window                                                    */
+    /************************************************************************/
+    ZHUMUSDKEX_API void SetWindowShowTop();
+
+    /************************************************************************/
+    /* Clean Up                                                              */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_CleanUp();
+
+    /************************************************************************/
+    /* 销毁SDK                                                               */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_DestorySDK();
+}
+
+END_ZHUMUSDKEX_NAMESPACE
+
+#endif //_ZHUMUSDKEX_H_
