@@ -7,9 +7,9 @@
 #include "CustomData.h"
 
 class CZhumuSdkAgency;
+class CAuthServiceEvent;
 
 class CBusinessLogic
-    : public ZOOM_SDK_NAMESPACE::IAuthServiceEvent
 {
 private:
     CBusinessLogic();
@@ -25,18 +25,16 @@ private:
     static  CBusinessLogic    *m_pInstance;
 
 public:
-    virtual void onAuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret);
-    virtual void onLoginRet(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
-    virtual void onLogout() {}
-    virtual void onZoomIdentityExpired() {}
-    virtual void onZoomAuthIdentityExpired() {}
-public:
     // 开启tcp服务
     void StartTcpServer();
 
     // 关闭tcp服务
     void StopTcpServer();
 
+    /************************************************************************/
+    /*                   上层协议调用处理函数                                */
+    /************************************************************************/
+public:
     // 初始化瞩目sdk
     int InitZhumuSDK(std::string strContent);
 
@@ -46,17 +44,28 @@ public:
     // 销毁瞩目SDK
     void DestroyZhumuSDK();
 
+    /************************************************************************/
+    /*                   执行结果协议反馈处理函数                             */
+    /************************************************************************/
+public:
+    // 反馈初始化SDK结果
+    bool FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret);
+
     // 反馈认证结果
     bool FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret);
 
     // 反馈登录结果
     bool FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret);  
-public:
-    //// 瞩目SDK 验证回调事件处理
-    //void AuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret);
 
-    //// 瞩目SDK 登录回调事件处理
-    //void LoginReturn(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
+    /************************************************************************/
+    /*                   瞩目SDK回调处理函数                                 */
+    /************************************************************************/
+public:
+    // 瞩目SDK 验证回调事件处理
+    void AuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret);
+
+    // 瞩目SDK 登录回调事件处理
+    void LoginReturn(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
 
 private:
     // 登录
@@ -87,6 +96,10 @@ public:
     bool GetIsAnonymousJoin() const;
     void SetIsAnonymousJoin(bool val);
 
+    // 是否已经认证
+    bool GetAlreadyAuth() const;
+    void SetAlreadyAuth(bool val);
+
     // 登录瞩目SDK参数
     LoginSDKParam GetLoginSDKParam() const;
     void SetLoginSDKParam(LoginSDKParam val);
@@ -98,10 +111,10 @@ private:
     bool                m_bAlreadyLanding;      // 瞩目SDK是否已经登录 true-已经登录 false-未登录
     bool                m_bIsDirectLogin;       // 登录SDK 
     bool                m_bIsAnonymousJoin;     // 是否为匿名入会
+    bool                m_bAlreadyAuth;         // 是否已经认证
     LoginSDKParam       m_loginSDKParam;        // 登录瞩目SDK参数
 
     CZhumuSdkAgency*    m_pZhumuSdkAgency;
-   ZOOM_SDK_NAMESPACE::IAuthService*       m_pAuthService;
 
 };
 

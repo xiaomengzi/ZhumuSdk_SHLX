@@ -5,9 +5,10 @@
 #include "stdafx.h"
 #include "ZhumuSdkProgress.h"
 #include "ZhumuSdkProgressDlg.h"
-#include "plog/Log.h"
-#include "Utils.h"
 #include "BusinessLogic.h"
+#include "ZhumuSdkAgency.h"
+#include "plog\Log.h"
+#include "Utils.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -73,11 +74,12 @@ BOOL CZhumuSdkProgressApp::InitInstance()
 	// 例如修改为公司或组织名
 	SetRegistryKey(_T("应用程序向导生成的本地应用程序"));
 
-    CBusinessLogic::Initialize();
-
-    // 初始化日志
     plog::init(plog::info, CUtils::GetLogFilePath().c_str(), 1000000, 5);
-    LOGI << "Initialize";
+    LOGI << "*************[ Initialization is complete! ]*****************" << std::endl;
+
+
+    CBusinessLogic::Initialize();
+    CZhumuSdkAgency::Initialize();
 
 	CZhumuSdkProgressDlg dlg;
 	m_pMainWnd = &dlg;

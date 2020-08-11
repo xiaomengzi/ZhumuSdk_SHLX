@@ -10,10 +10,11 @@
 #include "afxcmn.h"
 
 
+using namespace ZHUMUSDKEX_NAMESPACE;
 // CZhumuSdkExDemoDlg 对话框
 class CZhumuSdkExDemoDlg
     : public CDialogEx
-    , public ZhumuSdkEx_Event
+    , public ZHUMUSDKEX_NAMESPACE::ZhumuSdkEx_Event
 {
 // 构造
 public:
@@ -40,14 +41,16 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+    virtual void onInitRet(SDKError status);
     //auth event
-    virtual void onAuthRet(AuthResult status){}
+    virtual void onAuthRet(AuthResult status);
     //login event
-    virtual void onLoginRet(LOGINSTATUS status) {}
+    virtual void onLoginRet(LOGINSTATUS status);
     //meeting status event
-    virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code) {}
+    virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code);
     //exit app
-    virtual void onExitApp() {}
+    virtual void onExitApp();
+
 
 public:
     void AddMsg(CString strMsg);        // 添加反馈消息

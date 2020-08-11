@@ -3,11 +3,15 @@
 
 #include "ZhumuSdkEx_def.h"
 
-using namespace ZHUMUSDKEX_NAMESPACE;
+//using namespace ZHUMUSDKEX_NAMESPACE;
+
+BEGIN_ZHUMUSDKEX_NAMESPACE
 
 class ZhumuSdkEx_Event
 {
 public:
+    //init event
+    virtual void onInitRet(SDKError status) = 0;
     //auth event
     virtual void onAuthRet(AuthResult status) = 0;
     //login event
@@ -17,6 +21,6 @@ public:
     //exit app
     virtual void onExitApp() = 0;
 };
-
+END_ZHUMUSDKEX_NAMESPACE
 
 #endif // _ZHUMUSDKEX_EVENT_H_

@@ -32,7 +32,7 @@ bool CCustomTcpServer::StartServer(int nServerPort)
     if (m_pTcpServer->Start(L"0.0.0.0", nServerPort) == FALSE)
     {
         int error = m_pTcpServer->GetLastError();
-        LOGE << "The TCP service failed to start! error code : " << error << " local listening port: " << nServerPort;
+        LOGE << "[" << __FUNCTION__ << "] The TCP service failed to start! error code : " << error << " local listening port: " << nServerPort << std::endl;
     }
     else
     {
@@ -74,7 +74,7 @@ EnHandleResult CCustomTcpServer::OnAccept(ITcpServer* pSender, CONNID dwConnID, 
     USHORT usPort;
     pSender->GetRemoteAddress(dwConnID, szAddress, iAddressLen, usPort);
 
-    LOGI << "TCP client information dwConnID: " << dwConnID << " client ip: " << szAddress << " client port: " << usPort;
+    LOGD << "[" << __FUNCTION__ << "] TCP client information dwConnID: " << dwConnID << " client ip: " << szAddress << " client port: " << usPort << std::endl;
     return HR_OK;
 }
 
@@ -92,7 +92,7 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
 {
     std::string strReceiveContent((char*)pData + 32, iLength);
 
-    LOGI << "Content received: [" << strReceiveContent << "] form " << dwConnID;
+    LOGI << "[" << __FUNCTION__ << "] Content received : [" << strReceiveContent << "] form " << dwConnID<< std::endl;
 
     Json::CharReaderBuilder b;
     Json::CharReader* reader(b.newCharReader());
@@ -108,7 +108,7 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
             auto body = root["body"];
             CBusinessLogic::GetInstance()->InitZhumuSDK(CUtils::json2Str(body));
         }
-        if ("LoginSDK" == strMethod)
+        else if ("LoginSDK" == strMethod)
         {
             auto body = root["body"];
             CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
@@ -119,12 +119,12 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         }
         else
         {
-            LOGE << "Unknown method name! strMethod:[" << strMethod << "]";
+            LOGE << "[" << __FUNCTION__ << "] Unknown method name! strMethod:[" << strMethod << "]" << std::endl;
         }
     }
     else
     {
-        LOGE << "json reader error! content:[" << strReceiveContent << "]";
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strReceiveContent << "]" << std::endl;
     }
 
     delete reader;

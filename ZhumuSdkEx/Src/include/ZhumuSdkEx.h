@@ -2,8 +2,8 @@
 #define _ZHUMUSDKEX_H_
 
 #include "ZhumuSdkEx_def.h"
+#include "ZhumuSdkEx_Event.h"
 
-class ZhumuSdkEx_Event;
 
 BEGIN_ZHUMUSDKEX_NAMESPACE
 
@@ -12,7 +12,7 @@ extern "C"
     /************************************************************************/
     /* 创建sdk                                                              */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam);
+    ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(ZhumuSdkEx_Event* event, const char* exePath);
 
     /************************************************************************/
     /* 初始化SDK                                                             */

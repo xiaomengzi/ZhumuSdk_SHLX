@@ -22,11 +22,12 @@ ZhumuSdkEx/Bin/x64/Release/logs/*
 
 ZhumuSdkProgress/.vs/*
 ZhumuSdkProgress/Build/.vs/*
-ZhumuSdkProgress/ipch/*
+ZhumuSdkProgress/Build/ZhumuSdkProgress.VC.db
+ZhumuSdkProgress/Build/ipch/*
 ZhumuSdkProgress/Bin/Debug/ZhumuSdkProgress/*
 ZhumuSdkProgress/Bin/Debug/ZhumuSdkProgress_Logs/*
 ZhumuSdkProgress/Bin/Release/ZhumuSdkProgress/*
 ZhumuSdkProgress/Bin/Release/ZhumuSdkProgress_Logs/*
 
 
-ZhumuSdkProgress/Build/ZhumuSdkProgress.VC.db
+

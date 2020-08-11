@@ -23,11 +23,11 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
     bool bRet = false;
     if (strIp.empty() || nPort <= 0|| strSend.empty())
     {
-        LOGE << "parameter error! ";
+        LOGE << "[" << __FUNCTION__ << "] parameter error! " << std::endl;
         return false;
     }
 
-    LOGE << "send data! serverIp: " << strIp << " server port: " << nPort << "send data: " << strSend;
+    LOGE << "[" << __FUNCTION__ << "] send data! serverIp: " << strIp << " server port: " << nPort << "send data: " << strSend << std::endl;
 
     if (true == StartTcpClient(strIp,nPort))
     {
@@ -43,12 +43,12 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
         }
         else
         {
-            LOGE << "Failed to send data! serverIp: " << strIp << " server port: " << nPort;
+            LOGE << "[" << __FUNCTION__ << "] Failed to send data! serverIp: " << strIp << " server port: " << nPort << std::endl;
         }
     }
     else
     {
-        LOGE << "Connect to the server failed! serverIp: " << strIp << " server port: " << nPort;
+        LOGE << "[" << __FUNCTION__ << "] Connect to the server failed! serverIp: " << strIp << " server port: " << nPort << std::endl;
     }
 }
 

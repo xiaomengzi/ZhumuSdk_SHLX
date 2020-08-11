@@ -2,97 +2,49 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Depends">
-      <UniqueIdentifier>{3d61114b-133c-4123-9bc5-25f6b0545353}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src">
-      <UniqueIdentifier>{f642701c-d398-4bda-b70f-b8100169f60f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Business">
-      <UniqueIdentifier>{d1c0f855-89f0-4f2b-8a72-583227e96dc0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Net">
-      <UniqueIdentifier>{036e3cf4-955a-4e9d-b0e2-39a532b624b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Utils">
-      <UniqueIdentifier>{2dd7a523-0306-4ed4-9be4-1e620559d647}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Zhumu">
-      <UniqueIdentifier>{6d5a6b42-aebb-4068-b3cd-1a24478c7119}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Net\TcpClient">
-      <UniqueIdentifier>{8df22a9f-daa4-4c62-ac10-276e855e894b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\Net\TcpServer">
-      <UniqueIdentifier>{28b9372d-3795-41e6-be04-2d00dea96d7f}</UniqueIdentifier>
+      <UniqueIdentifier>{54d9d70a-cc92-4297-b05a-be9182c680fa}</UniqueIdentifier>
     </Filter>
     <Filter Include="Depends\HPSocket">
-      <UniqueIdentifier>{58030c6d-8099-45d5-a2ef-a87ccab2926b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\UI">
-      <UniqueIdentifier>{2aa97aaa-476f-416f-97a5-d4f4ab48fd1d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Src\UI\res">
-      <UniqueIdentifier>{610a412f-55c9-4393-b2a1-88cd7bd0d034}</UniqueIdentifier>
+      <UniqueIdentifier>{0891ee12-0039-418f-bc21-c0e2c1d894ad}</UniqueIdentifier>
     </Filter>
     <Filter Include="Depends\ZhumuSDK">
-      <UniqueIdentifier>{f036be8b-4279-4f7b-9c7b-d29913ba2d2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Depends\ZhumuSDK\customized_ui">
-      <UniqueIdentifier>{f6460c66-bb55-4d8d-8ebf-22370e93f50e}</UniqueIdentifier>
+      <UniqueIdentifier>{bffa97f9-32d1-4a5b-bb10-6700bdcf2838}</UniqueIdentifier>
     </Filter>
     <Filter Include="Depends\ZhumuSDK\meeting_service_components">
-      <UniqueIdentifier>{628a7cef-f158-446d-aa45-d20414c268e4}</UniqueIdentifier>
+      <UniqueIdentifier>{1764d1f9-ebb9-4044-a544-b2d8cf4aaa72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\ZhumuSDK\customized_ui">
+      <UniqueIdentifier>{028cc097-6c3f-486e-bb54-9c17c39e2245}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src">
+      <UniqueIdentifier>{b7b3e892-de7b-474e-a711-cd8db0d30767}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Business">
+      <UniqueIdentifier>{93d43d4f-4f9a-4604-96ec-1d99f725a788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net">
+      <UniqueIdentifier>{10bc174f-6812-48aa-a3e7-46f18fe6bcbf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpClient">
+      <UniqueIdentifier>{cc27d8bc-2997-4350-948f-09b2e2fdd731}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Net\TcpServer">
+      <UniqueIdentifier>{638dbbee-0de3-45ef-a493-437cabc9ee69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\UI">
+      <UniqueIdentifier>{12fb2121-2534-4a83-b38a-4bda44bbc571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\Utils">
+      <UniqueIdentifier>{79e8ed16-86ab-4df7-af0d-495e0d774b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\Zhumu">
+      <UniqueIdentifier>{065a8322-15da-409e-b939-c372a5db5d1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Src\UI\res">
+      <UniqueIdentifier>{e37d72fc-3011-470f-b6a1-dadd257a79b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h">
-      <Filter>Depends\HPSocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h">
-      <Filter>Depends\HPSocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h">
-      <Filter>Depends\HPSocket</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Business\CustomData.h">
-      <Filter>Src\Business</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h">
-      <Filter>Src\Net\TcpServer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h">
-      <Filter>Src\Net\TcpClient</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\UI\Resource.h">
-      <Filter>Src\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\UI\stdafx.h">
-      <Filter>Src\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\UI\targetver.h">
-      <Filter>Src\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\UI\ZhumuSdkProgress.h">
-      <Filter>Src\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\UI\ZhumuSdkProgressDlg.h">
-      <Filter>Src\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h">
-      <Filter>Src\Zhumu</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Utils\DirectoryUtil.h">
-      <Filter>Src\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Utils\FileUtil.h">
-      <Filter>Src\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Utils\Utils.h">
-      <Filter>Src\Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Src\Business\BusinessLogic.h">
-      <Filter>Src\Business</Filter>
-    </ClInclude>
     <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h">
       <Filter>Depends\ZhumuSDK</Filter>
     </ClInclude>
@@ -225,13 +177,58 @@
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_webinar_interface.h">
       <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
     </ClInclude>
+    <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h">
+      <Filter>Src\Zhumu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\resource.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\stdafx.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\targetver.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgress.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\UI\ZhumuSdkProgressDlg.h">
+      <Filter>Src\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h">
+      <Filter>Depends\HPSocket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\Utils\DirectoryUtil.h">
+      <Filter>Depends\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\Utils\FileUtil.h">
+      <Filter>Depends\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\Utils\Utils.h">
+      <Filter>Depends\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Business\BusinessLogic.h">
+      <Filter>Src\Business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Business\CustomData.h">
+      <Filter>Src\Business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h">
+      <Filter>Src\Net\TcpServer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp">
-      <Filter>Src\Net\TcpServer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp">
-      <Filter>Src\Net\TcpClient</Filter>
+    <ClCompile Include="..\Src\Zhumu\ZhumuSdkAgency.cpp">
+      <Filter>Src\Zhumu</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\UI\stdafx.cpp">
       <Filter>Src\UI</Filter>
@@ -242,30 +239,32 @@
     <ClCompile Include="..\Src\UI\ZhumuSdkProgressDlg.cpp">
       <Filter>Src\UI</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\Zhumu\ZhumuSdkAgency.cpp">
-      <Filter>Src\Zhumu</Filter>
+    <ClCompile Include="..\Depends\Utils\DirectoryUtil.cpp">
+      <Filter>Depends\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\Utils\DirectoryUtil.cpp">
-      <Filter>Src\Utils</Filter>
+    <ClCompile Include="..\Depends\Utils\FileUtil.cpp">
+      <Filter>Depends\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\Src\Utils\FileUtil.cpp">
-      <Filter>Src\Utils</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Src\Utils\Utils.cpp">
-      <Filter>Src\Utils</Filter>
+    <ClCompile Include="..\Depends\Utils\Utils.cpp">
+      <Filter>Depends\Utils</Filter>
     </ClCompile>
     <ClCompile Include="..\Src\Business\BusinessLogic.cpp">
       <Filter>Src\Business</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp">
+      <Filter>Src\Net\TcpClient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp">
+      <Filter>Src\Net\TcpServer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\Src\UI\res\ZhumuSdkProgress.ico">
       <Filter>Src\UI\res</Filter>
     </Image>
-    <Image Include="small.ico" />
-    <Image Include="logo.ico" />
-    <Image Include="..\Src\UI\small.ico" />
-    <Image Include="..\Src\UI\logo.ico" />
+    <Image Include="..\Src\UI\small.ico">
+      <Filter>Src\UI</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Src\UI\res\ZhumuSdkProgress.rc2">

@@ -9,7 +9,11 @@
  class CCustomTcpServerEvent
  {
  public:
-     virtual int OnReceive(std::string, int iLength) = 0;
+     virtual int OnReceive(std::string strReceive, int iLength) = 0;
+     virtual int OnInitResult(int nInitResult) = 0;
+     virtual int OnAuthResult(int nAuthResult) = 0;
+     virtual int OnLoginResult(int nLoginResult) = 0;
+    
  };
  
 

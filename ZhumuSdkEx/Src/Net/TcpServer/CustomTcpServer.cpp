@@ -2,6 +2,7 @@
 #include "CustomTcpServer.h"
 #include "HPTypeDef.h"
 #include "plog\Log.h"
+#include "reader.h"
 
 
 CCustomTcpServer::CCustomTcpServer()
@@ -27,7 +28,7 @@ bool CCustomTcpServer::StartServer(int nServerPort)
     if (m_pTcpServer->Start(L"0.0.0.0", nServerPort) == FALSE)
     {
         int error = m_pTcpServer->GetLastError();
-        LOGE << "The TCP service failed to start! error code : " << error << " local listening port: " << nServerPort;
+        LOGE << "[" << __FUNCTION__ << "]  The TCP service failed to start! error code : " << error << " local listening port: " << nServerPort << std::endl;
     }
     else
     {
@@ -69,7 +70,7 @@ EnHandleResult CCustomTcpServer::OnAccept(ITcpServer* pSender, CONNID dwConnID, 
     USHORT usPort;
     pSender->GetRemoteAddress(dwConnID, szAddress, iAddressLen, usPort);
 
-    LOGI << "TCP client information dwConnID: " << dwConnID << " client ip: " << szAddress << " client port: " << usPort;
+    LOGI << "[" << __FUNCTION__ << "] TCP client information dwConnID: " << dwConnID << " client ip: " << szAddress << " client port: " << usPort << std::endl;
     return HR_OK;
 }
 
@@ -87,12 +88,55 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
 {
     std::string strReceiveContent((char*)pData + 32, iLength);
 
-    LOGI << "Content received: [" << strReceiveContent << "] form " << dwConnID;
-    if (nullptr != m_pEvent)
+    LOGI << "[" << __FUNCTION__ << "] Content received: [" << strReceiveContent << "] form " << dwConnID << std::endl;
+    
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strReceiveContent.c_str(), strReceiveContent.c_str() + strReceiveContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
     {
-        m_pEvent->OnReceive(strReceiveContent, strReceiveContent.length());
+        std::string strMethod = root["method"].asString();
+
+        if ("InitResult" == strMethod)
+        {
+            auto body = root["body"];
+            int nInitResult = body["initResult"].asInt();
+            if (nullptr != m_pEvent)
+            {
+                m_pEvent->OnInitResult(nInitResult);
+            }
+        }
+        else if ("AuthResult" == strMethod)
+        {
+            auto body = root["body"];
+            int nAuthResult = body["authResult"].asInt();
+            if (nullptr != m_pEvent)
+            {
+                m_pEvent->OnAuthResult(nAuthResult);
+            }
+        }
+        else if ("LoginResult" == strMethod)
+        {
+            auto body = root["body"];
+            int nLoginResult = body["loginResult"].asInt();
+            if (nullptr != m_pEvent)
+            {
+                m_pEvent->OnLoginResult(nLoginResult);
+            }
+        }
+        else
+        {
+            LOGE << "[" << __FUNCTION__ << "] Unknown method name! strMethod:[" << strMethod << "]" << std::endl;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strReceiveContent << "]" << std::endl;
     }
 
+    delete reader;
     return HR_OK;
 }
 

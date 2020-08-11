@@ -7,7 +7,7 @@
 using namespace ZHUMUSDKEX_NAMESPACE;
 
 class CZhumuSdkImpl 
-    : public ZhumuSdkEx_Event
+    : public ZHUMUSDKEX_NAMESPACE::ZhumuSdkEx_Event
     , public CCustomTcpServerEvent
 {
 public:
@@ -37,18 +37,24 @@ public:
     bool DestorySDK();
 
 public: // zhumusdkex event
+    virtual void onInitRet(SDKError status);
     //auth event
-    virtual void onAuthRet(AuthResult status) {}
+    virtual void onAuthRet(AuthResult status);
     //login event
-    virtual void onLoginRet(LOGINSTATUS status) {}
+    virtual void onLoginRet(LOGINSTATUS status);
     //meeting status event
-    virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code) {}
+    virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code);
     //exit app
-    virtual void onExitApp() {}
+    virtual void onExitApp();
 
-
+    /************************************************************************/
+    /*  tcp 服务器接收信息回调                                                */
+    /************************************************************************/
 public: // tcp server event
-    virtual int OnReceive(std::string strData, int iLength) { return 0; }
+    virtual int OnReceive(std::string strReceive, int iLength);
+    virtual int OnInitResult(int nInitResult);
+    virtual int OnAuthResult(int nAuthResult);
+    virtual int OnLoginResult(int nLoginResult);
 
 private:
     ZhumuSdkEx_Event* m_event;

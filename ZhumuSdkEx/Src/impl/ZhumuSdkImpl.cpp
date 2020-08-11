@@ -34,11 +34,11 @@ bool CZhumuSdkImpl::StartTcpServer()
         m_pTcpServer->SetEvent(this);
         if (false == m_pTcpServer->StartServer(g_nLocalListeningPort))
         {
-            LOGE << "The TCP service failed to start! " << __FUNCTION__;
+            LOGE << "[" << __FUNCTION__ << "] The TCP service failed to start! " << std::endl;
         }
         else
         {
-            LOGE << "The TCP service started successfully! " << __FUNCTION__;
+            LOGI << "[" << __FUNCTION__ << "] he TCP service started successfully! " << std::endl;
             bRet = true;
         }
     }
@@ -65,8 +65,8 @@ bool CZhumuSdkImpl::StartSdkProcess(std::string strPath /*= ""*/)
         strExePath = "ZhumuSdkProgress.exe";
     }
 
-    LOGI << strExePath << " " << __FUNCTION__;
-    ;
+    LOGI << "[" << __FUNCTION__ << "] strExePath: " << strPath << std::endl;
+
     // Æô¶¯½ø³Ì
     ShellExecute(NULL, L"open", CUtils::s2ws(strExePath).c_str(), NULL, NULL, SW_SHOWNORMAL);
     //WinExec(strExePath.c_str(), SW_HIDE);
@@ -96,7 +96,7 @@ bool CZhumuSdkImpl::InitSDK(ZmSdkInitParam initParam)
     bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
     if (false == bRet)
     {
-        LOGE << "On failure " << __FUNCTION__;
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
     }
     return bRet;
 }
@@ -125,7 +125,7 @@ bool CZhumuSdkImpl::LoginSDK(ZmSdkLoginParam loginParam)
     bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
     if (false == bRet)
     {
-        LOGE << "On failure " << __FUNCTION__;
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
     }
     return bRet;
 }
@@ -147,7 +147,82 @@ bool CZhumuSdkImpl::DestorySDK()
     bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
     if (false == bRet)
     {
-        LOGE << "On failure " << __FUNCTION__;
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
     }
     return bRet;
+}
+
+void CZhumuSdkImpl::onInitRet(SDKError status)
+{
+
+}
+
+void CZhumuSdkImpl::onAuthRet(AuthResult status)
+{
+    LOGE << "[" << __FUNCTION__ << "]  status: " << status << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onAuthRet(status);
+    }
+}
+
+void CZhumuSdkImpl::onLoginRet(LOGINSTATUS status)
+{
+    LOGE << "[" << __FUNCTION__ << "]  status: " << status << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onLoginRet(status);
+    }
+}
+
+void CZhumuSdkImpl::onMeetingStatus(MeetingStatus status, MeetingFailCode code)
+{
+    LOGE << "[" << __FUNCTION__ << "]  MeetingStatus: " << status << " MeetingFailCode:" << code << std::endl;
+
+    if (nullptr != m_event)
+    {
+        m_event->onMeetingStatus(status, code);
+    }
+}
+
+void CZhumuSdkImpl::onExitApp()
+{
+
+}
+
+int CZhumuSdkImpl::OnReceive(std::string strReceive, int iLength)
+{
+    LOGE << "[" << __FUNCTION__ << "]  Receive content: " << strReceive << std::endl;
+
+    return 0;
+}
+
+int CZhumuSdkImpl::OnInitResult(int nInitResult)
+{
+    LOGE << "[" << __FUNCTION__ << "]  initResult: " << nInitResult << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onInitRet(SDKError(nInitResult));
+    }
+    return 0;
+}
+
+int CZhumuSdkImpl::OnAuthResult(int nAuthResult)
+{
+    LOGE << "[" << __FUNCTION__ << "]  authResult: " << nAuthResult << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onAuthRet(AuthResult(nAuthResult));
+    }
+    return 0;
+}
+
+int CZhumuSdkImpl::OnLoginResult(int nLoginResult)
+{
+    LOGE << "[" << __FUNCTION__ << "]  loginResult: " << nLoginResult << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onLoginRet(LOGINSTATUS(nLoginResult));
+    }
+    return 0;
 }

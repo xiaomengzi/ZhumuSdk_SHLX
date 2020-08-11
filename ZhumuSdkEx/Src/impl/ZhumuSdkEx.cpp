@@ -12,7 +12,7 @@ CZhumuSdkImpl* g_pZhumuSdkImpl = nullptr;
 
 BEGIN_ZHUMUSDKEX_NAMESPACE
 
-ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam)
+ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(ZhumuSdkEx_Event* event, const char* exePath)
 {
     bool bRet = false;
     // 初始化日志
@@ -22,7 +22,7 @@ ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam)
     if (nullptr == g_pZhumuSdkImpl)
     {
         g_pZhumuSdkImpl = new CZhumuSdkImpl;
-        g_pZhumuSdkImpl->SetEvent((ZhumuSdkEx_Event*)crateParam.event);
+        g_pZhumuSdkImpl->SetEvent(event);
         // 启动tcp服务
         if (false == g_pZhumuSdkImpl->StartTcpServer())
         {
@@ -30,7 +30,7 @@ ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(const ZMSdkCreateParam crateParam)
         }
 
         //// 启动进程
-        //if (false == g_pZhumuSdkImpl->StartSdkProcess(crateParam.pPaht))
+        //if (false == g_pZhumuSdkImpl->StartSdkProcess(exePath))
         //{
         //    return SDKERR_UNKNOWN;
         //}

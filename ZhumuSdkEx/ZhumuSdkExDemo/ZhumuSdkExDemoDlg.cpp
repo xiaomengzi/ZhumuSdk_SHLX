@@ -106,7 +106,7 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
     SetIcon(m_hIcon, FALSE);		// 设置小图标
 
     // TODO: 在此添加额外的初始化代码
-    m_editPassword.SetWindowTextW(_T("zm1234567"));
+    m_editPassword.SetWindowTextW(_T("zm123456"));
     m_editUserName.SetWindowTextW(_T("mengxw@suirui.com"));
 
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
@@ -161,6 +161,39 @@ HCURSOR CZhumuSdkExDemoDlg::OnQueryDragIcon()
     return static_cast<HCURSOR>(m_hIcon);
 }
 
+void CZhumuSdkExDemoDlg::onInitRet(SDKError status)
+{
+    CString strMsg;
+    strMsg.Format(_T("onInitRet %d"), status);
+    AddMsg(strMsg);
+}
+
+void CZhumuSdkExDemoDlg::onAuthRet(AuthResult status)
+{
+    CString strMsg;
+    strMsg.Format(_T("onAuthRet %d"), status);
+    AddMsg(strMsg);
+}
+
+void CZhumuSdkExDemoDlg::onLoginRet(LOGINSTATUS status)
+{
+    CString strMsg;
+    strMsg.Format(_T("onLoginRet %d"), status);
+    AddMsg(strMsg);
+}
+
+void CZhumuSdkExDemoDlg::onMeetingStatus(MeetingStatus status, MeetingFailCode code)
+{
+    CString strMsg;
+    strMsg.Format(_T("MeetingStatus %d, MeetingFailCode %d"), status, code);
+    AddMsg(strMsg);
+}
+
+void CZhumuSdkExDemoDlg::onExitApp()
+{
+
+}
+
 void CZhumuSdkExDemoDlg::AddMsg(CString strMsg)
 {
     m_richeditMsg.SetSel(-1, -1);
@@ -174,11 +207,7 @@ void CZhumuSdkExDemoDlg::AddMsg(CString strMsg)
 
 void CZhumuSdkExDemoDlg::OnBnClickedButton1()
 {
-    ZMSdkCreateParam crateParam;
-    crateParam.event = this;
-    crateParam.pPaht = "D:\\07 GitHub\\01 Suirui\\ZhumuSdk_SHLX\\ZhumuSdkProgress\\Bin\\Debug\\ZhumuSdkProgress.exe";
-
-    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(crateParam);
+    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(this, "D:\\07 GitHub\\01 Suirui\\ZhumuSdk_SHLX\\ZhumuSdkProgress\\Bin\\Debug\\ZhumuSdkProgress.exe");
 
     CString strMsg;
     strMsg.Format(_T(" SDKError %d = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(crateParam);"), err);

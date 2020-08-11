@@ -33,8 +33,20 @@ protected:
 	DECLARE_MESSAGE_MAP()
 
 public:
+    void CustomErrorMessage(CString strContent, int nType);
+
+public:
+    // 退出进程
     afx_msg LRESULT OnQuitProgress(WPARAM wParam, LPARAM lParam);
+    // 错误消息提示
     afx_msg LRESULT OnCustomErrorMessage(WPARAM wParam, LPARAM lParam);
+    // 初始化SDK
+    afx_msg LRESULT OnInitZhumuSDk(WPARAM wParam, LPARAM lParam);
+    // 登录SDK
+    afx_msg LRESULT OnLoginZhumuSDk(WPARAM wParam, LPARAM lParam);
 
     
+public:
+    afx_msg void OnBnClickedButton1();
+    afx_msg void OnBnClickedButton2();
 };
