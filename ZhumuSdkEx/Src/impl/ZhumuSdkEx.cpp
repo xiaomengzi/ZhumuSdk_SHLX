@@ -57,22 +57,7 @@ ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam)
     return SDKERR_SUCCESS;
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
-{
-    if (nullptr == g_pZhumuSdkImpl)
-    {
-        return SDKERR_UNKNOWN;
-    }
-    // 初始化sdk
-    bool bRet = g_pZhumuSdkImpl->DestorySDK();
 
-    if (false == bRet)
-    {
-        return SDKERR_UNKNOWN;
-    }
-
-    return SDKERR_SUCCESS;
-}
 
 ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
 {
@@ -90,5 +75,97 @@ ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
 
     return SDKERR_SUCCESS;
 }
+
+ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->StartAppointmentMeeting(meetingParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam meetingParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->StartInstantMeeting(meetingParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+
+ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->JoinMeeting(meetingParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->AnonymityJoinMeeting(meetingParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+    // 初始化sdk
+    bool bRet = g_pZhumuSdkImpl->DestorySDK();
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
+
+
 
 END_ZHUMUSDKEX_NAMESPACE

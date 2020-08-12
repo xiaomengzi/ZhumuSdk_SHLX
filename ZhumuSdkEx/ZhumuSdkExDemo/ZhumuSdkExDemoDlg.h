@@ -60,10 +60,29 @@ public:
     afx_msg void OnBnClickedButton2();  // 初始化SDK
     afx_msg void OnBnClickedButton3();  // 销毁SDK
     afx_msg void OnBnClickedButton4();  // 登录SDK
+    afx_msg void OnBnClickedButton5();  // 登录用户开启会议
 
 
 
     CEdit m_editUserName;
     CEdit m_editPassword;
     CRichEditCtrl m_richeditMsg;
+    CEdit m_editNormalStartMeetingNumber;
+    CEdit m_editNormalStartVanityID;
+    CEdit m_editNormalStartParticipantId;
+    CButton m_btnNormalStartIsVideoOff;
+    CButton m_btnNormalStartIsAudioOff;
+    CButton m_btnNormalStartIsDirectShareDesktop;
+    CEdit m_editNormalJoinMeetingNumber;
+    CEdit m_editNormalJoinVanityID;
+    CEdit m_editNormalJoinUserName;
+    CEdit m_editNormalJoinPsw;
+    CEdit m_editNormalJoinParticipantId;
+    CEdit m_editNormalJoinWebinarToken;
+    CButton m_btnNormalJoinIsVideoOff;
+    CButton m_btnNormalJoinIsAudioOff;
+    CButton m_btnNormalJoinIsDirectShareDesktop;
+    afx_msg void OnBnClickedButton6();
+    afx_msg void OnBnClickedButton7();
+    afx_msg void OnBnClickedButton8();
 };

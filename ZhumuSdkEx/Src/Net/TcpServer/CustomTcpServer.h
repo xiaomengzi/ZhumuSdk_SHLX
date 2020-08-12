@@ -13,7 +13,7 @@
      virtual int OnInitResult(int nInitResult) = 0;
      virtual int OnAuthResult(int nAuthResult) = 0;
      virtual int OnLoginResult(int nLoginResult) = 0;
-    
+     virtual int OnMeetingStatusResult(int nMeetingStatus, int nFailCode) = 0;
  };
  
 

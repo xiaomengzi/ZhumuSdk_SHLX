@@ -163,21 +163,6 @@ enum MeetingFailCode
 };
 
 /************************************************************************/
-/* 创建SDK参数                                                          */
-/************************************************************************/
-typedef struct stZmSdkCreateParam
-{
-    void*   event; // 监听者
-    char*   pPaht; // 可执行文件全路径
-    stZmSdkCreateParam()
-    {
-        event = nullptr;
-        pPaht = nullptr;
-    }
-
-}ZMSdkCreateParam;
-
-/************************************************************************/
 /* 初始化SDK参数                                                         */
 /************************************************************************/
 typedef struct stZmSdkInitParam
@@ -211,6 +196,92 @@ typedef struct stZmSdkLoginParam
 
 }ZmSdkLoginParam;
 
+/************************************************************************/
+/* 开始预约会议                                                          */
+/************************************************************************/
+typedef struct stZmStartAppointmentMeetingParam
+{
+    UINT64  meetingNumber;          /// 会议号码。.
+    char*   participantId;          ///<参会者ID。当相关设置打开时，SDK将设置此值。
+    bool    isVideoOff;             ///<关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isAudioOff;             ///<关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isDirectShareDesktop;   ///<是否直接共享桌面。True表示分享。
+    stZmStartAppointmentMeetingParam()
+    {
+        meetingNumber = 0;
+        participantId = nullptr;
+        isVideoOff = true;
+        isAudioOff = false;
+        isDirectShareDesktop = false;
+    }
+
+}ZmStartAppointmentMeetingParam;
+
+/************************************************************************/
+/* 开始即时会议                                                          */
+/************************************************************************/
+typedef struct stZmStartInstantMeetingParam
+{
+    char*	meetingTopic;			///< 会议主题
+    char*	meetingParticipants;	///< 会议参与人,通讯录用户Id,以逗号分割 "1039022079703897890,1038722079703891234"
+    bool	isVideoOff;				///< 是否关闭视频
+    bool	isAudioOff;				///< 是否关闭音频
+    bool    isDirectShareDesktop;   ///<是否直接共享桌面。True表示分享。
+
+    stZmStartInstantMeetingParam()
+    {
+        meetingTopic = nullptr;
+        meetingParticipants = nullptr;
+        isVideoOff = true;
+        isAudioOff = false;
+        isDirectShareDesktop = false;
+    }
+
+}ZmStartInstantMeetingParam;
+
+
+/************************************************************************/
+/* 加入会议                                                    */
+/************************************************************************/
+typedef struct stZmJoinMeetingParam
+{
+    UINT64  meetingNumber;          ///会议号码。
+    char*   userName;               /// 会议显示名称
+    char*   psw;                    /// 会议密码。
+    bool    isVideoOff;             /// 关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isAudioOff;             /// 关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isDirectShareDesktop;   /// 是否直接共享桌面。True表示分享。
+
+    stZmJoinMeetingParam()
+    {
+        meetingNumber = 0;
+        userName = nullptr;
+        psw = nullptr;
+        isVideoOff = true;
+        isAudioOff = false;
+        isDirectShareDesktop = false;
+    }
+}ZmJoinMeetingParam;
+
+typedef struct stZmAnonymityJoinMeetingParam
+{
+    UINT64  meetingNumber;          ///会议号码。
+    char*   userName;               /// 会议显示名称
+    char*   psw;                    /// 会议密码。
+    bool    isVideoOff;             /// 关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isAudioOff;             /// 关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
+    bool    isDirectShareDesktop;   /// 是否直接共享桌面。True表示分享。
+
+    stZmAnonymityJoinMeetingParam()
+    {
+        meetingNumber = 0;
+        userName = nullptr;
+        psw = nullptr;
+        isVideoOff = true;
+        isAudioOff = false;
+        isDirectShareDesktop = false;
+    }
+}ZmAnonymityJoinMeetingParam;
 
 END_ZHUMUSDKEX_NAMESPACE
 

@@ -130,6 +130,132 @@ bool CZhumuSdkImpl::LoginSDK(ZmSdkLoginParam loginParam)
     return bRet;
 }
 
+bool CZhumuSdkImpl::StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "StartAppointmentMeeting";
+
+    // 协议内容
+    Json::Value body;
+    body["meetingNumber"] = meetingParam.meetingNumber;
+    body["participantId"] = (nullptr == meetingParam.participantId) ? "" : meetingParam.participantId;
+    body["isVideoOff"] = meetingParam.isVideoOff;
+    body["isAudioOff"] = meetingParam.isAudioOff;
+    body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+    }
+    return bRet;
+}
+
+bool CZhumuSdkImpl::StartInstantMeeting(ZmStartInstantMeetingParam meetingParam)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "StartInstantMeeting";
+
+    // 协议内容
+    Json::Value body;
+    body["meetingTopic"] = meetingParam.meetingTopic;
+    body["meetingParticipants"] = (nullptr == meetingParam.meetingParticipants) ? "" : meetingParam.meetingParticipants;
+    body["isVideoOff"] = meetingParam.isVideoOff;
+    body["isAudioOff"] = meetingParam.isAudioOff;
+    body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+    }
+    return bRet;
+}
+
+bool CZhumuSdkImpl::JoinMeeting(ZmJoinMeetingParam meetingParam)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "JoinMeeting";
+
+    // 协议内容
+    Json::Value body;
+    body["meetingNumber"] = meetingParam.meetingNumber;
+    body["userName"] = (nullptr == meetingParam.userName) ? "" : meetingParam.userName;
+    body["psw"] = (nullptr == meetingParam.psw) ? "" : meetingParam.psw;
+    body["isVideoOff"] = meetingParam.isVideoOff;
+    body["isAudioOff"] = meetingParam.isAudioOff;
+    body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+    }
+    return bRet;
+}
+
+bool CZhumuSdkImpl::AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "AnonymityJoinMeeting";
+
+    // 协议内容
+    Json::Value body;
+    body["meetingNumber"] = meetingParam.meetingNumber;
+    body["userName"] = (nullptr == meetingParam.userName) ? "" : meetingParam.userName;
+    body["psw"] = (nullptr == meetingParam.psw) ? "" : meetingParam.psw;
+    body["isVideoOff"] = meetingParam.isVideoOff;
+    body["isAudioOff"] = meetingParam.isAudioOff;
+    body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+    }
+    return bRet;
+}
+
 bool CZhumuSdkImpl::DestorySDK()
 {
     bool bRet = false;
@@ -223,6 +349,16 @@ int CZhumuSdkImpl::OnLoginResult(int nLoginResult)
     if (nullptr != m_event)
     {
         m_event->onLoginRet(LOGINSTATUS(nLoginResult));
+    }
+    return 0;
+}
+
+int CZhumuSdkImpl::OnMeetingStatusResult(int nMeetingStatus, int nFailCode)
+{
+    LOGE << "[" << __FUNCTION__ << "]  MeetingStatus: " << nMeetingStatus  << " FailCode: " << nFailCode << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->onMeetingStatus(MeetingStatus(nMeetingStatus), MeetingFailCode(nFailCode));
     }
     return 0;
 }

@@ -20,10 +20,31 @@ extern "C"
     ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam);
 
     /************************************************************************/
-    /* SLogin SDK                                                           */
+    /* 登录瞩目SDK                                                           */
     /************************************************************************/
     ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam);
 
+    /************************************************************************/
+    /* 开启预约会议                                                          */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam);
+
+    /************************************************************************/
+    /* 开启即时会议                                                          */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam meetingParam);
+
+    /************************************************************************/
+    /* 加入会议                                                              */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam);
+
+    /************************************************************************/
+    /*  匿名加入会议                                                         */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam);
+
+    
     /************************************************************************/
     /* SJoin Meeting                                                        */
     /************************************************************************/

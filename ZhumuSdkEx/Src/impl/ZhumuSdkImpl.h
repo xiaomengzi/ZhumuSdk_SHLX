@@ -33,6 +33,18 @@ public:
     // 登录SDK
     bool LoginSDK(ZmSdkLoginParam loginParam);
 
+    // 开启预约会议
+    bool StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam);
+
+    // 开启即时会议
+    bool StartInstantMeeting(ZmStartInstantMeetingParam meetingParam);
+
+    // 加入会议
+    bool JoinMeeting(ZmJoinMeetingParam meetingParam);
+
+    // 匿名加入会议
+    bool AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam);
+
     // 销毁SDK
     bool DestorySDK();
 
@@ -55,6 +67,8 @@ public: // tcp server event
     virtual int OnInitResult(int nInitResult);
     virtual int OnAuthResult(int nAuthResult);
     virtual int OnLoginResult(int nLoginResult);
+    virtual int OnMeetingStatusResult(int nMeetingStatus, int nFailCode);
+
 
 private:
     ZhumuSdkEx_Event* m_event;

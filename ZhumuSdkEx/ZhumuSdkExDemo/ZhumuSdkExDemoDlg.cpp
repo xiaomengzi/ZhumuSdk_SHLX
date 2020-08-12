@@ -61,6 +61,23 @@ void CZhumuSdkExDemoDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_EDIT_USERNAME, m_editUserName);
     DDX_Control(pDX, IDC_EDIT_PASSWORD, m_editPassword);
     DDX_Control(pDX, IDC_RICHEDIT21, m_richeditMsg);
+
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER, m_editNormalStartMeetingNumber);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTVANITYID, m_editNormalStartVanityID);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTPARTICIPANTID, m_editNormalStartParticipantId);
+    DDX_Control(pDX, IDC_NORMALSTARTISVIDEOOFF, m_btnNormalStartIsVideoOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALSTARTISAUDIOOFF, m_btnNormalStartIsAudioOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALSTARTISDIRECTSHAREDESKTOP, m_btnNormalStartIsDirectShareDesktop);
+
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINMEETINGNUMBER, m_editNormalJoinMeetingNumber);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINVANITYID, m_editNormalJoinVanityID);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINUSERNAME, m_editNormalJoinUserName);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINPSW, m_editNormalJoinPsw);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINPARTICIPANTID, m_editNormalJoinParticipantId);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINWEBINARTOKEN, m_editNormalJoinWebinarToken);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISVIDEOOFF, m_btnNormalJoinIsVideoOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISAUDIOOFF, m_btnNormalJoinIsAudioOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISDIRECTSHAREDESKTOP, m_btnNormalJoinIsDirectShareDesktop);
 }
 
 BEGIN_MESSAGE_MAP(CZhumuSdkExDemoDlg, CDialogEx)
@@ -71,6 +88,10 @@ BEGIN_MESSAGE_MAP(CZhumuSdkExDemoDlg, CDialogEx)
     ON_BN_CLICKED(IDC_BUTTON2, &CZhumuSdkExDemoDlg::OnBnClickedButton2)
     ON_BN_CLICKED(IDC_BUTTON3, &CZhumuSdkExDemoDlg::OnBnClickedButton3)
     ON_BN_CLICKED(IDC_BUTTON4, &CZhumuSdkExDemoDlg::OnBnClickedButton4)
+    ON_BN_CLICKED(IDC_BUTTON5, &CZhumuSdkExDemoDlg::OnBnClickedButton5)
+    ON_BN_CLICKED(IDC_BUTTON6, &CZhumuSdkExDemoDlg::OnBnClickedButton6)
+    ON_BN_CLICKED(IDC_BUTTON7, &CZhumuSdkExDemoDlg::OnBnClickedButton7)
+    ON_BN_CLICKED(IDC_BUTTON8, &CZhumuSdkExDemoDlg::OnBnClickedButton8)
 END_MESSAGE_MAP()
 
 
@@ -108,6 +129,23 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
     // TODO: 在此添加额外的初始化代码
     m_editPassword.SetWindowTextW(_T("zm123456"));
     m_editUserName.SetWindowTextW(_T("mengxw@suirui.com"));
+
+    m_editNormalStartMeetingNumber.SetWindowTextW(_T("202444421"));
+    m_editNormalStartVanityID.SetWindowTextW(_T("mengxw@suirui.com"));
+    m_editNormalStartParticipantId.SetWindowTextW(_T("mengxw@suirui.com"));
+    m_btnNormalStartIsVideoOff.SetCheck(1);
+    m_btnNormalStartIsAudioOff.SetCheck(0);
+    m_btnNormalStartIsDirectShareDesktop.SetCheck(0);
+
+    m_editNormalJoinMeetingNumber.SetWindowTextW(_T("202444421"));
+    m_editNormalJoinVanityID.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinUserName.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinPsw.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinParticipantId.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinWebinarToken.SetWindowTextW(_T("zm123456"));
+    m_btnNormalJoinIsVideoOff.SetCheck(1);
+    m_btnNormalJoinIsAudioOff.SetCheck(1);
+    m_btnNormalJoinIsDirectShareDesktop.SetCheck(0);
 
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -230,7 +268,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedButton2()
 void CZhumuSdkExDemoDlg::OnBnClickedButton3()
 {
     // TODO: 在此添加控件通知处理程序代码
-    
+
     SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_DestorySDK();
 
     CString strMsg;
@@ -254,8 +292,142 @@ void CZhumuSdkExDemoDlg::OnBnClickedButton4()
     loginParam.account = const_cast<char*>(strName.c_str());
     loginParam.password = const_cast<char*>(strUserPassword.c_str());
 
-    ZHUMUSDKEX_NAMESPACE::Zhumu_SLoginSDK(loginParam);
+    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_SLoginSDK(loginParam);
+    CString strMsg;
+    strMsg.Format(_T(" SDKError %d = ZHUMUSDKEX_NAMESPACE::Zhumu_SLoginSDK(loginParam);"), err);
+    AddMsg(strMsg);
+}
 
+void CZhumuSdkExDemoDlg::OnBnClickedButton5()
+{
+    CString strNormalStartMeetingNumber;
+    CString strNormalStartVanityID;
+    CString strNormalStartUserName;
+    CString strNormalStartParticipantId;
+
+    m_editNormalStartMeetingNumber.GetWindowTextW(strNormalStartMeetingNumber);
+    m_editNormalStartVanityID.GetWindowTextW(strNormalStartVanityID);
+    m_editNormalStartParticipantId.GetWindowTextW(strNormalStartParticipantId);
+
+    std::string strVanityID = CT2A(strNormalStartVanityID);
+    std::string strParticipantId = CT2A(strNormalStartParticipantId);
+
+    ZmStartAppointmentMeetingParam startParam;
+    startParam.meetingNumber = _ttoi64(strNormalStartMeetingNumber);
+    startParam.participantId = const_cast<char*>(strParticipantId.c_str());
+    startParam.isVideoOff = m_btnNormalStartIsVideoOff.GetCheck() == 1 ? false : true;
+    startParam.isAudioOff = m_btnNormalStartIsAudioOff.GetCheck() == 1 ? false : true;
+    startParam.isDirectShareDesktop = m_btnNormalStartIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_StartAppointmentMeeting(startParam);
+    CString strMsg;
+    strMsg.Format(_T(" SDKError %d = ZHUMUSDKEX_NAMESPACE::Zhumu_NormalStartMeeting(startParam);"), err);
+    AddMsg(strMsg);
 }
 
 
+void CZhumuSdkExDemoDlg::OnBnClickedButton6()
+{
+    CString strNormalJoinMeetingNumber;
+    CString strNormalJoinVanityID;
+    CString strNormalJoinUserName;
+    CString strNormalJoinPsw;
+    CString strNormalJoinParticipantId;
+    CString strNormalJoinWebinarToken;
+
+    m_editNormalJoinMeetingNumber.GetWindowTextW(strNormalJoinMeetingNumber);
+    m_editNormalJoinVanityID.GetWindowTextW(strNormalJoinVanityID);
+    m_editNormalJoinUserName.GetWindowTextW(strNormalJoinUserName);
+    m_editNormalJoinPsw.GetWindowTextW(strNormalJoinPsw);
+    m_editNormalJoinParticipantId.GetWindowTextW(strNormalJoinParticipantId);
+    m_editNormalJoinWebinarToken.GetWindowTextW(strNormalJoinWebinarToken);
+
+
+    std::string strVanityID = CT2A(strNormalJoinVanityID);;
+    std::string strUserName = CT2A(strNormalJoinUserName);;
+    std::string strPsw = CT2A(strNormalJoinPsw);;
+    std::string strParticipantId = CT2A(strNormalJoinParticipantId);;
+    std::string strWebinarToken = CT2A(strNormalJoinWebinarToken);;
+
+    ZmJoinMeetingParam joinParam;
+    joinParam.meetingNumber = _ttoi64(strNormalJoinMeetingNumber);
+    joinParam.userName = const_cast<char*>(strUserName.c_str());
+    joinParam.psw = const_cast<char*>(strPsw.c_str());
+    joinParam.isVideoOff = m_btnNormalJoinIsVideoOff.GetCheck() == 1 ? true : false;
+    joinParam.isAudioOff = m_btnNormalJoinIsAudioOff.GetCheck() == 1 ? true : false;
+    joinParam.isDirectShareDesktop = m_btnNormalJoinIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    SDKError err = Zhumu_JoinMeeting(joinParam);
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = JoinMeetingNormal(joinParam)"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+}
+
+void CZhumuSdkExDemoDlg::OnBnClickedButton7()
+{
+    CString strNormalStartMeetingNumber;
+    CString strNormalStartVanityID;
+    CString strNormalStartUserName;
+    CString strNormalStartParticipantId;
+
+    m_editNormalStartMeetingNumber.GetWindowTextW(strNormalStartMeetingNumber);
+    m_editNormalStartVanityID.GetWindowTextW(strNormalStartVanityID);
+    m_editNormalStartParticipantId.GetWindowTextW(strNormalStartParticipantId);
+
+    std::string strVanityID = CT2A(strNormalStartVanityID);
+    std::string strParticipantId = CT2A(strNormalStartParticipantId);
+
+    ZmStartInstantMeetingParam startParam;
+    startParam.meetingTopic = const_cast<char*>(strVanityID.c_str());
+    startParam.meetingParticipants = const_cast<char*>(strParticipantId.c_str());
+    startParam.isVideoOff = m_btnNormalStartIsVideoOff.GetCheck() == 1 ? false : true;
+    startParam.isAudioOff = m_btnNormalStartIsAudioOff.GetCheck() == 1 ? false : true;
+    startParam.isDirectShareDesktop = m_btnNormalStartIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_StartInstantMeeting(startParam);
+    CString strMsg;
+    strMsg.Format(_T(" SDKError %d = ZHUMUSDKEX_NAMESPACE::Zhumu_StartInstantMeeting(startParam);"), err);
+    AddMsg(strMsg);
+}
+
+
+void CZhumuSdkExDemoDlg::OnBnClickedButton8()
+{
+    CString strNormalJoinMeetingNumber;
+    CString strNormalJoinVanityID;
+    CString strNormalJoinUserName;
+    CString strNormalJoinPsw;
+    CString strNormalJoinParticipantId;
+    CString strNormalJoinWebinarToken;
+
+    m_editNormalJoinMeetingNumber.GetWindowTextW(strNormalJoinMeetingNumber);
+    m_editNormalJoinVanityID.GetWindowTextW(strNormalJoinVanityID);
+    m_editNormalJoinUserName.GetWindowTextW(strNormalJoinUserName);
+    m_editNormalJoinPsw.GetWindowTextW(strNormalJoinPsw);
+    m_editNormalJoinParticipantId.GetWindowTextW(strNormalJoinParticipantId);
+    m_editNormalJoinWebinarToken.GetWindowTextW(strNormalJoinWebinarToken);
+
+
+    std::string strVanityID = CT2A(strNormalJoinVanityID);;
+    std::string strUserName = CT2A(strNormalJoinUserName);;
+    std::string strPsw = CT2A(strNormalJoinPsw);;
+    std::string strParticipantId = CT2A(strNormalJoinParticipantId);;
+    std::string strWebinarToken = CT2A(strNormalJoinWebinarToken);;
+
+    ZmAnonymityJoinMeetingParam joinParam;
+    joinParam.meetingNumber = _ttoi64(strNormalJoinMeetingNumber);
+    joinParam.userName = const_cast<char*>(strUserName.c_str());
+    joinParam.psw = const_cast<char*>(strPsw.c_str());
+    joinParam.isVideoOff = m_btnNormalJoinIsVideoOff.GetCheck() == 1 ? true : false;
+    joinParam.isAudioOff = m_btnNormalJoinIsAudioOff.GetCheck() == 1 ? true : false;
+    joinParam.isDirectShareDesktop = m_btnNormalJoinIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    SDKError err = Zhumu_AnonymityJoinMeeting(joinParam);
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = JoinMeetingNormal(joinParam)"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+}

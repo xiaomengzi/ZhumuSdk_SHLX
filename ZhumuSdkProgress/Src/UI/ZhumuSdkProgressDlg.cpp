@@ -25,19 +25,19 @@ using namespace ZOOM_SDK_NAMESPACE;
 class CAboutDlg : public CDialogEx
 {
 public:
-	CAboutDlg();
+    CAboutDlg();
 
-// 对话框数据
+    // 对话框数据
 #ifdef AFX_DESIGN_TIME
-	enum { IDD = IDD_ABOUTBOX };
+    enum { IDD = IDD_ABOUTBOX };
 #endif
 
-	protected:
-	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
+protected:
+    virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 // 实现
 protected:
-	DECLARE_MESSAGE_MAP()
+    DECLARE_MESSAGE_MAP()
 };
 
 CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
@@ -46,7 +46,7 @@ CAboutDlg::CAboutDlg() : CDialogEx(IDD_ABOUTBOX)
 
 void CAboutDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+    CDialogEx::DoDataExchange(pDX);
 }
 
 BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
@@ -58,29 +58,52 @@ END_MESSAGE_MAP()
 
 
 CZhumuSdkProgressDlg::CZhumuSdkProgressDlg(CWnd* pParent /*=NULL*/)
-	: CDialogEx(IDD_ZHUMUSDKPROGRESS_DIALOG, pParent)
+    : CDialogEx(IDD_ZHUMUSDKPROGRESS_DIALOG, pParent)
 {
-	m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
+    m_hIcon = AfxGetApp()->LoadIcon(IDR_MAINFRAME);
 }
 
 void CZhumuSdkProgressDlg::DoDataExchange(CDataExchange* pDX)
 {
-	CDialogEx::DoDataExchange(pDX);
+    CDialogEx::DoDataExchange(pDX);
+    DDX_Control(pDX, IDC_EDIT1, m_editUserName);
+    DDX_Control(pDX, IDC_EDIT2, m_editPassword);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINMEETINGNUMBER, m_editNormalJoinMeetingNumber);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINVANITYID, m_editNormalJoinVanityID);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINUSERNAME, m_editNormalJoinUserName);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINPSW, m_editNormalJoinPsw);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINPARTICIPANTID, m_editNormalJoinParticipantId);
+    DDX_Control(pDX, IDC_EDIT_NORMALJOINWEBINARTOKEN, m_editNormalJoinWebinarToken);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISVIDEOOFF, m_btnNormalJoinIsVideoOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISAUDIOOFF, m_btnNormalJoinIsAudioOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALJOINISDIRECTSHAREDESKTOP, m_btnNormalJoinIsDirectShareDesktop);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER, m_editNormalStartMeetingNumber);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTVANITYID, m_editNormalStartVanityID);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTPARTICIPANTID, m_editNormalStartParticipantId);
+    DDX_Control(pDX, IDC_NORMALSTARTISVIDEOOFF, m_btnNormalStartIsVideoOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALSTARTISAUDIOOFF, m_btnNormalStartIsAudioOff);
+    DDX_Control(pDX, IDC_CHECK_NORMALSTARTISDIRECTSHAREDESKTOP, m_btnNormalStartIsDirectShareDesktop);
 }
 
 BEGIN_MESSAGE_MAP(CZhumuSdkProgressDlg, CDialogEx)
-	ON_WM_SYSCOMMAND()
-	ON_WM_PAINT()
-	ON_WM_QUERYDRAGICON()
+    ON_WM_SYSCOMMAND()
+    ON_WM_PAINT()
+    ON_WM_QUERYDRAGICON()
 
     ON_REGISTERED_MESSAGE(WMUSER_BUSINESS_QUIT, &CZhumuSdkProgressDlg::OnQuitProgress)
     ON_REGISTERED_MESSAGE(WMUSER_BUSINESS_CUSTOM_ERROR, &CZhumuSdkProgressDlg::OnCustomErrorMessage)
     ON_REGISTERED_MESSAGE(WMUSER_INIT_ZHUMUSDK, &CZhumuSdkProgressDlg::OnInitZhumuSDk)
     ON_REGISTERED_MESSAGE(WMUSER_LOGIN_ZHUMUSDK, &CZhumuSdkProgressDlg::OnLoginZhumuSDk)
+    ON_REGISTERED_MESSAGE(WMUSER_START_APPOINTMENTMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnStartAppointmentMeetingZhumuSDK)
+    ON_REGISTERED_MESSAGE(WMUSER_START_INSTANTMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnStartInstantMeetingZhumuSDK)
+    ON_REGISTERED_MESSAGE(WMUSER_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnJoinMeetingZhumuSDK)
+    ON_REGISTERED_MESSAGE(WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK)
     
-
     ON_BN_CLICKED(IDC_BUTTON1, &CZhumuSdkProgressDlg::OnBnClickedButton1)
     ON_BN_CLICKED(IDC_BUTTON2, &CZhumuSdkProgressDlg::OnBnClickedButton2)
+    ON_BN_CLICKED(IDC_BUTTON3, &CZhumuSdkProgressDlg::OnBnClickedButton3)
+    ON_BN_CLICKED(IDC_BUTTON4, &CZhumuSdkProgressDlg::OnBnClickedButton4)
+    ON_BN_CLICKED(IDC_BUTTON5, &CZhumuSdkProgressDlg::OnBnClickedButton5)
 END_MESSAGE_MAP()
 
 
@@ -88,32 +111,32 @@ END_MESSAGE_MAP()
 
 BOOL CZhumuSdkProgressDlg::OnInitDialog()
 {
-	CDialogEx::OnInitDialog();
+    CDialogEx::OnInitDialog();
 
-	// 将“关于...”菜单项添加到系统菜单中。
+    // 将“关于...”菜单项添加到系统菜单中。
 
-	// IDM_ABOUTBOX 必须在系统命令范围内。
-	ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
-	ASSERT(IDM_ABOUTBOX < 0xF000);
+    // IDM_ABOUTBOX 必须在系统命令范围内。
+    ASSERT((IDM_ABOUTBOX & 0xFFF0) == IDM_ABOUTBOX);
+    ASSERT(IDM_ABOUTBOX < 0xF000);
 
-	CMenu* pSysMenu = GetSystemMenu(FALSE);
-	if (pSysMenu != NULL)
-	{
-		BOOL bNameValid;
-		CString strAboutMenu;
-		bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
-		ASSERT(bNameValid);
-		if (!strAboutMenu.IsEmpty())
-		{
-			pSysMenu->AppendMenu(MF_SEPARATOR);
-			pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
-		}
-	}
+    CMenu* pSysMenu = GetSystemMenu(FALSE);
+    if (pSysMenu != NULL)
+    {
+        BOOL bNameValid;
+        CString strAboutMenu;
+        bNameValid = strAboutMenu.LoadString(IDS_ABOUTBOX);
+        ASSERT(bNameValid);
+        if (!strAboutMenu.IsEmpty())
+        {
+            pSysMenu->AppendMenu(MF_SEPARATOR);
+            pSysMenu->AppendMenu(MF_STRING, IDM_ABOUTBOX, strAboutMenu);
+        }
+    }
 
-	// 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
-	//  执行此操作
-	SetIcon(m_hIcon, TRUE);			// 设置大图标
-	SetIcon(m_hIcon, FALSE);		// 设置小图标
+    // 设置此对话框的图标。  当应用程序主窗口不是对话框时，框架将自动
+    //  执行此操作
+    SetIcon(m_hIcon, TRUE);			// 设置大图标
+    SetIcon(m_hIcon, FALSE);		// 设置小图标
 
     ////隐藏界面
     //int nFullWidth = GetSystemMetrics(SM_CXSCREEN);
@@ -128,20 +151,39 @@ BOOL CZhumuSdkProgressDlg::OnInitDialog()
     // 启动tcp服务器
     CBusinessLogic::GetInstance()->StartTcpServer();
 
-	return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
+    m_editPassword.SetWindowTextW(_T("zm123456"));
+    m_editUserName.SetWindowTextW(_T("mengxw@suirui.com"));
+
+    m_editNormalJoinMeetingNumber.SetWindowTextW(_T("202444421"));
+    m_editNormalJoinVanityID.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinUserName.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinPsw.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinParticipantId.SetWindowTextW(_T("zm123456"));
+    m_editNormalJoinWebinarToken.SetWindowTextW(_T("zm123456"));
+    m_btnNormalJoinIsVideoOff.SetCheck(1);
+    m_btnNormalJoinIsAudioOff.SetCheck(1);
+    m_btnNormalJoinIsDirectShareDesktop.SetCheck(0);
+
+    m_editNormalStartMeetingNumber.SetWindowTextW(_T("202444421"));
+    m_editNormalStartVanityID.SetWindowTextW(_T("zm123456"));
+    m_editNormalStartParticipantId.SetWindowTextW(_T("zm123456"));
+    m_btnNormalStartIsVideoOff.SetCheck(1);
+    m_btnNormalStartIsAudioOff.SetCheck(1);
+    m_btnNormalStartIsDirectShareDesktop.SetCheck(0);
+    return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
 
 void CZhumuSdkProgressDlg::OnSysCommand(UINT nID, LPARAM lParam)
 {
-	if ((nID & 0xFFF0) == IDM_ABOUTBOX)
-	{
-		CAboutDlg dlgAbout;
-		dlgAbout.DoModal();
-	}
-	else
-	{
-		CDialogEx::OnSysCommand(nID, lParam);
-	}
+    if ((nID & 0xFFF0) == IDM_ABOUTBOX)
+    {
+        CAboutDlg dlgAbout;
+        dlgAbout.DoModal();
+    }
+    else
+    {
+        CDialogEx::OnSysCommand(nID, lParam);
+    }
 }
 
 // 如果向对话框添加最小化按钮，则需要下面的代码
@@ -150,34 +192,34 @@ void CZhumuSdkProgressDlg::OnSysCommand(UINT nID, LPARAM lParam)
 
 void CZhumuSdkProgressDlg::OnPaint()
 {
-	if (IsIconic())
-	{
-		CPaintDC dc(this); // 用于绘制的设备上下文
+    if (IsIconic())
+    {
+        CPaintDC dc(this); // 用于绘制的设备上下文
 
-		SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
+        SendMessage(WM_ICONERASEBKGND, reinterpret_cast<WPARAM>(dc.GetSafeHdc()), 0);
 
-		// 使图标在工作区矩形中居中
-		int cxIcon = GetSystemMetrics(SM_CXICON);
-		int cyIcon = GetSystemMetrics(SM_CYICON);
-		CRect rect;
-		GetClientRect(&rect);
-		int x = (rect.Width() - cxIcon + 1) / 2;
-		int y = (rect.Height() - cyIcon + 1) / 2;
+        // 使图标在工作区矩形中居中
+        int cxIcon = GetSystemMetrics(SM_CXICON);
+        int cyIcon = GetSystemMetrics(SM_CYICON);
+        CRect rect;
+        GetClientRect(&rect);
+        int x = (rect.Width() - cxIcon + 1) / 2;
+        int y = (rect.Height() - cyIcon + 1) / 2;
 
-		// 绘制图标
-		dc.DrawIcon(x, y, m_hIcon);
-	}
-	else
-	{
-		CDialogEx::OnPaint();
-	}
+        // 绘制图标
+        dc.DrawIcon(x, y, m_hIcon);
+    }
+    else
+    {
+        CDialogEx::OnPaint();
+    }
 }
 
 //当用户拖动最小化窗口时系统调用此函数取得光标
 //显示。
 HCURSOR CZhumuSdkProgressDlg::OnQueryDragIcon()
 {
-	return static_cast<HCURSOR>(m_hIcon);
+    return static_cast<HCURSOR>(m_hIcon);
 }
 
 void CZhumuSdkProgressDlg::CustomErrorMessage(CString strContent, int nType)
@@ -214,7 +256,7 @@ LRESULT CZhumuSdkProgressDlg::OnQuitProgress(WPARAM wParam, LPARAM lParam)
 
     // 退出程序
     OnOK();
-    LOGI << "[" << __FUNCTION__ << "] Program normal exit!"<< std::endl;
+    LOGI << "[" << __FUNCTION__ << "] Program normal exit!" << std::endl;
     return 0;
 }
 
@@ -336,7 +378,7 @@ LRESULT CZhumuSdkProgressDlg::OnLoginZhumuSDk(WPARAM wParam, LPARAM lParam)
 
         LoginSDKParam       loginSDKParam;        // 登录瞩目SDK参数
 
-        
+
         std::string strAccountTemp = CUtils::UTF_82ASCII(strAccount);;
         std::string strPasswordTemp = CUtils::UTF_82ASCII(strPassword);;
         // 保存登录保存SDK参数
@@ -393,6 +435,440 @@ LRESULT CZhumuSdkProgressDlg::OnLoginZhumuSDk(WPARAM wParam, LPARAM lParam)
     return 0;
 }
 
+LRESULT CZhumuSdkProgressDlg::OnStartAppointmentMeetingZhumuSDK(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+    if (false == CBusinessLogic::GetInstance()->GetAlreadyLanding()
+        || true == CBusinessLogic::GetInstance()->GetIsLanding())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Logging in or already logged in to the SDK!" << std::endl;
+        return 0;
+    }
+    if (true == CBusinessLogic::GetInstance()->GetReadyMeeting()
+        || true == CBusinessLogic::GetInstance()->GetAttendMeeting())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Joining or having joined a meeting!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    std::string strContent(*pStrErrMsg);
+    CString strMsg;
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        UINT64		nMeetingNumber = root["meetingNumber"].asInt64();
+        std::string strParticipantId = root["participantId"].asString();
+        bool bIsVideoOff = root["isVideoOff"].asBool();
+        bool bIsAudioOff = root["isAudioOff"].asBool();
+        bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
+
+        std::string strParticipantIdTemp = CUtils::UTF_82ASCII(strParticipantId);
+
+        CBusinessLogic::GetInstance()->SetReadyMeeting(true);
+
+        ZOOM_SDK_NAMESPACE::StartParam startParam;
+        startParam.userType = SDK_UT_NORMALUSER;
+        startParam.param.normaluserStart.meetingNumber = nMeetingNumber;
+        startParam.param.normaluserStart.participantId = CUtils::s2ws(strParticipantIdTemp).c_str();
+        startParam.param.normaluserStart.isVideoOff = bIsVideoOff;
+        startParam.param.normaluserStart.isAudioOff = bIsAudioOff;
+        startParam.param.normaluserStart.isDirectShareDesktop = bIsDirectShareDesktop;
+
+        if (true == CBusinessLogic::GetInstance()->GetAlreadyAuth())
+        {
+            // 已经通过验证，直接登录
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+            if (err == SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->StartAppointmentMeeting(startParam);
+            }
+            if (err != SDKERR_SUCCESS)
+            {
+                CBusinessLogic::GetInstance()->SetReadyMeeting(false);
+
+                // 反馈登录错误
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+                // 弹出错误提示
+                strMsg.Format(_T(" The meeting failed to start ! error code: %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "]The meeting failed to start ! error code:" << err << std::endl;
+            }
+        }
+        else
+        {
+            // 未通过验证则首先进行登录验证
+            bool bSuccess = false;
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateAuthService();
+            if (err == SDKError::SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->AuthSDK(const_cast<wchar_t*>(g_strAuthAppKey.c_str()), const_cast<wchar_t*>(g_strAuthAppSecret.c_str()));
+                if (err == SDKError::SDKERR_SUCCESS)
+                {
+                    bSuccess = true;
+                }
+            }
+            if (false == bSuccess)
+            {
+                CBusinessLogic::GetInstance()->FeedbackAuthResult(AUTHRET_UNKNOWN);
+                CBusinessLogic::GetInstance()->FeedbackLoginResult(LOGIN_FAILED);
+
+                strMsg.Format(_T(" login SDK failure! error code : %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] authentication failure ! error code: " << err << std::endl;
+            }
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+
+    delete reader;
+    return 0;
+}
+
+LRESULT CZhumuSdkProgressDlg::OnStartInstantMeetingZhumuSDK(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+    if (false == CBusinessLogic::GetInstance()->GetAlreadyLanding()
+        || true == CBusinessLogic::GetInstance()->GetIsLanding())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Logging in or already logged in to the SDK!" << std::endl;
+        return 0;
+    }
+    if (true == CBusinessLogic::GetInstance()->GetReadyMeeting()
+        || true == CBusinessLogic::GetInstance()->GetAttendMeeting())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Joining or having joined a meeting!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    std::string strContent(*pStrErrMsg);
+    CString strMsg;
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        std::string strMeetingTopic = root["meetingTopic"].asString();
+        std::string strParticipantId = root["meetingParticipants"].asString();
+        bool bIsVideoOff = root["isVideoOff"].asBool();
+        bool bIsAudioOff = root["isAudioOff"].asBool();
+        bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
+
+        std::string strParticipantIdTemp = CUtils::UTF_82ASCII(strParticipantId);
+
+        CBusinessLogic::GetInstance()->SetReadyMeeting(true);
+
+        ZOOM_SDK_NAMESPACE::StartParam startParam;
+        startParam.userType = SDK_UT_NORMALUSER;
+        startParam.param.normaluserStart.participantId = CUtils::s2ws(strParticipantIdTemp).c_str();
+        startParam.param.normaluserStart.isVideoOff = bIsVideoOff;
+        startParam.param.normaluserStart.isAudioOff = bIsAudioOff;
+        startParam.param.normaluserStart.isDirectShareDesktop = bIsDirectShareDesktop;
+
+        if (true == CBusinessLogic::GetInstance()->GetAlreadyAuth())
+        {
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+            if (err == SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->StartInstantMeeting(startParam);
+            }
+            if (err != SDKERR_SUCCESS)
+            {
+                CBusinessLogic::GetInstance()->SetReadyMeeting(false);
+
+                // 反馈登录错误
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+                // 弹出错误提示
+                strMsg.Format(_T(" The meeting failed to start ! error code: %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "]The meeting failed to start ! error code:" << err << std::endl;
+            }
+        }
+        else
+        {
+            // 未通过验证则首先进行登录验证
+            bool bSuccess = false;
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateAuthService();
+            if (err == SDKError::SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->AuthSDK(const_cast<wchar_t*>(g_strAuthAppKey.c_str()), const_cast<wchar_t*>(g_strAuthAppSecret.c_str()));
+                if (err == SDKError::SDKERR_SUCCESS)
+                {
+                    bSuccess = true;
+                }
+            }
+            if (false == bSuccess)
+            {
+                CBusinessLogic::GetInstance()->FeedbackAuthResult(AUTHRET_UNKNOWN);
+                CBusinessLogic::GetInstance()->FeedbackLoginResult(LOGIN_FAILED);
+
+                strMsg.Format(_T(" login SDK failure! error code : %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] authentication failure ! error code: " << err << std::endl;
+            }
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+
+    delete reader;
+    return 0;
+}
+
+LRESULT CZhumuSdkProgressDlg::OnJoinMeetingZhumuSDK(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+    if (false == CBusinessLogic::GetInstance()->GetAlreadyLanding()
+        || true == CBusinessLogic::GetInstance()->GetIsLanding())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Logging in or already logged in to the SDK!" << std::endl;
+        return 0;
+    }
+    if (true == CBusinessLogic::GetInstance()->GetReadyMeeting()
+        || true == CBusinessLogic::GetInstance()->GetAttendMeeting())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Joining or having joined a meeting!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    std::string strContent(*pStrErrMsg);
+    CString strMsg;
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        UINT64		nMeetingNumber = root["meetingNumber"].asInt64();
+        std::string strUserName = root["userName"].asString();
+        std::string strPsw = root["psw"].asString();
+        bool bIsVideoOff = root["isVideoOff"].asBool();
+        bool bIsAudioOff = root["isAudioOff"].asBool();
+        bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
+
+        std::string strUserNameTemp = CUtils::UTF_82ASCII(strUserName);
+        std::string strPswTemp = CUtils::UTF_82ASCII(strPsw);
+
+        CBusinessLogic::GetInstance()->SetReadyMeeting(true);
+
+        JoinParam joinParam;
+        joinParam.userType = SDK_UT_NORMALUSER;
+        joinParam.param.normaluserJoin.meetingNumber = nMeetingNumber;
+        joinParam.param.normaluserJoin.userName = CUtils::s2ws(strUserNameTemp).c_str();
+        joinParam.param.normaluserJoin.psw = CUtils::s2ws(strPswTemp).c_str();
+        joinParam.param.normaluserJoin.isVideoOff = bIsVideoOff;
+        joinParam.param.normaluserJoin.isAudioOff = bIsAudioOff;
+        joinParam.param.normaluserJoin.isDirectShareDesktop = bIsDirectShareDesktop;
+
+        if (true == CBusinessLogic::GetInstance()->GetAlreadyAuth())
+        {
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+            if (err == SDKERR_SUCCESS)
+            {
+                SDKError err = CZhumuSdkAgency::GetInstance()->JoinMeeting(joinParam);
+            }
+            if (err != SDKERR_SUCCESS)
+            {
+                CBusinessLogic::GetInstance()->SetReadyMeeting(false);
+                // 反馈登录错误
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+                // 弹出错误提示
+                strMsg.Format(_T(" Failed to join the meeting ! error code: %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] Failed to join the meeting ! error code:" << err << std::endl;
+            }
+        }
+        else
+        {
+            // 未通过验证则首先进行登录验证
+            bool bSuccess = false;
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateAuthService();
+            if (err == SDKError::SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->AuthSDK(const_cast<wchar_t*>(g_strAuthAppKey.c_str()), const_cast<wchar_t*>(g_strAuthAppSecret.c_str()));
+                if (err == SDKError::SDKERR_SUCCESS)
+                {
+                    bSuccess = true;
+                }
+            }
+            if (false == bSuccess)
+            {
+                CBusinessLogic::GetInstance()->FeedbackAuthResult(AUTHRET_UNKNOWN);
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+
+                strMsg.Format(_T(" Failed to join the meeting! error code : %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] authentication failure ! error code: " << err << std::endl;
+            }
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+
+    delete reader;
+    return 0;
+}
+
+LRESULT CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+    if (true == CBusinessLogic::GetInstance()->GetReadyMeeting()
+        || true == CBusinessLogic::GetInstance()->GetAttendMeeting())
+    {
+        LOGE << "[" << __FUNCTION__ << "] Joining or having joined a meeting!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    std::string strContent(*pStrErrMsg);
+    CString strMsg;
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        UINT64		nMeetingNumber = root["meetingNumber"].asInt64();
+        std::string strUserName = root["userName"].asString();
+        std::string strPsw = root["psw"].asString();
+        bool bIsVideoOff = root["isVideoOff"].asBool();
+        bool bIsAudioOff = root["isAudioOff"].asBool();
+        bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
+
+        std::string strUserNameTemp = CUtils::UTF_82ASCII(strUserName);
+        std::string strPswTemp = CUtils::UTF_82ASCII(strPsw);
+
+        CBusinessLogic::GetInstance()->SetReadyMeeting(true);
+
+        JoinParam joinParam;
+        joinParam.userType = SDK_UT_WITHOUT_LOGIN;
+        joinParam.param.withoutloginuserJoin.meetingNumber = nMeetingNumber;
+        joinParam.param.withoutloginuserJoin.userName = CUtils::s2ws(strUserNameTemp).c_str();
+        joinParam.param.withoutloginuserJoin.psw = CUtils::s2ws(strPswTemp).c_str();
+        joinParam.param.withoutloginuserJoin.isVideoOff = bIsVideoOff;
+        joinParam.param.withoutloginuserJoin.isAudioOff = bIsAudioOff;
+        joinParam.param.withoutloginuserJoin.isDirectShareDesktop = bIsDirectShareDesktop;
+
+        if (true == CBusinessLogic::GetInstance()->GetAlreadyAuth())
+        {
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+            if (err == SDKERR_SUCCESS)
+            {
+                SDKError err = CZhumuSdkAgency::GetInstance()->AnonymityJoinMeeting(joinParam);
+            }
+            if (err != SDKERR_SUCCESS)
+            {
+                CBusinessLogic::GetInstance()->SetReadyMeeting(false);
+                // 反馈登录错误
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+                // 弹出错误提示
+                strMsg.Format(_T(" Failed to join the meeting ! error code: %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] Failed to join the meeting ! error code:" << err << std::endl;
+            }
+        }
+        else
+        {
+            // 未通过验证则首先进行登录验证
+            bool bSuccess = false;
+            SDKError err = CZhumuSdkAgency::GetInstance()->CreateAuthService();
+            if (err == SDKError::SDKERR_SUCCESS)
+            {
+                err = CZhumuSdkAgency::GetInstance()->AuthSDK(const_cast<wchar_t*>(g_strAuthAppKey.c_str()), const_cast<wchar_t*>(g_strAuthAppSecret.c_str()));
+                if (err == SDKError::SDKERR_SUCCESS)
+                {
+                    bSuccess = true;
+                }
+            }
+            if (false == bSuccess)
+            {
+                CBusinessLogic::GetInstance()->FeedbackAuthResult(AUTHRET_UNKNOWN);
+                CBusinessLogic::GetInstance()->FeedbackMeetingStatusResult(MEETING_STATUS_FAILED, 0);
+
+                strMsg.Format(_T(" Failed to join the meeting! error code : %d"), err);
+                CustomErrorMessage(strMsg, 1);
+                LOGE << "[" << __FUNCTION__ << "] authentication failure ! error code: " << err << std::endl;
+            }
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+
+    delete reader;
+    return 0;
+}
+
 void CZhumuSdkProgressDlg::OnBnClickedButton1()
 {
     ZOOM_SDK_NAMESPACE::InitParam zm_param;
@@ -427,6 +903,120 @@ void CZhumuSdkProgressDlg::OnBnClickedButton2()
     {
         CString strMsg;
         strMsg.Format(_T("%d = AuthSDK(...)"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+}
+
+
+void CZhumuSdkProgressDlg::OnBnClickedButton3()
+{
+    CString strUserName;
+    CString strPassword;
+
+    m_editUserName.GetWindowTextW(strUserName);
+    m_editPassword.GetWindowTextW(strPassword);
+
+    std::string strName = CT2A(strUserName);
+    std::string strUserPassword = CT2A(strPassword);
+
+    SDKError err = CZhumuSdkAgency::GetInstance()->LoginSDK(CUtils::s2ws(strName), CUtils::s2ws(strUserPassword));
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = LoginSDK(...)"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+}
+
+
+void CZhumuSdkProgressDlg::OnBnClickedButton4()
+{
+    
+    CString strNormalStartMeetingNumber;
+    CString strNormalStartVanityID;
+    CString strNormalStartUserName;
+    CString strNormalStartParticipantId;
+
+    m_editNormalStartMeetingNumber.GetWindowTextW(strNormalStartMeetingNumber);
+    m_editNormalStartVanityID.GetWindowTextW(strNormalStartVanityID);
+    m_editNormalStartParticipantId.GetWindowTextW(strNormalStartParticipantId);
+
+    std::string strVanityID = CT2A(strNormalStartVanityID);
+    std::string strParticipantId = CT2A(strNormalStartParticipantId);
+
+    SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = CreateMeetingService()"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+
+    ZOOM_SDK_NAMESPACE::StartParam startParam;
+    startParam.userType = SDK_UT_NORMALUSER;
+    //startParam.param.normaluserStart.meetingNumber = _ttoi64(strNormalStartMeetingNumber);
+    //startParam.param.normaluserStart.vanityID = CUtils::s2ws(strVanityID).c_str();
+    //startParam.param.normaluserStart.participantId = CUtils::s2ws(strParticipantId).c_str();
+    //startParam.param.normaluserStart.meetingNumber = 201229199;
+//     startParam.param.normaluserStart.vanityID = L"";
+     startParam.param.normaluserStart.participantId = L"";
+    startParam.param.normaluserStart.isVideoOff = m_btnNormalStartIsVideoOff.GetCheck() == 1 ? false : true;
+    startParam.param.normaluserStart.isAudioOff = m_btnNormalStartIsVideoOff.GetCheck() == 1 ? false : true;
+    startParam.param.normaluserStart.isDirectShareDesktop = m_btnNormalStartIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    err = CZhumuSdkAgency::GetInstance()->StartAppointmentMeeting(startParam);
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = StartMeetingNormal(...)"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+}
+
+
+void CZhumuSdkProgressDlg::OnBnClickedButton5()
+{
+    CString strNormalJoinMeetingNumber;
+    CString strNormalJoinVanityID;
+    CString strNormalJoinUserName;
+    CString strNormalJoinPsw;
+    CString strNormalJoinParticipantId;
+    CString strNormalJoinWebinarToken;
+
+    m_editNormalJoinMeetingNumber.GetWindowTextW(strNormalJoinMeetingNumber);
+    m_editNormalJoinVanityID.GetWindowTextW(strNormalJoinVanityID);
+    m_editNormalJoinUserName.GetWindowTextW(strNormalJoinUserName);
+    m_editNormalJoinPsw.GetWindowTextW(strNormalJoinPsw);
+    m_editNormalJoinParticipantId.GetWindowTextW(strNormalJoinParticipantId);
+    m_editNormalJoinWebinarToken.GetWindowTextW(strNormalJoinWebinarToken);
+
+
+    std::string strVanityID = CT2A(strNormalJoinVanityID);;
+    std::string strUserName = CT2A(strNormalJoinUserName);;
+    std::string strPsw = CT2A(strNormalJoinPsw);;
+    std::string strParticipantId = CT2A(strNormalJoinParticipantId);;
+    std::string strWebinarToken = CT2A(strNormalJoinWebinarToken);;
+
+
+    // TODO: 在此添加控件通知处理程序代码
+    SDKError err = CZhumuSdkAgency::GetInstance()->CreateMeetingService();
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = CreateMeetingService()"), err);
+        MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+    }
+
+    JoinParam joinParam;
+    joinParam.userType = SDK_UT_NORMALUSER;
+    joinParam.param.normaluserJoin.meetingNumber = _ttoi64(strNormalJoinMeetingNumber);
+    joinParam.param.normaluserJoin.userName = CUtils::s2ws(strUserName).c_str();
+    joinParam.param.normaluserJoin.psw = CUtils::s2ws(strPsw).c_str();
+    joinParam.param.normaluserJoin.participantId = CUtils::s2ws(strParticipantId).c_str();
+    joinParam.param.normaluserJoin.isVideoOff = m_btnNormalJoinIsVideoOff.GetCheck() == 1 ? true : false;
+    joinParam.param.normaluserJoin.isAudioOff = m_btnNormalJoinIsAudioOff.GetCheck() == 1 ? true : false;
+    joinParam.param.normaluserJoin.isDirectShareDesktop = m_btnNormalJoinIsDirectShareDesktop.GetCheck() == 1 ? true : false;
+
+    err = CZhumuSdkAgency::GetInstance()->JoinMeeting(joinParam);
+    {
+        CString strMsg;
+        strMsg.Format(_T("%d = JoinMeetingNormal(joinParam)"), err);
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
     }
 }

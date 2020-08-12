@@ -126,6 +126,18 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
                 m_pEvent->OnLoginResult(nLoginResult);
             }
         }
+        else if ("MeetingStatus" == strMethod)
+        {
+            root["method"] = "MeetingStatus";
+            // Ð­ÒéÄÚÈÝ
+            auto body = root["body"];
+            int nMeetingStatus = body["meetingStatus"].asInt();
+            int nResult = body["result"].asInt();
+            if (nullptr != m_pEvent)
+            {
+                m_pEvent->OnMeetingStatusResult(nMeetingStatus, nResult);
+            }
+        }
         else
         {
             LOGE << "[" << __FUNCTION__ << "] Unknown method name! strMethod:[" << strMethod << "]" << std::endl;

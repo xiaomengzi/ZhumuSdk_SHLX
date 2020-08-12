@@ -5,6 +5,8 @@
 
 #include "auth_service_interface.h"
 #include "CustomData.h"
+#include "meeting_service_interface.h"
+#include <map>
 
 class CZhumuSdkAgency;
 class CAuthServiceEvent;
@@ -41,6 +43,18 @@ public:
     // 登录瞩目sdk
     int LoginZhumuSDK(std::string strContent);
 
+    // 开启预约会议
+    int StartAppointmentMeetingZhumuSDK(std::string strContent);
+    
+    // 开启即时会议
+    int StartInstantMeetingZhumuSDK(std::string strContent);
+
+    // 加入会议
+    int JoinMeetingZhumuSDK(std::string strContent);
+
+    // 匿名加入会议
+    int AnonymityJoinMeetingZhumuSDK(std::string strContent);
+
     // 销毁瞩目SDK
     void DestroyZhumuSDK();
 
@@ -55,7 +69,10 @@ public:
     bool FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret);
 
     // 反馈登录结果
-    bool FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret);  
+    bool FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret);
+
+    // 反馈会议状态
+    bool FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult = 0);
 
     /************************************************************************/
     /*                   瞩目SDK回调处理函数                                 */
@@ -67,10 +84,15 @@ public:
     // 瞩目SDK 登录回调事件处理
     void LoginReturn(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
 
+    // 瞩目SDK 会议回调事件处理
+    void MeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/);
+
 private:
     // 登录
     void DirectLogin();
 
+    // 通过错误码获取错误描述
+    CString GetErrorDescriptionByErrorCode(ZOOM_SDK_NAMESPACE::MeetingFailCode errCode);
 public:
     // 注册主窗口句柄
     void RegisterMainDlgHwnd(HWND hWnd);
@@ -100,6 +122,13 @@ public:
     bool GetAlreadyAuth() const;
     void SetAlreadyAuth(bool val);
 
+    // 是否正在准备会议 true-正在准备会议 false-未准备会议
+    bool GetReadyMeeting() const;
+    void SetReadyMeeting(bool val);
+
+    // 是否正在准备会议 true-正在准备会议 false-未准备会议
+    bool GetAttendMeeting() const;
+    void SetAttendMeeting(bool val);
     // 登录瞩目SDK参数
     LoginSDKParam GetLoginSDKParam() const;
     void SetLoginSDKParam(LoginSDKParam val);
@@ -112,9 +141,12 @@ private:
     bool                m_bIsDirectLogin;       // 登录SDK 
     bool                m_bIsAnonymousJoin;     // 是否为匿名入会
     bool                m_bAlreadyAuth;         // 是否已经认证
+    bool                m_bReadyMeeting;        // 是否正在准备会议 true-正在准备会议 false-未准备会议
+    bool                m_bAttendMeeting;      // 是否正在准备会议 true-正在准备会议 false-未准备会议
     LoginSDKParam       m_loginSDKParam;        // 登录瞩目SDK参数
 
     CZhumuSdkAgency*    m_pZhumuSdkAgency;
+    std::map<ZOOM_SDK_NAMESPACE::MeetingFailCode, CString> m_mapMeetFailCode;
 
 };
 

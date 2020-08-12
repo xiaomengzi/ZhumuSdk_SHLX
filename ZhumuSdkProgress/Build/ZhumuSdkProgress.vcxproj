@@ -284,7 +284,7 @@
   </ImportGroup>
   <ProjectExtensions>
     <VisualStudio>
-      <UserProperties RESOURCE_FILE="\Users\mengxw\Desktop\ZhumuSdkProgress\Src\UI\ZhumuSdkProgress.rc" />
+      <UserProperties RESOURCE_FILE="" />
     </VisualStudio>
   </ProjectExtensions>
 </Project>

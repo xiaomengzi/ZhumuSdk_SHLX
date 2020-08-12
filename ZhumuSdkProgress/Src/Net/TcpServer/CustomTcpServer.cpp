@@ -113,6 +113,27 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
             auto body = root["body"];
             CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
         }
+        else if ("StartAppointmentMeeting" == strMethod)
+        {
+            auto body = root["body"];
+            CBusinessLogic::GetInstance()->StartAppointmentMeetingZhumuSDK(CUtils::json2Str(body));
+        }
+        else if ("StartInstantMeeting" == strMethod)
+        {
+            auto body = root["body"];
+            CBusinessLogic::GetInstance()->StartInstantMeetingZhumuSDK(CUtils::json2Str(body));
+        }
+        else if ("JoinMeeting" == strMethod)
+        {
+            auto body = root["body"];
+            CBusinessLogic::GetInstance()->JoinMeetingZhumuSDK(CUtils::json2Str(body));
+        }
+        else if ("AnonymityJoinMeeting" == strMethod)
+        {
+            auto body = root["body"];
+            CBusinessLogic::GetInstance()->AnonymityJoinMeetingZhumuSDK(CUtils::json2Str(body));
+        }
+        
         else if ("DestorySDK" == strMethod)
         {
             CBusinessLogic::GetInstance()->DestroyZhumuSDK();
