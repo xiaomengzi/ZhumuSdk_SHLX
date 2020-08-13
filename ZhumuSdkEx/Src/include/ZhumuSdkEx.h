@@ -2,13 +2,14 @@
 #define _ZHUMUSDKEX_H_
 
 #include "ZhumuSdkEx_def.h"
-#include "ZhumuSdkEx_Event.h"
 
 
 BEGIN_ZHUMUSDKEX_NAMESPACE
 
 extern "C"
 {
+    class ISettingService;
+    class ZhumuSdkEx_Event;
     /************************************************************************/
     /* 创建sdk                                                              */
     /************************************************************************/
@@ -44,26 +45,15 @@ extern "C"
     /************************************************************************/
     ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam);
 
-    
     /************************************************************************/
-    /* SJoin Meeting                                                        */
+    /* 创建设置服务                                                          */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_SJoinMeeting(const char* meegtingNumber, const char* joinName, const char* meetingPassword = "", const bool videoon = true, const bool audioon = true, const char*bandingName = "zhumu", SDK_LANGUAGE_ID language = LANGUAGE_Chinese_Simplified);
+    ZHUMUSDKEX_API SDKError Zhumu_CreateSettingService(ISettingService** ppSettingService);
 
     /************************************************************************/
-    /* start App exit                                                       */
+    /* 销毁设置服务                                                          */
     /************************************************************************/
-    ZHUMUSDKEX_API void Zhumu_AppExit();
-
-    /************************************************************************/
-    /* Set Active Window                                                    */
-    /************************************************************************/
-    ZHUMUSDKEX_API void SetWindowShowTop();
-
-    /************************************************************************/
-    /* Clean Up                                                              */
-    /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_CleanUp();
+    ZHUMUSDKEX_API SDKError Zhumu_DestroySettingService(ISettingService* pSettingService);
 
     /************************************************************************/
     /* 销毁SDK                                                               */

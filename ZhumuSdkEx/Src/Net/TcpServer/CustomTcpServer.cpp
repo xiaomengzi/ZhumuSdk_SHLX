@@ -128,14 +128,22 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         }
         else if ("MeetingStatus" == strMethod)
         {
-            root["method"] = "MeetingStatus";
-            // Ð­ÒéÄÚÈÝ
             auto body = root["body"];
             int nMeetingStatus = body["meetingStatus"].asInt();
             int nResult = body["result"].asInt();
             if (nullptr != m_pEvent)
             {
                 m_pEvent->OnMeetingStatusResult(nMeetingStatus, nResult);
+            }
+        }
+        else if ("MeetingSetting" == strMethod)
+        {
+            auto body = root["body"];
+            int nSettingType = body["settingType"].asInt();
+            int nResult = body["result"].asInt();
+            if (nullptr != m_pEvent)
+            {
+                m_pEvent->OnMeetingSettingResult(nSettingType, nResult);
             }
         }
         else

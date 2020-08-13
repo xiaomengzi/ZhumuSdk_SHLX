@@ -55,6 +55,9 @@ public:
     // 匿名加入会议
     int AnonymityJoinMeetingZhumuSDK(std::string strContent);
 
+    // 通用设置
+    int SettingMeetingZhumu(std::string strContent);
+
     // 销毁瞩目SDK
     void DestroyZhumuSDK();
 
@@ -73,6 +76,9 @@ public:
 
     // 反馈会议状态
     bool FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult = 0);
+
+    // 反馈会议设置结果
+    bool FeedbackMeetingSettingResult(SettingServerType settingType, ZOOM_SDK_NAMESPACE::SDKError ret);
 
     /************************************************************************/
     /*                   瞩目SDK回调处理函数                                 */

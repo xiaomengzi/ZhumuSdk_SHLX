@@ -58,6 +58,9 @@ DECLARE_USER_MESSAGE(WMUSER_JOINMEETING_ZHUMUSDK)
 #define WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK_MSG      _T("WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK-{AF9969C5-92B7-4317-857A-B1391D475F0A}")
 DECLARE_USER_MESSAGE(WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK)
 
+// 匿名加入会议
+#define WMUSER_SETTINGMEETING_ZHUMUSDK_MSG      _T("WMUSER_SETTINGMEETING_ZHUMUSDK-{B54252FB-8F45-4E9E-A826-508A61ED986D}")
+DECLARE_USER_MESSAGE(WMUSER_SETTINGMEETING_ZHUMUSDK)
 
 
 
@@ -71,5 +74,16 @@ typedef struct _LoginSDKParam {
     std::string zcode;
 }LoginSDKParam;
 
+enum SettingServerType
+{
+    SETTIN_TYPE_AUTOFULLSCREEN = 0,                 /// 加入会议时启用或禁用自动进入全屏视频模式
+    SETTIN_TYPE_ALWAYSSHOWCTRLBAR = 1,              /// 会议过程中是否始终显示会议控制栏
+    SETTIN_TYPE_ALWAYSJOINMEETINGBEFOREADMIN = 2,   /// 无管理员入会
+    SETTIN_TYPE_AUTOJOINAUDIO = 3,                  /// 加入会议时启用或禁用自动加入音频
+    SETTIN_TYPE_PARTICIPANTSUNMUTE = 4,             /// 允许参会人解除静音
+    SETTIN_TYPE_ECHOCANCELLATION = 5,               /// 设置是否启用回声消除功能
+    SETTIN_TYPE_HDVIDEO = 6,                        /// 启用或禁用高清视频
+    SETTIN_TYPE_AUTOTURNOFFVIDEO = 7                /// 启用或禁用在加入会议时关闭视频
+};
 
 #endif // _CUSTOMDATA_H_

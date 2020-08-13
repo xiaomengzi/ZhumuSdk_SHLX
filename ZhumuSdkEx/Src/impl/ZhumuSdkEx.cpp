@@ -6,9 +6,11 @@
 #include "ZhumuSdkImpl.h"
 #include "plog/Log.h"
 #include "Utils.h"
+#include "SettingServiceImpl.h"
 
 
 CZhumuSdkImpl* g_pZhumuSdkImpl = nullptr;
+CSettingServiceImpl* g_pSettingService = nullptr;
 
 BEGIN_ZHUMUSDKEX_NAMESPACE
 
@@ -148,6 +150,31 @@ ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam m
 
     return SDKERR_SUCCESS;
 }
+
+ZHUMUSDKEX_API SDKError Zhumu_CreateSettingService(ISettingService** ppSettingService)
+{
+    auto result = SDKERR_SUCCESS;
+    if (nullptr == g_pSettingService)
+    {
+        g_pSettingService = new CSettingServiceImpl();
+    }
+    
+    *ppSettingService = g_pSettingService;
+    return result;
+}
+
+ZHUMUSDKEX_API SDKError Zhumu_DestroySettingService(ISettingService* pSettingService)
+{
+    auto result = SDKERR_SUCCESS;
+
+    if (nullptr != g_pSettingService)
+    {
+        delete g_pSettingService;
+        g_pSettingService = nullptr;
+    }
+    return SDKError(result);
+}
+
 ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
 {
     if (nullptr == g_pZhumuSdkImpl)

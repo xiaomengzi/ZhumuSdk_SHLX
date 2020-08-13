@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\dllmain.cpp" />
+    <ClCompile Include="..\Src\impl\SettingServiceImpl.cpp" />
     <ClCompile Include="..\Src\impl\ZhumuSdkEx.cpp" />
     <ClCompile Include="..\Src\impl\ZhumuSdkImpl.cpp" />
     <ClCompile Include="..\Src\Net\TcpClient\CustomTcpClient.cpp" />
@@ -36,7 +37,9 @@
     <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h" />
     <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h" />
     <ClInclude Include="..\Src\Business\CustomData.h" />
+    <ClInclude Include="..\Src\impl\SettingServiceImpl.h" />
     <ClInclude Include="..\Src\impl\ZhumuSdkImpl.h" />
+    <ClInclude Include="..\Src\include\setting_service_interface.h" />
     <ClInclude Include="..\Src\include\ZhumuSdkEx.h" />
     <ClInclude Include="..\Src\include\ZhumuSdkEx_def.h" />
     <ClInclude Include="..\Src\include\ZhumuSdkEx_Event.h" />

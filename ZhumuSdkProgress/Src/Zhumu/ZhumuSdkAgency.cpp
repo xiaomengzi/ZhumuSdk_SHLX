@@ -22,7 +22,9 @@ CZhumuSdkAgency::~CZhumuSdkAgency()
 
 void CZhumuSdkAgency::Destory()
 {
-
+    DestroySettingService();
+    DestroyMeetingService();
+    DestroyAuthService();
 }
 
 
@@ -207,6 +209,134 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AnonymityJoinMeeting(JoinParam& jo
     return err;
 }
 
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetGeneralSettings()->EnableAutoFullScreenVideoWhenJoinMeeting(bEnable);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable to enter the full screen video mode automatically when join meeting ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysDisplayedMeetingCtrlBar(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    //if (err == SDKERR_SUCCESS)
+    //{
+    //    err = m_pSettingService->GetGeneralSettings()->EnableAutoFullScreenVideoWhenJoinMeeting(bEnable);
+    //    if (err != SDKERR_SUCCESS)
+    //    {
+    //        LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable to enter the full screen video mode automatically when join meeting ! error code: " << err << std::endl;
+    //    }
+    //    return err;
+    //}
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysJoinMeetingbeforeAdmin(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    //if (err == SDKERR_SUCCESS)
+    //{
+    //    err = m_pSettingService->GetGeneralSettings()->EnableAutoFullScreenVideoWhenJoinMeeting(bEnable);
+    //    if (err != SDKERR_SUCCESS)
+    //    {
+    //        LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable to enter the full screen video mode automatically when join meeting ! error code: " << err << std::endl;
+    //    }
+    //    return err;
+    //}
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoJoinAudio(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->EnableAutoJoinAudio(bEnable);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable the audio automatically when join meeting ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableParticipantsUnmuteWhenMeeting(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    //if (err == SDKERR_SUCCESS)
+    //{
+    //    err = m_pSettingService->GetAudioSettings()->EnableAutoJoinAudio(bEnable);
+    //    if (err != SDKERR_SUCCESS)
+    //    {
+    //        LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable the audio automatically when join meeting ! error code: " << err << std::endl;
+    //    }
+    //    return err;
+    //}
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableEchoCancellation(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->EnableEchoCancellation(bEnable);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to Set whether to enable the function of echo cancellation or not ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableHDVideo(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetVideoSettings()->EnableHDVideo(bEnable);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable HD video ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable)
+{
+    SDKError err;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetVideoSettings()->EnableAutoTurnOffVideoWhenJoinMeeting(bEnable);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to Enable or disable to turn off the video when join meeting ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
 ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateAuthService()
 {
     if (nullptr == m_pAuthService)
@@ -221,6 +351,23 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateAuthService()
 
         m_pAuthService->SetEvent(this);
         
+        return SDKERR_SUCCESS;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyAuthService()
+{
+    if (nullptr != m_pAuthService)
+    {
+        m_pAuthService->SetEvent(nullptr);
+        SDKError err = ZOOM_SDK_NAMESPACE::DestroyAuthService(m_pAuthService);
+
+        if (err != SDKError::SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to destroy the authentication service ! error code: " << err << std::endl;
+            return err;
+        }
         return SDKERR_SUCCESS;
     }
     return SDKERR_UNKNOWN;
@@ -243,4 +390,54 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateMeetingService()
         return SDKERR_SUCCESS;
     }
     return SDKERR_SUCCESS;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyMeetingService()
+{
+    if (nullptr != m_pMeetingService)
+    {
+        m_pMeetingService->SetEvent(nullptr);
+        SDKError err = ZOOM_SDK_NAMESPACE::DestroyMeetingService(m_pMeetingService);
+
+        if (err != SDKError::SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to destroy the meeting service ! error code: " << err << std::endl;
+            return err;
+        }
+        return SDKERR_SUCCESS;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateSettingService()
+{
+    if (nullptr == m_pSettingService)
+    {
+        SDKError err = ZOOM_SDK_NAMESPACE::CreateSettingService(&m_pSettingService);
+
+        if (err != SDKError::SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to create the setting service ! error code: " << err << std::endl;
+            return err;
+        }
+
+        return SDKERR_SUCCESS;
+    }
+    return SDKERR_SUCCESS;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroySettingService()
+{
+    if (nullptr != m_pSettingService)
+    {
+        SDKError err = ZOOM_SDK_NAMESPACE::DestroySettingService(m_pSettingService);
+
+        if (err != SDKError::SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to destroy the setting service ! error code: " << err << std::endl;
+            return err;
+        }
+        return SDKERR_SUCCESS;
+    }
+    return SDKERR_UNKNOWN;
 }

@@ -20,7 +20,11 @@ public:
     virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code) = 0;
     //exit app
     virtual void onExitApp() = 0;
+
+    virtual void OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode) = 0;
+
 };
+
 END_ZHUMUSDKEX_NAMESPACE
 
 #endif // _ZHUMUSDKEX_EVENT_H_

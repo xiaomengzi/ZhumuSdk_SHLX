@@ -162,6 +162,18 @@ enum MeetingFailCode
     CONF_FAIL_REMOVED_BY_HOST = 61, ///<被主持人移除
 };
 
+enum SettingServerType
+{
+    SETTIN_TYPE_AUTOFULLSCREEN = 0,                 /// 加入会议时启用或禁用自动进入全屏视频模式
+    SETTIN_TYPE_ALWAYSSHOWCTRLBAR = 1,              /// 会议过程中是否始终显示会议控制栏
+    SETTIN_TYPE_ALWAYSJOINMEETINGBEFOREADMIN = 2,   /// 无管理员入会
+    SETTIN_TYPE_AUTOJOINAUDIO = 3,                  /// 加入会议时启用或禁用自动加入音频
+    SETTIN_TYPE_PARTICIPANTSUNMUTE = 4,             /// 允许参会人解除静音
+    SETTIN_TYPE_ECHOCANCELLATION = 5,               /// 设置是否启用回声消除功能
+    SETTIN_TYPE_HDVIDEO = 6,                        /// 启用或禁用高清视频
+    SETTIN_TYPE_AUTOTURNOFFVIDEO = 7                /// 启用或禁用在加入会议时关闭视频
+};
+
 /************************************************************************/
 /* 初始化SDK参数                                                         */
 /************************************************************************/

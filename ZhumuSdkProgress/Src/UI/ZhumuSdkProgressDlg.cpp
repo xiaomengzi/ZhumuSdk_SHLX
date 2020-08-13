@@ -98,6 +98,8 @@ BEGIN_MESSAGE_MAP(CZhumuSdkProgressDlg, CDialogEx)
     ON_REGISTERED_MESSAGE(WMUSER_START_INSTANTMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnStartInstantMeetingZhumuSDK)
     ON_REGISTERED_MESSAGE(WMUSER_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnJoinMeetingZhumuSDK)
     ON_REGISTERED_MESSAGE(WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK)
+    ON_REGISTERED_MESSAGE(WMUSER_SETTINGMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnSettingMeetingZhumuSDK)
+    
     
     ON_BN_CLICKED(IDC_BUTTON1, &CZhumuSdkProgressDlg::OnBnClickedButton1)
     ON_BN_CLICKED(IDC_BUTTON2, &CZhumuSdkProgressDlg::OnBnClickedButton2)
@@ -253,6 +255,7 @@ LRESULT CZhumuSdkProgressDlg::OnQuitProgress(WPARAM wParam, LPARAM lParam)
     CBusinessLogic::GetInstance()->StopTcpServer();
 
     // 清理瞩目SDK
+    CZhumuSdkAgency::GetInstance()->Destory();
 
     // 退出程序
     OnOK();
@@ -869,6 +872,85 @@ LRESULT CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK(WPARAM wParam, LPAR
     return 0;
 }
 
+LRESULT CZhumuSdkProgressDlg::OnSettingMeetingZhumuSDK(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    std::string strContent(*pStrErrMsg);
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        SettingServerType settingType;
+        SDKError    err = SDKERR_UNKNOWN;
+        // 解析字符串，拼接初始化参数
+        std::string strMethod = root["method"].asString();
+        auto body = root["body"];
+        bool bEnable = body["enable"].asBool();
+        if ("AutoFullScreen" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOFULLSCREEN;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoFullScreenVideoWhenJoinMeeting(bEnable);
+        }
+        else if ("AlwaysShowCtrlBar" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ALWAYSSHOWCTRLBAR;
+            err = CZhumuSdkAgency::GetInstance()->EanbleAlwaysDisplayedMeetingCtrlBar(bEnable);
+        }
+        else if ("AlwaysJoinMeetingbeforeAdmin" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ALWAYSJOINMEETINGBEFOREADMIN;
+            err = CZhumuSdkAgency::GetInstance()->EanbleAlwaysJoinMeetingbeforeAdmin(bEnable);
+        }
+        else if ("AutoJoinAudio" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOJOINAUDIO;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoJoinAudio(bEnable);
+        }
+        else if ("ParticipantsUnmute" == strMethod)
+        {
+            settingType = SETTIN_TYPE_PARTICIPANTSUNMUTE;
+            err = CZhumuSdkAgency::GetInstance()->EnableParticipantsUnmuteWhenMeeting(bEnable);
+        }
+        else if ("EchoCancellation" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ECHOCANCELLATION;
+            err = CZhumuSdkAgency::GetInstance()->EnableEchoCancellation(bEnable);
+        }
+        else if ("HDVideo" == strMethod)
+        {
+            settingType = SETTIN_TYPE_HDVIDEO;
+            err = CZhumuSdkAgency::GetInstance()->EnableHDVideo(bEnable);
+        }
+        else if ("AutoTurnOffVideo" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOJOINAUDIO;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoTurnOffVideoWhenJoinMeeting(bEnable);
+        }
+        CBusinessLogic::GetInstance()->FeedbackMeetingSettingResult(settingType, err);
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+}
+
 void CZhumuSdkProgressDlg::OnBnClickedButton1()
 {
     ZOOM_SDK_NAMESPACE::InitParam zm_param;
@@ -889,7 +971,6 @@ void CZhumuSdkProgressDlg::OnBnClickedButton1()
     }
 }
 
-
 void CZhumuSdkProgressDlg::OnBnClickedButton2()
 {
     SDKError err = CZhumuSdkAgency::GetInstance()->CreateAuthService();
@@ -906,7 +987,6 @@ void CZhumuSdkProgressDlg::OnBnClickedButton2()
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
     }
 }
-
 
 void CZhumuSdkProgressDlg::OnBnClickedButton3()
 {
@@ -926,7 +1006,6 @@ void CZhumuSdkProgressDlg::OnBnClickedButton3()
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
     }
 }
-
 
 void CZhumuSdkProgressDlg::OnBnClickedButton4()
 {

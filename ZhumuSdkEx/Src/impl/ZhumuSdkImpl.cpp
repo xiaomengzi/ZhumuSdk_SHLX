@@ -6,6 +6,8 @@
 #include "TcpClient\CustomTcpClient.h"
 #include "Business\CustomData.h"
 #include "json.h"
+#include "setting_service_interface.h"
+#include "ZhumuSdkEx_def.h"
 
 
 CZhumuSdkImpl::CZhumuSdkImpl()
@@ -285,33 +287,25 @@ void CZhumuSdkImpl::onInitRet(SDKError status)
 
 void CZhumuSdkImpl::onAuthRet(AuthResult status)
 {
-    LOGE << "[" << __FUNCTION__ << "]  status: " << status << std::endl;
-    if (nullptr != m_event)
-    {
-        m_event->onAuthRet(status);
-    }
+
 }
 
 void CZhumuSdkImpl::onLoginRet(LOGINSTATUS status)
 {
-    LOGE << "[" << __FUNCTION__ << "]  status: " << status << std::endl;
-    if (nullptr != m_event)
-    {
-        m_event->onLoginRet(status);
-    }
+
 }
 
 void CZhumuSdkImpl::onMeetingStatus(MeetingStatus status, MeetingFailCode code)
 {
-    LOGE << "[" << __FUNCTION__ << "]  MeetingStatus: " << status << " MeetingFailCode:" << code << std::endl;
 
-    if (nullptr != m_event)
-    {
-        m_event->onMeetingStatus(status, code);
-    }
 }
 
 void CZhumuSdkImpl::onExitApp()
+{
+
+}
+
+void CZhumuSdkImpl::OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode)
 {
 
 }
@@ -362,3 +356,15 @@ int CZhumuSdkImpl::OnMeetingStatusResult(int nMeetingStatus, int nFailCode)
     }
     return 0;
 }
+
+int CZhumuSdkImpl::OnMeetingSettingResult(int nSettingType, int nResult)
+{
+    LOGE << "[" << __FUNCTION__ << "]  SettingType: " << nSettingType << " Result: " << nResult << std::endl;
+    if (nullptr != m_event)
+    {
+        m_event->OnMeetingSettingResult(SettingServerType(nSettingType), SDKError(nResult));
+    }
+    return 0;
+}
+
+

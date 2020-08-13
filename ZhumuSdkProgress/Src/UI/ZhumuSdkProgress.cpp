@@ -106,6 +106,9 @@ BOOL CZhumuSdkProgressApp::InitInstance()
 		delete pShellManager;
 	}
 
+    CZhumuSdkAgency::Uninitialize();
+    CBusinessLogic::Uninitialize();
+
 #ifndef _AFXDLL
 	ControlBarCleanUp();
 #endif

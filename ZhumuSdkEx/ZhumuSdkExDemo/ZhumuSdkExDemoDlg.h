@@ -8,6 +8,7 @@
 #include "ZhumuSdkEx_Event.h"
 #include "afxwin.h"
 #include "afxcmn.h"
+#include "setting_service_interface.h"
 
 
 using namespace ZHUMUSDKEX_NAMESPACE;
@@ -50,8 +51,7 @@ public:
     virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code);
     //exit app
     virtual void onExitApp();
-
-
+    virtual void OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode);
 public:
     void AddMsg(CString strMsg);        // 添加反馈消息
 
@@ -61,8 +61,18 @@ public:
     afx_msg void OnBnClickedButton3();  // 销毁SDK
     afx_msg void OnBnClickedButton4();  // 登录SDK
     afx_msg void OnBnClickedButton5();  // 登录用户开启会议
+    afx_msg void OnBnClickedButton6();
+    afx_msg void OnBnClickedButton7();
+    afx_msg void OnBnClickedButton8();
 
-
+    afx_msg void OnBnClickedCheckAutofullscreen();
+    afx_msg void OnBnClickedCheckAlwaysshowctrlbar();
+    afx_msg void OnBnClickedCheckAlwaysjoinmeetingbeforeadmin();
+    afx_msg void OnBnClickedCheckAutojoinaudio();
+    afx_msg void OnBnClickedCheckParticipantsunmute();
+    afx_msg void OnBnClickedCheckEchocancellation();
+    afx_msg void OnBnClickedCheckHdvideo();
+    afx_msg void OnBnClickedCheckAutoturnoffvideo();
 
     CEdit m_editUserName;
     CEdit m_editPassword;
@@ -82,7 +92,16 @@ public:
     CButton m_btnNormalJoinIsVideoOff;
     CButton m_btnNormalJoinIsAudioOff;
     CButton m_btnNormalJoinIsDirectShareDesktop;
-    afx_msg void OnBnClickedButton6();
-    afx_msg void OnBnClickedButton7();
-    afx_msg void OnBnClickedButton8();
+    CButton m_btnAutoFullScreen;
+    CButton m_btnAlwaysShowCtrlBar;
+    CButton m_btnAlwaysJoinMeetingBeforeAdmin;
+    CButton m_btnAutoJoinAudio;
+    CButton m_btnParticipantsUnmute;
+    CButton m_btnEchoCancellation;
+    CButton m_btnHDVideo;
+    CButton m_btnAutoTurnOffVideo;
+
+    ISettingService* m_pSettingService;
+
+
 };

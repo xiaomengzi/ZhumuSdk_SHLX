@@ -194,6 +194,17 @@ int CBusinessLogic::AnonymityJoinMeetingZhumuSDK(std::string strContent)
     return 0;
 }
 
+int CBusinessLogic::SettingMeetingZhumu(std::string strContent)
+{
+    int nRet = -1;
+
+    std::string *pStr = new std::string(strContent);
+    PostMessage(m_hWndMainDlg, WMUSER_SETTINGMEETING_ZHUMUSDK, (WPARAM)pStr, NULL);
+
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    return 0;
+}
+
 // 注册主窗口句柄
 void CBusinessLogic::DestroyZhumuSDK()
 {
@@ -298,6 +309,33 @@ bool CBusinessLogic::FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStat
     Json::Value body;
     body["meetingStatus"] = status;
     body["result"] = iResult;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure !" << std::endl;
+    }
+    return bRet;
+}
+
+bool CBusinessLogic::FeedbackMeetingSettingResult(SettingServerType settingType, ZOOM_SDK_NAMESPACE::SDKError ret)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "MeetingSetting";
+    // 协议内容
+    Json::Value body;
+    body["settingType"] = settingType;
+    body["result"] = ret;
     root["body"] = body;
 
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));

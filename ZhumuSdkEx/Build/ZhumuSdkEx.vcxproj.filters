@@ -60,6 +60,9 @@
     <ClCompile Include="..\Src\Utils\DirectoryUtil.cpp">
       <Filter>Src\Utils</Filter>
     </ClCompile>
+    <ClCompile Include="..\Src\impl\SettingServiceImpl.cpp">
+      <Filter>Src\impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\Src\ReadMe.txt">
@@ -108,6 +111,12 @@
     </ClInclude>
     <ClInclude Include="..\Src\Business\CustomData.h">
       <Filter>Src\Business</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\include\setting_service_interface.h">
+      <Filter>Src\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Src\impl\SettingServiceImpl.h">
+      <Filter>Src\impl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

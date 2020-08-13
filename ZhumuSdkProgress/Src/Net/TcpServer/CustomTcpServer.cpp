@@ -133,7 +133,18 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
             auto body = root["body"];
             CBusinessLogic::GetInstance()->AnonymityJoinMeetingZhumuSDK(CUtils::json2Str(body));
         }
-        
+        else if ("AutoFullScreen" == strMethod
+            || "AlwaysShowCtrlBar" == strMethod
+            || "AlwaysJoinMeetingbeforeAdmin" == strMethod
+            || "AutoJoinAudio" == strMethod
+            || "ParticipantsUnmute" == strMethod
+            || "EchoCancellation" == strMethod
+            || "HDVideo" == strMethod
+            || "AutoTurnOffVideo" == strMethod
+            )
+        {
+            CBusinessLogic::GetInstance()->SettingMeetingZhumu(strReceiveContent);
+        }
         else if ("DestorySDK" == strMethod)
         {
             CBusinessLogic::GetInstance()->DestroyZhumuSDK();

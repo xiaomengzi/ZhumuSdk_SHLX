@@ -5,6 +5,7 @@
 #include "zoom_sdk.h"
 #include "auth_service_interface.h"
 #include "meeting_service_interface.h"
+#include "setting_service_interface.h"
 
 using namespace ZOOM_SDK_NAMESPACE;
 
@@ -61,21 +62,61 @@ public:
 
     // 匿名加入会议
     SDKError AnonymityJoinMeeting(JoinParam& joinParam);
-    
 
+    ////////////////////// 通用设置 //////////////////////////////
+
+    /// 加入会议时启用或禁用自动进入全屏视频模式
+    SDKError EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable);
+
+    /// 会议过程中是否始终显示会议控制栏
+    SDKError EanbleAlwaysDisplayedMeetingCtrlBar(bool bEnable);
+
+    /// 无管理员入会
+    SDKError EanbleAlwaysJoinMeetingbeforeAdmin(bool bEnable);
+
+    ////////////////////// 音频设置 //////////////////////////////
+
+    /// 加入会议时启用或禁用自动加入音频
+    SDKError EnableAutoJoinAudio(bool bEnable);
+
+    /// 允许参会人解除静音
+    SDKError EnableParticipantsUnmuteWhenMeeting(bool bEnable);
+
+    /// 设置是否启用回声消除功能
+    SDKError EnableEchoCancellation(bool bEnable);
+
+    ////////////////////// 视频设置 //////////////////////////////
+
+    /// 启用或禁用高清视频
+    SDKError EnableHDVideo(bool bEnable);
+
+    /// 启用或禁用在加入会议时关闭视频
+    SDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable);
     
-    // 创建认证服务器
+    // 创建认证服务
     SDKError CreateAuthService();
 
-    // 创建会议服务器
-    SDKError CreateMeetingService();
+    // 销毁认证服务
+    SDKError DestroyAuthService();
 
+    // 创建会议服务
+    SDKError CreateMeetingService();
+    
+    // 销毁会议服务
+    SDKError DestroyMeetingService();
+
+    // 创建设置服务
+    SDKError CreateSettingService();
+
+    // 销毁设置服务
+    SDKError DestroySettingService();
 public:
     void Destory();
 
 private:
     IAuthService* m_pAuthService;
     IMeetingService* m_pMeetingService;
+    ISettingService* m_pSettingService;
 
 };
 
