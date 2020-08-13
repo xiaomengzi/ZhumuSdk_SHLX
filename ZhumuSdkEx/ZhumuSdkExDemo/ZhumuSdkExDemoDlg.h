@@ -51,7 +51,6 @@ public:
     virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code);
     //exit app
     virtual void onExitApp();
-    virtual void OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode);
 public:
     void AddMsg(CString strMsg);        // 添加反馈消息
 
@@ -64,7 +63,8 @@ public:
     afx_msg void OnBnClickedButton6();
     afx_msg void OnBnClickedButton7();
     afx_msg void OnBnClickedButton8();
-
+    afx_msg void OnBnClickedButton9();
+    afx_msg void OnBnClickedButton10();
     afx_msg void OnBnClickedCheckAutofullscreen();
     afx_msg void OnBnClickedCheckAlwaysshowctrlbar();
     afx_msg void OnBnClickedCheckAlwaysjoinmeetingbeforeadmin();
@@ -73,6 +73,7 @@ public:
     afx_msg void OnBnClickedCheckEchocancellation();
     afx_msg void OnBnClickedCheckHdvideo();
     afx_msg void OnBnClickedCheckAutoturnoffvideo();
+
 
     CEdit m_editUserName;
     CEdit m_editPassword;
@@ -101,7 +102,7 @@ public:
     CButton m_btnHDVideo;
     CButton m_btnAutoTurnOffVideo;
 
+    CComboBox m_comboxMicList;
     ISettingService* m_pSettingService;
-
 
 };

@@ -62,8 +62,12 @@ public:
 
     // 匿名加入会议
     SDKError AnonymityJoinMeeting(JoinParam& joinParam);
+    
+    // 直接共享
+    SDKError DirectSharing(UINT64 nMeetingNumber);
 
     ////////////////////// 通用设置 //////////////////////////////
+
 
     /// 加入会议时启用或禁用自动进入全屏视频模式
     SDKError EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable);
@@ -75,6 +79,17 @@ public:
     SDKError EanbleAlwaysJoinMeetingbeforeAdmin(bool bEnable);
 
     ////////////////////// 音频设置 //////////////////////////////
+    // 设置默认麦克风
+    virtual SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName);
+
+    // 设置所选麦克风的音量。0~255
+    virtual SDKError SetMicVol(float& value);
+
+    // 选择扬声器装置。
+    virtual SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);
+
+    // 设置所选扬声器的音量。0~255
+    virtual SDKError SetSpeakerVol(float& value);
 
     /// 加入会议时启用或禁用自动加入音频
     SDKError EnableAutoJoinAudio(bool bEnable);
@@ -86,13 +101,17 @@ public:
     SDKError EnableEchoCancellation(bool bEnable);
 
     ////////////////////// 视频设置 //////////////////////////////
+    // 设置默认摄像头
+    virtual SDKError SelectCamera(const wchar_t* deviceId);
 
     /// 启用或禁用高清视频
     SDKError EnableHDVideo(bool bEnable);
 
     /// 启用或禁用在加入会议时关闭视频
     SDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable);
-    
+
+   
+public:
     // 创建认证服务
     SDKError CreateAuthService();
 

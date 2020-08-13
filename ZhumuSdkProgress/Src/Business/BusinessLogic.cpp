@@ -198,11 +198,296 @@ int CBusinessLogic::SettingMeetingZhumu(std::string strContent)
 {
     int nRet = -1;
 
-    std::string *pStr = new std::string(strContent);
-    PostMessage(m_hWndMainDlg, WMUSER_SETTINGMEETING_ZHUMUSDK, (WPARAM)pStr, NULL);
-
     LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
-    return 0;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return nRet;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        SettingServerType settingType;
+        SDKError    err = SDKERR_UNKNOWN;
+        // 解析字符串，拼接初始化参数
+        std::string strMethod = root["method"].asString();
+        auto body = root["body"];
+        bool bEnable = body["enable"].asBool();
+        if ("AutoFullScreen" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOFULLSCREEN;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoFullScreenVideoWhenJoinMeeting(bEnable);
+        }
+        else if ("AlwaysShowCtrlBar" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ALWAYSSHOWCTRLBAR;
+            err = CZhumuSdkAgency::GetInstance()->EanbleAlwaysDisplayedMeetingCtrlBar(bEnable);
+        }
+        else if ("AlwaysJoinMeetingbeforeAdmin" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ALWAYSJOINMEETINGBEFOREADMIN;
+            err = CZhumuSdkAgency::GetInstance()->EanbleAlwaysJoinMeetingbeforeAdmin(bEnable);
+        }
+        else if ("AutoJoinAudio" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOJOINAUDIO;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoJoinAudio(bEnable);
+        }
+        else if ("ParticipantsUnmute" == strMethod)
+        {
+            settingType = SETTIN_TYPE_PARTICIPANTSUNMUTE;
+            err = CZhumuSdkAgency::GetInstance()->EnableParticipantsUnmuteWhenMeeting(bEnable);
+        }
+        else if ("EchoCancellation" == strMethod)
+        {
+            settingType = SETTIN_TYPE_ECHOCANCELLATION;
+            err = CZhumuSdkAgency::GetInstance()->EnableEchoCancellation(bEnable);
+        }
+        else if ("HDVideo" == strMethod)
+        {
+            settingType = SETTIN_TYPE_HDVIDEO;
+            err = CZhumuSdkAgency::GetInstance()->EnableHDVideo(bEnable);
+        }
+        else if ("AutoTurnOffVideo" == strMethod)
+        {
+            settingType = SETTIN_TYPE_AUTOJOINAUDIO;
+            err = CZhumuSdkAgency::GetInstance()->EnableAutoTurnOffVideoWhenJoinMeeting(bEnable);
+        }
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    return nRet;
+}
+
+int CBusinessLogic::SelectMicZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+    
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        std::string strDeviceId = root["deviceId"].asString();
+        std::string strDeviceName = root["deviceName"].asString();
+       
+        strDeviceId = CUtils::UTF_82ASCII(strDeviceId);
+        strDeviceName = CUtils::UTF_82ASCII(strDeviceName);
+
+        SDKError err = CZhumuSdkAgency::GetInstance()->SelectMic(CUtils::s2ws(strDeviceId).c_str(), CUtils::s2ws(strDeviceName).c_str());
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
+int CBusinessLogic::SetMicVolZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        int nValue = root["value"].asInt();
+        float fValue = (float)nValue * (float)255 / (float)100 ;
+
+        SDKError err = CZhumuSdkAgency::GetInstance()->SetMicVol(fValue);
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
+int CBusinessLogic::SelectSpeakerZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        std::string strDeviceId = root["deviceId"].asString();
+        std::string strDeviceName = root["deviceName"].asString();
+
+        strDeviceId = CUtils::UTF_82ASCII(strDeviceId);
+        strDeviceName = CUtils::UTF_82ASCII(strDeviceName);
+
+        SDKError err = CZhumuSdkAgency::GetInstance()->SelectSpeaker(CUtils::s2ws(strDeviceId).c_str(), CUtils::s2ws(strDeviceName).c_str());
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
+int CBusinessLogic::SetSpeakerVolZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        int nValue = root["value"].asInt();
+        float fValue = (float)nValue * (float)255 / (float)100;
+
+        SDKError err = CZhumuSdkAgency::GetInstance()->SetSpeakerVol(fValue);
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
+int CBusinessLogic::SelectCameraZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        std::string strDeviceId = root["deviceId"].asString();
+        strDeviceId = CUtils::UTF_82ASCII(strDeviceId);
+        SDKError err = CZhumuSdkAgency::GetInstance()->SelectCamera(CUtils::s2ws(strDeviceId).c_str());
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
+int CBusinessLogic::DirectSharingZhumu(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        UINT64 nMeetingNUmber = root["meetingNumber"].asInt64();
+        SDKError err = CZhumuSdkAgency::GetInstance()->DirectSharing(nMeetingNUmber);
+        if (err == SDKERR_SUCCESS)
+        {
+            nRet = 0;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
 }
 
 // 注册主窗口句柄

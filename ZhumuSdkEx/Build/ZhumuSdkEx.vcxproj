@@ -19,6 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Depends\SystemTime\FakeSystemTime.cpp" />
+    <ClCompile Include="..\Depends\SystemTime\TimeUtil.cpp" />
     <ClCompile Include="..\Src\dllmain.cpp" />
     <ClCompile Include="..\Src\impl\SettingServiceImpl.cpp" />
     <ClCompile Include="..\Src\impl\ZhumuSdkEx.cpp" />
@@ -36,6 +38,10 @@
     <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h" />
     <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h" />
     <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h" />
+    <ClInclude Include="..\Depends\Minithread\Minithread.hpp" />
+    <ClInclude Include="..\Depends\SystemTime\FakeSystemTime.h" />
+    <ClInclude Include="..\Depends\SystemTime\GCommon.h" />
+    <ClInclude Include="..\Depends\SystemTime\TimeUtil.h" />
     <ClInclude Include="..\Src\Business\CustomData.h" />
     <ClInclude Include="..\Src\impl\SettingServiceImpl.h" />
     <ClInclude Include="..\Src\impl\ZhumuSdkImpl.h" />
@@ -132,7 +138,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ZHUMUSDKEX_EXPORTS;_CRT_SECURE_NO_WARNINGS;HPSOCKET_STATIC_LIB;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\SystemTime;..\Depends\Minithread;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,7 +155,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_USRDLL;ZHUMUSDKEX_EXPORTS;HPSOCKET_STATIC_LIB;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\SystemTime;..\Depends\Minithread;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,7 +176,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ZHUMUSDKEX_EXPORTS;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\SystemTime;..\Depends\Minithread;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,7 +197,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_USRDLL;ZHUMUSDKEX_EXPORTS;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\SystemTime;..\Depends\Minithread;..\Src;..\Src\impl;..\Src\include;..\Src\Net;..\Src\Utils;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

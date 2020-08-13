@@ -56,6 +56,11 @@ extern "C"
     ZHUMUSDKEX_API SDKError Zhumu_DestroySettingService(ISettingService* pSettingService);
 
     /************************************************************************/
+    /* 直接共享                                                              */
+    /************************************************************************/
+    ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam directSharingParam);
+
+    /************************************************************************/
     /* 销毁SDK                                                               */
     /************************************************************************/
     ZHUMUSDKEX_API SDKError Zhumu_DestorySDK();

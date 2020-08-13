@@ -6,6 +6,7 @@
 #include "reader.h"
 #include "Utils.h"
 #include "BusinessLogic.h"
+#include <stddef.h>
 
 
 
@@ -28,6 +29,8 @@ void CCustomTcpServer::SetEvent(CCustomTcpServerEvent* _event)
 bool CCustomTcpServer::StartServer(int nServerPort)
 {
     bool bRet = false;
+
+    m_pTcpServer->SetPackHeaderFlag(0x169);
 
     if (m_pTcpServer->Start(L"0.0.0.0", nServerPort) == FALSE)
     {
@@ -106,32 +109,38 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         if ("InitSDK" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->InitZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->InitZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("LoginSDK" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("StartAppointmentMeeting" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->StartAppointmentMeetingZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->StartAppointmentMeetingZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("StartInstantMeeting" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->StartInstantMeetingZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->StartInstantMeetingZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("JoinMeeting" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->JoinMeetingZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->JoinMeetingZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("AnonymityJoinMeeting" == strMethod)
         {
             auto body = root["body"];
-            CBusinessLogic::GetInstance()->AnonymityJoinMeetingZhumuSDK(CUtils::json2Str(body));
+            int nRet = CBusinessLogic::GetInstance()->AnonymityJoinMeetingZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("AutoFullScreen" == strMethod
             || "AlwaysShowCtrlBar" == strMethod
@@ -143,11 +152,49 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
             || "AutoTurnOffVideo" == strMethod
             )
         {
-            CBusinessLogic::GetInstance()->SettingMeetingZhumu(strReceiveContent);
+            int nRet = CBusinessLogic::GetInstance()->SettingMeetingZhumu(strReceiveContent);
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("DirectSharing" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->DirectSharingZhumu(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("SelectMic" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->SelectMicZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("SetMicVol" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->SetMicVolZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("SelectSpeaker" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->SelectSpeakerZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("SetSpeakerVol" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->SetSpeakerVolZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
+        }
+        else if ("SelectCamera" == strMethod)
+        {
+            auto body = root["body"];
+            int nRet = CBusinessLogic::GetInstance()->SelectCameraZhumuSDK(CUtils::json2Str(body));
+            OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("DestorySDK" == strMethod)
         {
             CBusinessLogic::GetInstance()->DestroyZhumuSDK();
+            OnResponse(pSender, dwConnID, strMethod, 0);
         }
         else
         {
@@ -175,4 +222,33 @@ EnHandleResult CCustomTcpServer::OnShutdown(ITcpServer* pSender)
     /* ::PostOnShutdown();*/
 
     return HR_OK;
+}
+
+void CCustomTcpServer::OnResponse(ITcpServer* pSender, CONNID dwConnID, std::string strMethod, int nErrCode)
+{
+    // 拼接字符串
+    Json::Value root;
+    // 接口名
+    root["method"] = strMethod;
+    root["errorCode"] = nErrCode;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    bool bRet = false;
+    LPCSTR name = "suirui_head";
+    LPCSTR desc = strSendConteng.c_str();
+    int desc_len = (int)strlen(desc) + 1;
+    int body_len = offsetof(TPkgBody, desc) + desc_len;
+
+    TPkgBody* pBody = (TPkgBody*)_alloca(body_len);
+    memset(pBody, 0, body_len);
+
+    pBody->age = 23;
+    strcpy(pBody->name, name);
+    strcpy(pBody->desc, desc);
+
+    if (nullptr != pSender)
+    {
+        pSender->Send(dwConnID, (BYTE*)pBody, body_len);
+    }
 }

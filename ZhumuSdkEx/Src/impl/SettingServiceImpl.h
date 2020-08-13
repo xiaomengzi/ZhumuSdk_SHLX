@@ -14,6 +14,17 @@ public:
 
 public:
     ////////////////////// 通用设置 //////////////////////////////
+    // 设置默认麦克风
+    virtual SDKError SelectMic(const char* deviceId, const char* deviceName);
+
+    // 设置所选麦克风的音量。0~100
+    virtual SDKError SetMicVol(int& value);
+
+    // 选择扬声器装置。
+    virtual SDKError SelectSpeaker(const char* deviceId, const char* deviceName);
+
+    // 设置所选扬声器的音量。0~100
+    virtual SDKError	SetSpeakerVol(int& value);
 
     /// 加入会议时启用或禁用自动进入全屏视频模式
     virtual SDKError EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable);
@@ -36,6 +47,8 @@ public:
     virtual SDKError EnableEchoCancellation(bool bEnable);
 
     ////////////////////// 视频设置 //////////////////////////////
+    // 设置默认摄像头
+    virtual SDKError SelectCamera(const char* deviceId);
 
     /// 启用或禁用高清视频
     virtual SDKError EnableHDVideo(bool bEnable);

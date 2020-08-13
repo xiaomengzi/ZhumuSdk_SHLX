@@ -7,6 +7,7 @@
 #include "ZhumuSdkExDemoDlg.h"
 #include "afxdialogex.h"
 #include "ZhumuSdkEx.h"
+#include "SwtichAudioDev.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -88,6 +89,7 @@ void CZhumuSdkExDemoDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_CHECK_ECHOCANCELLATION, m_btnEchoCancellation);
     DDX_Control(pDX, IDC_CHECK_HDVIDEO, m_btnHDVideo);
     DDX_Control(pDX, IDC_CHECK_AUTOTURNOFFVIDEO, m_btnAutoTurnOffVideo);
+    DDX_Control(pDX, IDC_COMBO1, m_comboxMicList);
 }
 
 BEGIN_MESSAGE_MAP(CZhumuSdkExDemoDlg, CDialogEx)
@@ -110,6 +112,8 @@ BEGIN_MESSAGE_MAP(CZhumuSdkExDemoDlg, CDialogEx)
     ON_BN_CLICKED(IDC_CHECK_ECHOCANCELLATION, &CZhumuSdkExDemoDlg::OnBnClickedCheckEchocancellation)
     ON_BN_CLICKED(IDC_CHECK_HDVIDEO, &CZhumuSdkExDemoDlg::OnBnClickedCheckHdvideo)
     ON_BN_CLICKED(IDC_CHECK_AUTOTURNOFFVIDEO, &CZhumuSdkExDemoDlg::OnBnClickedCheckAutoturnoffvideo)
+    ON_BN_CLICKED(IDC_BUTTON9, &CZhumuSdkExDemoDlg::OnBnClickedButton9)
+    ON_BN_CLICKED(IDC_BUTTON10, &CZhumuSdkExDemoDlg::OnBnClickedButton10)
 END_MESSAGE_MAP()
 
 
@@ -164,6 +168,16 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
     m_btnNormalJoinIsVideoOff.SetCheck(1);
     m_btnNormalJoinIsAudioOff.SetCheck(1);
     m_btnNormalJoinIsDirectShareDesktop.SetCheck(0);
+
+
+    CSwtichAudioDev::Instance()->EnumAudioDevice();
+    int ictn = CSwtichAudioDev::Instance()->m_strFriedlyName.GetCount();
+    for (int i = 0; i < ictn; i++)
+    {
+        m_comboxMicList.AddString(CSwtichAudioDev::Instance()->m_strFriedlyName.GetAt(i));
+        m_comboxMicList.SetItemData(i, i);
+    }
+    m_comboxMicList.SetCurSel(0);
 
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -248,13 +262,6 @@ void CZhumuSdkExDemoDlg::onMeetingStatus(MeetingStatus status, MeetingFailCode c
 void CZhumuSdkExDemoDlg::onExitApp()
 {
 
-}
-
-void CZhumuSdkExDemoDlg::OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode)
-{
-    CString strMsg;
-    strMsg.Format(_T("SettingServerResult  tyep %d, SDKError %d"), tyep, errorCode);
-    AddMsg(strMsg);
 }
 
 void CZhumuSdkExDemoDlg::AddMsg(CString strMsg)
@@ -462,6 +469,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedButton8()
         CString strMsg;
         strMsg.Format(_T("%d = JoinMeetingNormal(joinParam)"), err);
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+        AddMsg(strMsg);
     }
 }
 
@@ -482,6 +490,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckAutofullscreen()
             CString strMsg;
             strMsg.Format(_T("%d = EnableAutoFullScreenVideoWhenJoinMeeting()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -498,6 +507,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckAlwaysshowctrlbar()
             CString strMsg;
             strMsg.Format(_T("%d = EanbleAlwaysDisplayedMeetingCtrlBar()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -514,6 +524,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckAlwaysjoinmeetingbeforeadmin()
             CString strMsg;
             strMsg.Format(_T("%d = EanbleAlwaysJoinMeetingbeforeAdmin()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -530,6 +541,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckAutojoinaudio()
             CString strMsg;
             strMsg.Format(_T("%d = EnableAutoJoinAudio()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -546,6 +558,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckParticipantsunmute()
             CString strMsg;
             strMsg.Format(_T("%d = EnableParticipantsUnmuteWhenMeeting()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -562,6 +575,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckEchocancellation()
             CString strMsg;
             strMsg.Format(_T("%d = EnableEchoCancellation()"), err);
             MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -577,7 +591,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckHdvideo()
         {
             CString strMsg;
             strMsg.Format(_T("%d = EnableHDVideo()"), err);
-            MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
         }
     }
 }
@@ -593,7 +607,46 @@ void CZhumuSdkExDemoDlg::OnBnClickedCheckAutoturnoffvideo()
         {
             CString strMsg;
             strMsg.Format(_T("%d = EnableAutoTurnOffVideoWhenJoinMeeting()"), err);
-            MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
+            AddMsg(strMsg);
+        }
+    }
+}
+
+
+void CZhumuSdkExDemoDlg::OnBnClickedButton9()
+{
+    //SDKError err = Zhumu_DirectSharing();
+    //{
+    //    CString strMsg;
+    //    strMsg.Format(_T("%d =Zhumu_DirectSharing()"), err);
+    //    AddMsg(strMsg);
+    //}
+}
+
+
+void CZhumuSdkExDemoDlg::OnBnClickedButton10()
+{
+    int nIndex = m_comboxMicList.GetCurSel();
+    if (-1 == nIndex)
+    {
+        return;
+    }
+    int nData = m_comboxMicList.GetItemData(nIndex);
+    CString strName;
+    CString strId;
+    m_comboxMicList.GetLBText(nIndex, strName);
+    strId = CSwtichAudioDev::Instance()->m_strId.GetAt(nData);
+
+    std::string strMicName = CT2A(strName);
+    std::string strMicId = CT2A(strId);
+
+    if (nullptr != m_pSettingService)
+    {
+        SDKError err = m_pSettingService->SelectMic(strMicId.c_str(),strMicName.c_str());
+        {
+            CString strMsg;
+            strMsg.Format(_T("%d = SelectMic(%s, %s"), err, strName, strId);
+            AddMsg(strMsg);
         }
     }
 }

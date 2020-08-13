@@ -58,6 +58,25 @@ public:
     // 通用设置
     int SettingMeetingZhumu(std::string strContent);
 
+    // 设置默认麦克风
+    int SelectMicZhumuSDK(std::string strContent);
+
+    // 设置所选麦克风的音量。0~255
+    int SetMicVolZhumuSDK(std::string strContent);
+
+    // 选择扬声器装置。
+    int SelectSpeakerZhumuSDK(std::string strContent);
+
+    // 设置所选扬声器的音量。0~255
+    int SetSpeakerVolZhumuSDK(std::string strContent);
+
+    // 设置默认摄像头
+    int SelectCameraZhumuSDK(std::string strContent);
+
+
+    // 直接共享
+    int DirectSharingZhumu(std::string strContent);
+
     // 销毁瞩目SDK
     void DestroyZhumuSDK();
 

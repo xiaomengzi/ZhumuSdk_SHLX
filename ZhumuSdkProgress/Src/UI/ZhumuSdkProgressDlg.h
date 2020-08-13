@@ -55,7 +55,8 @@ public:
     afx_msg LRESULT OnAnonymityJoinMeetingZhumuSDK(WPARAM wParam, LPARAM lParam);
     // 会议设置
     afx_msg LRESULT OnSettingMeetingZhumuSDK(WPARAM wParam, LPARAM lParam);
-    
+    // 直接共享
+    afx_msg LRESULT OnDirectSharingZhumu(WPARAM wParam, LPARAM lParam);
 public:
     afx_msg void OnBnClickedButton1();
     afx_msg void OnBnClickedButton2();

@@ -3,6 +3,8 @@
 #include <string>
 #include "Utils.h"
 #include "plog\Log.h"
+#include "TimeUtil.h"
+#include "reader.h"
 
 
 
@@ -31,14 +33,28 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
     {
         if (true == SendContentTcpClient(strSend))
         {
+            m_nStartTime = TimeUtil::milliseconds();
             // 等待接收服务器反馈
-            while (!m_bCanReturn)
+            while (true)
             {
+                if (true == m_bCanReturn)
+                {
+                    bRet = true;
+                    break;
+                }
+                else if (TimeUtil::milliseconds() - m_nStartTime > 15*1000)
+                {
+                    bRet = false;
+                    break;
+                }
                 Sleep(1);
+            }
+            if (false == m_strReceive.empty())
+            {
+                bRet = AnalyzeFeedbackContent(m_strReceive);
             }
             // 关闭服务
             StopTcpClient();
-            bRet = true;
         }
         else
         {
@@ -77,9 +93,7 @@ bool CCustomTcpClient::SendContentTcpClient(std::string strContent)
 bool CCustomTcpClient::StartTcpClient(const std::string strIp, const int nPort)
 {
     bool bRet = false;
-    m_pClient->SetMaxPackSize(0x01FFF);
     m_pClient->SetPackHeaderFlag(0x169);
-
     if (m_pClient->Start(L"127.0.0.1", nPort, false))
     {
         bRet = true;
@@ -113,18 +127,22 @@ EnHandleResult CCustomTcpClient::OnConnect(ITcpClient* pSender, CONNID dwConnID)
     return HR_OK;
 }
 
+
+
 EnHandleResult CCustomTcpClient::OnSend(ITcpClient* pSender, CONNID dwConnID, const BYTE* pData, int iLength)
 {
-    if (false == m_bCanReturn)
+    /*if (false == m_bCanReturn)
     {
         m_bCanReturn = true;
-    }
+    }*/
     return HR_OK;
 }
 
 EnHandleResult CCustomTcpClient::OnReceive(ITcpClient* pSender, CONNID dwConnID, const BYTE* pData, int iLength)
 {
     //::PostOnReceive(dwConnID, pData, iLength);
+    m_bCanReturn = true;
+    m_strReceive = std::string((char*)pData + 32, iLength);
     return HR_OK;
 }
 
@@ -136,4 +154,29 @@ EnHandleResult CCustomTcpClient::OnClose(ITcpClient* pSender, CONNID dwConnID, E
     //SetAppState(ST_STOPPED);
     m_bCanReturn = true;
     return HR_OK;
+}
+
+bool CCustomTcpClient::AnalyzeFeedbackContent(std::string strReceive)
+{
+    LOGE << "[" << __FUNCTION__ << "]  content:[" << strReceive << "]" << std::endl;
+    bool bRet = false;
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strReceive.c_str(), strReceive.c_str() + strReceive.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        std::string strMethod = root["method"].asString();
+        int nErrorCode = root["errorCode"].asInt();
+        if (0 == nErrorCode)
+        {
+            bRet = true;
+        }
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strReceive << "]" << std::endl;
+    }
+    return bRet;
 }

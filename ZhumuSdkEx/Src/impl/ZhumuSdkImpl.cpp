@@ -258,9 +258,39 @@ bool CZhumuSdkImpl::AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingPara
     return bRet;
 }
 
+bool CZhumuSdkImpl::DirectSharing(ZmDirectSharingParam directSharingParam)
+{
+    bool bRet = false;
+
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "DirectSharing";
+    Json::Value body;
+    body["meetingNumber"] = directSharingParam.meetingNumber;
+    root["body"] = body;
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+    }
+    return bRet;
+}
+
 bool CZhumuSdkImpl::DestorySDK()
 {
     bool bRet = false;
+    
+    // 停止tcp服务
+    if (nullptr != m_pTcpServer)
+    {
+        m_pTcpServer->StopServer();
+    }
 
     // 拼接协议
     Json::Value root;
@@ -305,15 +335,8 @@ void CZhumuSdkImpl::onExitApp()
 
 }
 
-void CZhumuSdkImpl::OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode)
-{
-
-}
-
 int CZhumuSdkImpl::OnReceive(std::string strReceive, int iLength)
 {
-    LOGE << "[" << __FUNCTION__ << "]  Receive content: " << strReceive << std::endl;
-
     return 0;
 }
 
@@ -357,14 +380,5 @@ int CZhumuSdkImpl::OnMeetingStatusResult(int nMeetingStatus, int nFailCode)
     return 0;
 }
 
-int CZhumuSdkImpl::OnMeetingSettingResult(int nSettingType, int nResult)
-{
-    LOGE << "[" << __FUNCTION__ << "]  SettingType: " << nSettingType << " Result: " << nResult << std::endl;
-    if (nullptr != m_event)
-    {
-        m_event->OnMeetingSettingResult(SettingServerType(nSettingType), SDKError(nResult));
-    }
-    return 0;
-}
 
 

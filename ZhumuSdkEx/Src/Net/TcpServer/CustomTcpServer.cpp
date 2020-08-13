@@ -25,6 +25,7 @@ bool CCustomTcpServer::StartServer(int nServerPort)
 {
     bool bRet = false;
 
+    m_pTcpServer->SetPackHeaderFlag(0x169);
     if (m_pTcpServer->Start(L"0.0.0.0", nServerPort) == FALSE)
     {
         int error = m_pTcpServer->GetLastError();
@@ -134,16 +135,6 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
             if (nullptr != m_pEvent)
             {
                 m_pEvent->OnMeetingStatusResult(nMeetingStatus, nResult);
-            }
-        }
-        else if ("MeetingSetting" == strMethod)
-        {
-            auto body = root["body"];
-            int nSettingType = body["settingType"].asInt();
-            int nResult = body["result"].asInt();
-            if (nullptr != m_pEvent)
-            {
-                m_pEvent->OnMeetingSettingResult(nSettingType, nResult);
             }
         }
         else

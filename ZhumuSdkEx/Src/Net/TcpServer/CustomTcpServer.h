@@ -14,7 +14,6 @@
      virtual int OnAuthResult(int nAuthResult) = 0;
      virtual int OnLoginResult(int nLoginResult) = 0;
      virtual int OnMeetingStatusResult(int nMeetingStatus, int nFailCode) = 0;
-     virtual int OnMeetingSettingResult(int nSettingType, int nResult) = 0;
      
  };
  

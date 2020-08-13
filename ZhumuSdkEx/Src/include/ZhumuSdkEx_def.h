@@ -295,6 +295,18 @@ typedef struct stZmAnonymityJoinMeetingParam
     }
 }ZmAnonymityJoinMeetingParam;
 
+
+typedef struct stZmDirectSharingParam
+{
+    UINT64  meetingNumber;          ///ª·“È∫≈¬Î°£
+
+    stZmDirectSharingParam()
+    {
+        meetingNumber = 0;
+    }
+}ZmDirectSharingParam;
+
+
 END_ZHUMUSDKEX_NAMESPACE
 
 #endif //_ZHUMUSDKEX_DEF_H_

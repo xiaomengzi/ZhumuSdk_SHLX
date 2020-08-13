@@ -8,14 +8,6 @@
 class CCustomTcpClient :public CTcpClientListener
 {
 public:
-    struct TPkgBody
-    {
-        char name[30];
-        short age;
-        char desc[1];
-    };
-
-public:
     CCustomTcpClient();
     ~CCustomTcpClient();
 

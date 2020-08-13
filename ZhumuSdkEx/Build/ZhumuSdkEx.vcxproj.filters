@@ -34,6 +34,12 @@
     <Filter Include="Src\Business">
       <UniqueIdentifier>{7abd7de8-20a6-4fb5-aa7f-27d2e51ec8aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Depends\SystemTime">
+      <UniqueIdentifier>{0d3c2b1a-4908-4df8-923b-6ba9e1b32ef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\Minithread">
+      <UniqueIdentifier>{8dffa17e-821c-40de-bae0-cce2f1d1cf2f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\dllmain.cpp">
@@ -62,6 +68,12 @@
     </ClCompile>
     <ClCompile Include="..\Src\impl\SettingServiceImpl.cpp">
       <Filter>Src\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Depends\SystemTime\FakeSystemTime.cpp">
+      <Filter>Depends\SystemTime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Depends\SystemTime\TimeUtil.cpp">
+      <Filter>Depends\SystemTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,6 +129,18 @@
     </ClInclude>
     <ClInclude Include="..\Src\impl\SettingServiceImpl.h">
       <Filter>Src\impl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\FakeSystemTime.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\GCommon.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\TimeUtil.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\Minithread\Minithread.hpp">
+      <Filter>Depends\Minithread</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

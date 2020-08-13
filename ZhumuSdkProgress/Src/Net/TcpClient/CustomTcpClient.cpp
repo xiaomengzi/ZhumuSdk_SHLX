@@ -3,6 +3,7 @@
 #include <string>
 #include "Utils.h"
 #include "plog\Log.h"
+#include "CustomData.h"
 
 
 
@@ -77,7 +78,6 @@ bool CCustomTcpClient::SendContentTcpClient(std::string strContent)
 bool CCustomTcpClient::StartTcpClient(const std::string strIp, const int nPort)
 {
     bool bRet = false;
-    m_pClient->SetMaxPackSize(0x01FFF);
     m_pClient->SetPackHeaderFlag(0x169);
 
     if (m_pClient->Start(L"127.0.0.1", nPort, false))

@@ -105,7 +105,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Bin\Win32\Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ZhumuSdkExd.lib</AdditionalDependencies>
+      <AdditionalDependencies>ZhumuSdkExd.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -159,7 +159,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\Bin\Win32\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>ZhumuSdkEx.lib</AdditionalDependencies>
+      <AdditionalDependencies>ZhumuSdkEx.lib;winmm.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -207,6 +207,7 @@
   <ItemGroup>
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="SwtichAudioDev.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="ZhumuSdkExDemo.h" />
     <ClInclude Include="ZhumuSdkExDemoDlg.h" />
@@ -218,6 +219,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="SwtichAudioDev.cpp" />
     <ClCompile Include="ZhumuSdkExDemo.cpp" />
     <ClCompile Include="ZhumuSdkExDemoDlg.cpp" />
   </ItemGroup>

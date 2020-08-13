@@ -31,11 +31,11 @@ ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(ZhumuSdkEx_Event* event, const char* exe
             return SDKERR_UNKNOWN;
         }
 
-        //// 启动进程
-        //if (false == g_pZhumuSdkImpl->StartSdkProcess(exePath))
-        //{
-        //    return SDKERR_UNKNOWN;
-        //}
+        // 启动进程
+        if (false == g_pZhumuSdkImpl->StartSdkProcess(exePath))
+        {
+            return SDKERR_UNKNOWN;
+        }
     }
 
     return SDKERR_SUCCESS;
@@ -48,7 +48,6 @@ ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam)
         return SDKERR_UNKNOWN;
     }
 
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->InitSDK(initParam);
 
     if (false == bRet)
@@ -67,7 +66,6 @@ ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
     {
         return SDKERR_UNKNOWN;
     }
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->LoginSDK(loginParam);
 
     if (false == bRet)
@@ -85,7 +83,6 @@ ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingP
         return SDKERR_UNKNOWN;
     }
 
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->StartAppointmentMeeting(meetingParam);
 
     if (false == bRet)
@@ -103,7 +100,6 @@ ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam mee
         return SDKERR_UNKNOWN;
     }
 
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->StartInstantMeeting(meetingParam);
 
     if (false == bRet)
@@ -122,7 +118,6 @@ ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam)
         return SDKERR_UNKNOWN;
     }
 
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->JoinMeeting(meetingParam);
 
     if (false == bRet)
@@ -140,7 +135,6 @@ ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam m
         return SDKERR_UNKNOWN;
     }
 
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->AnonymityJoinMeeting(meetingParam);
 
     if (false == bRet)
@@ -154,6 +148,12 @@ ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam m
 ZHUMUSDKEX_API SDKError Zhumu_CreateSettingService(ISettingService** ppSettingService)
 {
     auto result = SDKERR_SUCCESS;
+
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
     if (nullptr == g_pSettingService)
     {
         g_pSettingService = new CSettingServiceImpl();
@@ -175,13 +175,29 @@ ZHUMUSDKEX_API SDKError Zhumu_DestroySettingService(ISettingService* pSettingSer
     return SDKError(result);
 }
 
+ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam directSharingParam)
+{
+    if (nullptr == g_pZhumuSdkImpl)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    bool bRet = g_pZhumuSdkImpl->DirectSharing(directSharingParam);
+
+    if (false == bRet)
+    {
+        return SDKERR_UNKNOWN;
+    }
+
+    return SDKERR_SUCCESS;
+}
+
 ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
         return SDKERR_UNKNOWN;
     }
-    // 初始化sdk
     bool bRet = g_pZhumuSdkImpl->DestorySDK();
 
     if (false == bRet)

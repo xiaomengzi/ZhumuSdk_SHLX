@@ -38,6 +38,9 @@ public:
     virtual EnHandleResult OnClose(ITcpServer* pSender, CONNID dwConnID, EnSocketOperation enOperation, int iErrorCode);
     virtual EnHandleResult OnShutdown(ITcpServer* pSender);
 
+public:
+    // tcp连接相应
+    void OnResponse(ITcpServer* pSender, CONNID dwConnID, std::string strMethod, int nErrCode);
 private:
     CCustomTcpServerEvent* m_pEvent;
     //CTcpPullServerPtr m_pTcpServer;

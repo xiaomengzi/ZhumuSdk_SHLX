@@ -45,6 +45,9 @@ public:
     // 匿名加入会议
     bool AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam);
 
+    // 直接共享
+    bool DirectSharing(ZmDirectSharingParam directSharingParam);
+
     // 销毁SDK
     bool DestorySDK();
 
@@ -58,7 +61,6 @@ public: // zhumusdkex event
     virtual void onMeetingStatus(MeetingStatus status, MeetingFailCode code);
     //exit app
     virtual void onExitApp();
-    virtual void OnMeetingSettingResult(SettingServerType tyep, SDKError errorCode);
 
     /************************************************************************/
     /*  tcp 服务器接收信息回调                                                */
@@ -69,7 +71,6 @@ public: // tcp server event
     virtual int OnAuthResult(int nAuthResult);
     virtual int OnLoginResult(int nLoginResult);
     virtual int OnMeetingStatusResult(int nMeetingStatus, int nFailCode);
-    virtual int OnMeetingSettingResult(int nSettingType, int nResult);
 
 
 private:

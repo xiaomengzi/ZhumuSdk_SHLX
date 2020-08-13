@@ -5,6 +5,7 @@
 #include "plog/Log.h"
 #include "Utils.h"
 #include "zoom_sdk.h"
+#include "meeting_service_components/meeting_configuration_interface.h"
 
 
 CZhumuSdkAgency *CZhumuSdkAgency::m_pInstance = nullptr;
@@ -80,6 +81,17 @@ void CZhumuSdkAgency::onZoomAuthIdentityExpired()
 void CZhumuSdkAgency::onMeetingStatusChanged(MeetingStatus status, int iResult /*= 0*/)
 {
     CBusinessLogic::GetInstance()->MeetingStatusChanged(status, iResult);
+    if (MEETING_STATUS_INMEETING == status)
+    {
+        // 进入会议成功 设置标志位
+      
+        IMeetingConfiguration* pMeetingConfig = nullptr;
+        pMeetingConfig = m_pMeetingService->GetMeetingConfiguration();
+        if (nullptr != pMeetingConfig)
+        {
+            pMeetingConfig->SetBottomFloatToolbarWndVisibility(true);
+        }
+    }
 }
 
 void CZhumuSdkAgency::onMeetingStatisticsWarningNotification(StatisticsWarningType type)
@@ -209,6 +221,23 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AnonymityJoinMeeting(JoinParam& jo
     return err;
 }
 
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DirectSharing(UINT64 nMeetingNumber)
+{
+    SDKError err = SDKERR_SUCCESS;
+    //if (nullptr == m_pMeetingService)
+    //{
+    //    LOGE << "[" << __FUNCTION__ << "] The conference server was not created! " << std::endl;
+    //    return SDKERR_VIDEO_NOTREADY;
+    //}
+
+    //err = m_pMeetingService->Join(joinParam);
+    //if (err != SDKError::SDKERR_SUCCESS)
+    //{
+    //    LOGE << "[" << __FUNCTION__ << "] Failed to join meeting ! error code: " << err << std::endl;
+    //}
+    return err;
+}
+
 ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable)
 {
     SDKError err;
@@ -257,6 +286,71 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysJoinMeetingbeforeAdmin
     return SDKERR_UNKNOWN;
 }
 
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectMic(const wchar_t* deviceId, const wchar_t* deviceName)
+{
+    SDKError err = SDKERR_UNKNOWN;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->SelectMic(deviceId, deviceName);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to select microphone device ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return err;
+}
+
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetMicVol(float& value)
+{
+    SDKError err = SDKERR_UNKNOWN;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->SetMicVol(value);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to set the volume of the selected mic ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return err;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName)
+{
+    SDKError err = SDKERR_UNKNOWN;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->SelectSpeaker(deviceId, deviceName);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to select speaker device ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return err;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetSpeakerVol(float& value)
+{
+    SDKError err = SDKERR_UNKNOWN;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetAudioSettings()->SetSpeakerVol(value);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to set the volume of the selected speaker ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return err;
+}
+
 ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoJoinAudio(bool bEnable)
 {
     SDKError err;
@@ -303,6 +397,22 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableEchoCancellation(bool bEnabl
         return err;
     }
     return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectCamera(const wchar_t* deviceId)
+{
+    SDKError err = SDKERR_UNKNOWN;
+    err = CreateSettingService();
+    if (err == SDKERR_SUCCESS)
+    {
+        err = m_pSettingService->GetVideoSettings()->SelectCamera(deviceId);
+        if (err != SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] Failed to select camera device ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return err;
 }
 
 ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableHDVideo(bool bEnable)

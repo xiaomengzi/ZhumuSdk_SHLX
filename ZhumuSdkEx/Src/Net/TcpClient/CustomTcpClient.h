@@ -36,8 +36,12 @@ private:
     virtual EnHandleResult OnConnect(ITcpClient* pSender, CONNID dwConnID);
 
 private:
+    bool AnalyzeFeedbackContent(std::string strReceive);
+private:
     CTcpPackClientPtr m_pClient;
     bool m_bCanReturn;
+    UINT64 m_nStartTime;
+    std::string m_strReceive;
 };
 
 

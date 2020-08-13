@@ -281,7 +281,9 @@ public:
 	/// \param pos Specify the position of the primary view meeting window. The coordinates of the window are those of the screen.
 	virtual void SetMeetingUIPos(WndPosition pos) = 0;
 
-	/// \brief Set the position of the floating video window when sharing. 	/// \param pos Specify the position of the floating video window when sharing.	/// \remarks The value shall be set before the sharing begins. If you set the value during the process of share, the function will not be valid until the next share.
+	/// \brief Set the position of the floating video window when sharing. 
+	/// \param pos Specify the position of the floating video window when sharing.
+	/// \remarks The value shall be set before the sharing begins. If you set the value during the process of share, the function will not be valid until the next share.
 	virtual void SetFloatVideoPos(WndPosition pos) = 0;
 
 	/// \brief Set the visibility of the sharing toolbar. Default value: TRUE. 
@@ -303,7 +305,8 @@ public:
 	///If it is FALSE, the user can deal with this request in the IMeetingRemoteCtrlEvent::onRemoteControlStatus() callback event sent by SDK when receiving the decline request of the remote control and then exists the sharing status at the end of callback event.
 	virtual void EnableDeclineRemoteControlResponseDlg(bool bEnable) = 0;
 
-	/// \brief Set the visibility of the LEAVE MEETING button on the pop-up dialogue box when the host leaves the meeting. Default value: TRUE.	/// \param bEnable TRUE indicates to display the button. Otherwise not.
+	/// \brief Set the visibility of the LEAVE MEETING button on the pop-up dialogue box when the host leaves the meeting. Default value: TRUE.
+	/// \param bEnable TRUE indicates to display the button. Otherwise not.
 	virtual void EnableLeaveMeetingOptionForHost(bool bEnable) = 0;
 
 	/// \brief Set the visibility of the INVITE button in the panelist action bar during the meeting. Default value: TRUE.
@@ -584,10 +587,14 @@ public:
 	/// \remarks This function doesn't work if the IJoinMeetingBehaviorConfiguration::EnableAutoEndOtherMeetingWhenStartMeeting(true) is also called. If redirect successfully, the SDK will trigger the IMeetingConfigurationEvent::onEndOtherMeetingToJoinMeetingNotification() callback event. For more details, see \link IMeetingConfigurationEvent::onEndOtherMeetingToJoinMeetingNotification() \endlink.
 	virtual void RedirectEndOtherMeeting(bool bRedirect) = 0;
 	
-	/// \brief Force to enable the video when join meeting.	/// \param bEnable TRUE indicates to force to start video.	/// \remarks The default behavior depends on the configuration of the meeting.
+	/// \brief Force to enable the video when join meeting.
+	/// \param bEnable TRUE indicates to force to start video.
+	/// \remarks The default behavior depends on the configuration of the meeting.
 	virtual void EnableForceAutoStartMyVideoWhenJoinMeeting(bool bEnable) = 0;
 
-	/// \brief Force to turn off video when joining the meeting.	/// \param bEnable TRUE indicates to force to turn off the video.	/// \remarks The default behavior depends on the configuration of the meeting.
+	/// \brief Force to turn off video when joining the meeting.
+	/// \param bEnable TRUE indicates to force to turn off the video.
+	/// \remarks The default behavior depends on the configuration of the meeting.
 	virtual void EnableForceAutoStopMyVideoWhenJoinMeeting(bool bEnable) = 0;
 
 	/// \brief Set the visibility of the dialog  SELECT JOIN AUDIO when joining meeting. Default: FALSE.

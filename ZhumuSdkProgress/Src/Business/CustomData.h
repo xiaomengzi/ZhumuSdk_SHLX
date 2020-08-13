@@ -62,7 +62,17 @@ DECLARE_USER_MESSAGE(WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK)
 #define WMUSER_SETTINGMEETING_ZHUMUSDK_MSG      _T("WMUSER_SETTINGMEETING_ZHUMUSDK-{B54252FB-8F45-4E9E-A826-508A61ED986D}")
 DECLARE_USER_MESSAGE(WMUSER_SETTINGMEETING_ZHUMUSDK)
 
+// Ö±½Ó¹²Ïí
+#define WMUSER_DIRECTSHARING_ZHUMUSDK_MSG      _T("WMUSER_DIRECTSHARING_ZHUMUSDK-{EFAF6462-ECF6-4418-B50D-C9B7E303C387}")
+DECLARE_USER_MESSAGE(WMUSER_DIRECTSHARING_ZHUMUSDK)
 
+
+struct TPkgBody
+{
+    char name[30];
+    short age;
+    char desc[1];
+};
 
 typedef struct _LoginSDKParam {
     std::string apiurl;
@@ -73,6 +83,7 @@ typedef struct _LoginSDKParam {
     std::string password;
     std::string zcode;
 }LoginSDKParam;
+
 
 enum SettingServerType
 {

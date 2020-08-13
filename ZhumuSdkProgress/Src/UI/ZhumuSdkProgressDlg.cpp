@@ -99,6 +99,8 @@ BEGIN_MESSAGE_MAP(CZhumuSdkProgressDlg, CDialogEx)
     ON_REGISTERED_MESSAGE(WMUSER_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnJoinMeetingZhumuSDK)
     ON_REGISTERED_MESSAGE(WMUSER_ANONYMITY_JOINMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK)
     ON_REGISTERED_MESSAGE(WMUSER_SETTINGMEETING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnSettingMeetingZhumuSDK)
+    ON_REGISTERED_MESSAGE(WMUSER_DIRECTSHARING_ZHUMUSDK, &CZhumuSdkProgressDlg::OnDirectSharingZhumu)
+    
     
     
     ON_BN_CLICKED(IDC_BUTTON1, &CZhumuSdkProgressDlg::OnBnClickedButton1)
@@ -140,12 +142,12 @@ BOOL CZhumuSdkProgressDlg::OnInitDialog()
     SetIcon(m_hIcon, TRUE);			// 设置大图标
     SetIcon(m_hIcon, FALSE);		// 设置小图标
 
-    ////隐藏界面
-    //int nFullWidth = GetSystemMetrics(SM_CXSCREEN);
-    //int nFullHeight = GetSystemMetrics(SM_CYSCREEN);
-    //SetWindowPos(NULL, nFullWidth, nFullHeight, 0, 0, SWP_NOZORDER);  //设置0像素,移到最角落  或者:MoveWindow(0,0,0,0);
-    //ShowWindow(SW_HIDE);
-    //ModifyStyleEx(WS_EX_APPWINDOW, WS_EX_TOOLWINDOW);  //移除任务栏图标显示
+    //隐藏界面
+    int nFullWidth = GetSystemMetrics(SM_CXSCREEN);
+    int nFullHeight = GetSystemMetrics(SM_CYSCREEN);
+    SetWindowPos(NULL, nFullWidth, nFullHeight, 0, 0, SWP_NOZORDER);  //设置0像素,移到最角落  或者:MoveWindow(0,0,0,0);
+    ShowWindow(SW_HIDE);
+    ModifyStyleEx(WS_EX_APPWINDOW, WS_EX_TOOLWINDOW);  //移除任务栏图标显示
 
     // 注册主窗口句柄
     CBusinessLogic::GetInstance()->RegisterMainDlgHwnd(this->GetSafeHwnd());
@@ -950,6 +952,28 @@ LRESULT CZhumuSdkProgressDlg::OnSettingMeetingZhumuSDK(WPARAM wParam, LPARAM lPa
         LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
     }
 }
+
+LRESULT CZhumuSdkProgressDlg::OnDirectSharingZhumu(WPARAM wParam, LPARAM lParam)
+{
+    LOGI << "[" << __FUNCTION__ << "] In!" << std::endl;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return 0;
+    }
+
+    std::string* pStrErrMsg = (std::string*)wParam;
+    if (nullptr == pStrErrMsg)
+    {
+        return 0;
+    }
+
+    // 直接共享
+    //SDKError err = CZhumuSdkAgency::GetInstance()->DirectSharing(TODO);
+    //CBusinessLogic::GetInstance()->FeedbackMeetingSettingResult(settingType, err);
+}
+
 
 void CZhumuSdkProgressDlg::OnBnClickedButton1()
 {

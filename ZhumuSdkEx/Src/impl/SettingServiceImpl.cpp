@@ -17,6 +17,120 @@ CSettingServiceImpl::~CSettingServiceImpl()
 {
 }
 
+ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectMic(const char* deviceId, const char* deviceName)
+{
+    bool bRet = false;
+    SDKError err = SDKERR_SUCCESS;
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "SelectMic";
+
+    // 协议内容
+    Json::Value body;
+    body["deviceId"] = deviceId;
+    body["deviceName"] = deviceName;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+        err = SDKERR_UNKNOWN;
+    }
+    return err;
+}
+
+ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SetMicVol(int& value)
+{
+    bool bRet = false;
+    SDKError err = SDKERR_SUCCESS;
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "SetMicVol";
+
+    // 协议内容
+    Json::Value body;
+    body["value"] = value;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+        err = SDKERR_UNKNOWN;
+    }
+    return err;
+}
+
+ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectSpeaker(const char* deviceId, const char* deviceName)
+{
+    bool bRet = false;
+    SDKError err = SDKERR_SUCCESS;
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "SelectSpeaker";
+
+    // 协议内容
+    Json::Value body;
+    body["deviceId"] = deviceId;
+    body["deviceName"] = deviceName;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+        err = SDKERR_UNKNOWN;
+    }
+    return err;
+}
+
+ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SetSpeakerVol(int& value)
+{
+    bool bRet = false;
+    SDKError err = SDKERR_SUCCESS;
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "SetSpeakerVol";
+
+    // 协议内容
+    Json::Value body;
+    body["value"] = value;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+        err = SDKERR_UNKNOWN;
+    }
+    return err;
+}
+
 ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable)
 {
     bool bRet = false;
@@ -169,6 +283,34 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableEchoCancellation(bool 
     // 协议内容
     Json::Value body;
     body["enable"] = bEnable;
+    root["body"] = body;
+
+    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+
+    //发送数据
+    CCustomTcpClient tcpClient;
+    std::string strReceive;
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    if (false == bRet)
+    {
+        LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
+        err = SDKERR_UNKNOWN;
+    }
+    return err;
+}
+
+ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectCamera(const char* deviceId)
+{
+    bool bRet = false;
+    SDKError err = SDKERR_SUCCESS;
+    // 拼接协议
+    Json::Value root;
+    // 接口名
+    root["method"] = "SelectCamera";
+
+    // 协议内容
+    Json::Value body;
+    body["deviceId"] = deviceId;
     root["body"] = body;
 
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
