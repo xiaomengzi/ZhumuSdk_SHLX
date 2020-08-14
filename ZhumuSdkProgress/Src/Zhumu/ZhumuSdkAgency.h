@@ -51,6 +51,12 @@ public:
     // 登录
     SDKError LoginSDK(std::wstring account, std::wstring password);
 
+    // 退出登录
+    SDKError LogOutSDK();
+
+    // 离开会议
+    SDKError LeaveMeeting();
+
     // 开启预约会议
     SDKError StartAppointmentMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam);
 

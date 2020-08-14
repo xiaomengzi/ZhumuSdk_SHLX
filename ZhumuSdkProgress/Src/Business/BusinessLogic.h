@@ -151,7 +151,7 @@ public:
     bool GetReadyMeeting() const;
     void SetReadyMeeting(bool val);
 
-    // 是否正在准备会议 true-正在准备会议 false-未准备会议
+    // 是否正在参加会议 true-正在参加会议 false-参加会议
     bool GetAttendMeeting() const;
     void SetAttendMeeting(bool val);
     // 登录瞩目SDK参数
@@ -167,7 +167,7 @@ private:
     bool                m_bIsAnonymousJoin;     // 是否为匿名入会
     bool                m_bAlreadyAuth;         // 是否已经认证
     bool                m_bReadyMeeting;        // 是否正在准备会议 true-正在准备会议 false-未准备会议
-    bool                m_bAttendMeeting;      // 是否正在准备会议 true-正在准备会议 false-未准备会议
+    bool                m_bAttendMeeting;       // 是否正在参加会议 true-正在参加会议 false-参加会议
     LoginSDKParam       m_loginSDKParam;        // 登录瞩目SDK参数
 
     CZhumuSdkAgency*    m_pZhumuSdkAgency;

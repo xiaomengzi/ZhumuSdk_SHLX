@@ -43,6 +43,17 @@ CZhumuSdkProgressApp theApp;
 
 BOOL CZhumuSdkProgressApp::InitInstance()
 {
+    //保证程序只启动一个实例 CreateMutex创建互斥量
+    HANDLE hMutex = CreateMutex(NULL, FALSE, _T("CZhumuSdkProgress_Mutex"));
+    if (hMutex == NULL || ERROR_ALREADY_EXISTS == ::GetLastError())
+    {
+        if (NULL != hMutex)
+        {
+            CloseHandle(hMutex);
+        }
+        return FALSE;
+    }
+
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。  否则，将无法创建窗口。
@@ -113,6 +124,10 @@ BOOL CZhumuSdkProgressApp::InitInstance()
 	ControlBarCleanUp();
 #endif
 
+    if (NULL != hMutex)
+    {
+        CloseHandle(hMutex);
+    }
 	// 由于对话框已关闭，所以将返回 FALSE 以便退出应用程序，
 	//  而不是启动应用程序的消息泵。
 	return FALSE;

@@ -60,6 +60,18 @@ bool CZhumuSdkImpl::StopTcpServer()
 
 bool CZhumuSdkImpl::StartSdkProcess(std::string strPath /*= ""*/)
 {
+    HANDLE hMutex = nullptr;
+    hMutex = CreateMutex(NULL, FALSE, _T("CZhumuSdkProgress_Mutex"));
+    if (nullptr == hMutex || ERROR_ALREADY_EXISTS == ::GetLastError())
+    {
+        DestorySDK();
+        Sleep(50);
+    }
+    if (nullptr != hMutex)
+    {
+        CloseHandle(hMutex);
+    }
+
     std::string strExePath = strPath;
     if (strPath.empty())
     {
@@ -286,11 +298,7 @@ bool CZhumuSdkImpl::DestorySDK()
 {
     bool bRet = false;
     
-    // 停止tcp服务
-    if (nullptr != m_pTcpServer)
-    {
-        m_pTcpServer->StopServer();
-    }
+    
 
     // 拼接协议
     Json::Value root;

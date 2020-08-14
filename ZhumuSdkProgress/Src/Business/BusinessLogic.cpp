@@ -493,6 +493,14 @@ int CBusinessLogic::DirectSharingZhumu(std::string strContent)
 // ×¢²áÖ÷´°¿Ú¾ä±ú
 void CBusinessLogic::DestroyZhumuSDK()
 {
+    if (true == m_bAttendMeeting)
+    {
+        CZhumuSdkAgency::GetInstance()->LeaveMeeting();
+    }
+    if (true == m_bAlreadyLanding)
+    {
+        CZhumuSdkAgency::GetInstance()->LogOutSDK();
+    }
     // ÍË³ösdk
     PostMessage(m_hWndMainDlg, WMUSER_BUSINESS_QUIT, NULL, NULL);
 }

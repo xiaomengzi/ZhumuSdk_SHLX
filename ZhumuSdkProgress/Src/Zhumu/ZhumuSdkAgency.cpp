@@ -153,6 +153,39 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LoginSDK(std::wstring account, std
     return SDKERR_UNKNOWN;
 }
 
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LogOutSDK()
+{
+    SDKError err = SDKERR_SUCCESS;
+
+    if (nullptr != m_pAuthService)
+    {
+        err = m_pAuthService->LogOut();
+        if (err != SDKError::SDKERR_SUCCESS)
+        {
+            LOGE << "[" << __FUNCTION__ << "] LogOut SDK failure ! error code: " << err << std::endl;
+        }
+        return err;
+    }
+    return SDKERR_UNKNOWN;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LeaveMeeting()
+{
+    if (nullptr == m_pMeetingService)
+    {
+        LOGE << "[" << __FUNCTION__ << "] The conference server was not created! " << std::endl;
+        return SDKERR_VIDEO_NOTREADY;
+    }
+
+    SDKError err = SDKERR_SUCCESS;
+    err = m_pMeetingService->Leave(LEAVE_MEETING);
+    if (err != SDKError::SDKERR_SUCCESS)
+    {
+        LOGE << "[" << __FUNCTION__ << "] Opening an appointment meeting failed ! error code: " << err << std::endl;
+    }
+    return err;
+}
+
 ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartAppointmentMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam)
 {
     if (nullptr == m_pMeetingService)

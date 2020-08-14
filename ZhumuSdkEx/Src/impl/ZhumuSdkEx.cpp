@@ -205,6 +205,11 @@ ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
         return SDKERR_UNKNOWN;
     }
 
+    g_pZhumuSdkImpl->StopTcpServer();
+
+    delete g_pZhumuSdkImpl;
+    g_pZhumuSdkImpl = nullptr;
+
     return SDKERR_SUCCESS;
 }
 

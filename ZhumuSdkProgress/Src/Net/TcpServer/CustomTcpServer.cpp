@@ -193,8 +193,8 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         }
         else if ("DestorySDK" == strMethod)
         {
-            CBusinessLogic::GetInstance()->DestroyZhumuSDK();
             OnResponse(pSender, dwConnID, strMethod, 0);
+            CBusinessLogic::GetInstance()->DestroyZhumuSDK();
         }
         else
         {
