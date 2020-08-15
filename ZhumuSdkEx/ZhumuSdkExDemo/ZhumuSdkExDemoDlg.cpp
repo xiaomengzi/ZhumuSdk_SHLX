@@ -289,6 +289,7 @@ void CZhumuSdkExDemoDlg::OnBnClickedButton2()
 {
     // TODO: 在此添加控件通知处理程序代码
     ZmSdkInitParam initParam;
+    initParam.asynchronous = true;
     SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_InitSDK(initParam);
 
     CString strMsg;

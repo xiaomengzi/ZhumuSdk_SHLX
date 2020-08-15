@@ -45,9 +45,10 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
                 else if (TimeUtil::milliseconds() - m_nStartTime > 15*1000)
                 {
                     bRet = false;
+                    LOGI << "[" << __FUNCTION__ << "] connection timeout £¡" << std::endl;
                     break;
                 }
-                Sleep(1);
+                Sleep(10);
             }
             if (false == m_strReceive.empty())
             {

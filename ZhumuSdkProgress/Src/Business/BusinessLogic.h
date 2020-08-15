@@ -157,6 +157,19 @@ public:
     // 登录瞩目SDK参数
     LoginSDKParam GetLoginSDKParam() const;
     void SetLoginSDKParam(LoginSDKParam val);
+
+    // 协议处理超时时间
+    int GetWaitTimeOut() const;
+    void SetWaitTimeOut(int val);
+    // 协议处理是否异步
+    bool GetAsynchronous() const;
+    void SetAsynchronous(bool val);
+    // 验证结果是否返回 true-已经翻译 false-未返回
+    bool GetAuthResultReturned() const;
+    void SetAuthResultReturned(bool val);
+    // 登录结果是否返回 true-已经翻译 false-未返回
+    bool GetLoginResultReturned() const;
+    void SetLoginResultReturned(bool val);
 private:
     CCustomTcpServer    m_tcpServer;
     HWND                m_hWndMainDlg;
@@ -169,7 +182,10 @@ private:
     bool                m_bReadyMeeting;        // 是否正在准备会议 true-正在准备会议 false-未准备会议
     bool                m_bAttendMeeting;       // 是否正在参加会议 true-正在参加会议 false-参加会议
     LoginSDKParam       m_loginSDKParam;        // 登录瞩目SDK参数
-
+    int                 m_nWaitTimeOut;         // 协议处理超时时间
+    bool                m_bAsynchronous;       // 协议处理是否异步
+    bool                m_bAuthResultReturned;  // 验证结果是否返回 true-已经翻译 false-未返回
+    bool                m_bLoginResultReturned; // 登录结果是否返回 true-已经翻译 false-未返回
     CZhumuSdkAgency*    m_pZhumuSdkAgency;
     std::map<ZOOM_SDK_NAMESPACE::MeetingFailCode, CString> m_mapMeetFailCode;
 

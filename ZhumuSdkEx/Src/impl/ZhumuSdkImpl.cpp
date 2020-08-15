@@ -40,7 +40,7 @@ bool CZhumuSdkImpl::StartTcpServer()
         }
         else
         {
-            LOGI << "[" << __FUNCTION__ << "] he TCP service started successfully! " << std::endl;
+            LOGI << "[" << __FUNCTION__ << "] The TCP service started successfully! " << std::endl;
             bRet = true;
         }
     }
@@ -97,8 +97,11 @@ bool CZhumuSdkImpl::InitSDK(ZmSdkInitParam initParam)
     root["method"] = "InitSDK";
     // 协议内容
     Json::Value body;
-    body["bandingName"] = (nullptr == initParam.bindingName) ? "" : initParam.bindingName;
-    body["supportUrl"] = (nullptr == initParam.supportUrl) ? "" : initParam.supportUrl;
+    body["bandingName"] = (nullptr == initParam.bindingName) ? "" : CUtils::ASCII2UTF_8(initParam.bindingName);
+    body["supportUrl"] = (nullptr == initParam.supportUrl) ? "" : CUtils::ASCII2UTF_8(initParam.supportUrl);
+    body["wbDomain"] = (nullptr == initParam.webDomain) ? "" : CUtils::ASCII2UTF_8(initParam.webDomain);
+    body["asynchronous"] = initParam.asynchronous;
+    body["timeOut"] = initParam.timeOut;
     body["sdkLangId"] = initParam.language;
     root["body"] = body;
 
@@ -126,8 +129,8 @@ bool CZhumuSdkImpl::LoginSDK(ZmSdkLoginParam loginParam)
     // 协议内容
     Json::Value body;
 
-    body["account"] = (nullptr == loginParam.account) ? "" : loginParam.account;
-    body["password"] = (nullptr == loginParam.password) ? "" : loginParam.password;
+    body["account"] = (nullptr == loginParam.account) ? "" : CUtils::ASCII2UTF_8(loginParam.account);
+    body["password"] = (nullptr == loginParam.password) ? "" : CUtils::ASCII2UTF_8(loginParam.password);
 
     root["body"] = body;
 
@@ -156,7 +159,7 @@ bool CZhumuSdkImpl::StartAppointmentMeeting(ZmStartAppointmentMeetingParam meeti
     // 协议内容
     Json::Value body;
     body["meetingNumber"] = meetingParam.meetingNumber;
-    body["participantId"] = (nullptr == meetingParam.participantId) ? "" : meetingParam.participantId;
+    body["participantId"] = (nullptr == meetingParam.participantId) ? "" : CUtils::ASCII2UTF_8(meetingParam.participantId);
     body["isVideoOff"] = meetingParam.isVideoOff;
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
@@ -186,8 +189,8 @@ bool CZhumuSdkImpl::StartInstantMeeting(ZmStartInstantMeetingParam meetingParam)
 
     // 协议内容
     Json::Value body;
-    body["meetingTopic"] = meetingParam.meetingTopic;
-    body["meetingParticipants"] = (nullptr == meetingParam.meetingParticipants) ? "" : meetingParam.meetingParticipants;
+    body["meetingTopic"] = (nullptr == meetingParam.meetingTopic) ? "" : CUtils::ASCII2UTF_8(meetingParam.meetingTopic);
+    body["meetingParticipants"] = (nullptr == meetingParam.meetingParticipants) ? "" : CUtils::ASCII2UTF_8(meetingParam.meetingParticipants);
     body["isVideoOff"] = meetingParam.isVideoOff;
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
@@ -218,8 +221,8 @@ bool CZhumuSdkImpl::JoinMeeting(ZmJoinMeetingParam meetingParam)
     // 协议内容
     Json::Value body;
     body["meetingNumber"] = meetingParam.meetingNumber;
-    body["userName"] = (nullptr == meetingParam.userName) ? "" : meetingParam.userName;
-    body["psw"] = (nullptr == meetingParam.psw) ? "" : meetingParam.psw;
+    body["userName"] = (nullptr == meetingParam.userName) ? "" : CUtils::ASCII2UTF_8(meetingParam.userName);
+    body["psw"] = (nullptr == meetingParam.psw) ? "" : CUtils::ASCII2UTF_8(meetingParam.psw);
     body["isVideoOff"] = meetingParam.isVideoOff;
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
@@ -250,8 +253,8 @@ bool CZhumuSdkImpl::AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingPara
     // 协议内容
     Json::Value body;
     body["meetingNumber"] = meetingParam.meetingNumber;
-    body["userName"] = (nullptr == meetingParam.userName) ? "" : meetingParam.userName;
-    body["psw"] = (nullptr == meetingParam.psw) ? "" : meetingParam.psw;
+    body["userName"] = (nullptr == meetingParam.userName) ? "" : CUtils::ASCII2UTF_8(meetingParam.userName);
+    body["psw"] = (nullptr == meetingParam.psw) ? "" : CUtils::ASCII2UTF_8(meetingParam.psw);
     body["isVideoOff"] = meetingParam.isVideoOff;
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;

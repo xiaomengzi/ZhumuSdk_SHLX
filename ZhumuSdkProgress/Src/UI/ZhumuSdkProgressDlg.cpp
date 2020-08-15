@@ -289,6 +289,7 @@ LRESULT CZhumuSdkProgressDlg::OnInitZhumuSDk(WPARAM wParam, LPARAM lParam)
     {
         return 0;
     }
+    SDKError err = SDKERR_UNKNOWN;
     std::string strContent(*pStrErrMsg);
     CString strMsg;
 
@@ -302,22 +303,36 @@ LRESULT CZhumuSdkProgressDlg::OnInitZhumuSDk(WPARAM wParam, LPARAM lParam)
         // 解析字符串，拼接初始化参数
         std::string strBandingName = root["bandingName"].asString();
         std::string strSupportUrl = root["supportUrl"].asString();
+        std::string strWbDomain = root["wbDomain"].asString();
+        bool        bAsynchronous = root["asynchronous"].asBool();
+        int         nTimeOut = root["timeOut"].asInt();
         int         nSdkLangId = root["sdkLangId"].asInt();
 
-        strBandingName = CUtils::UTF_82ASCII(strBandingName);
-        strSupportUrl = CUtils::UTF_82ASCII(strSupportUrl);
+        std::wstring wstrBandingName = CUtils::s2ws(CUtils::UTF_82ASCII(strBandingName));
+        std::wstring wstrSupportUrl = CUtils::s2ws(CUtils::UTF_82ASCII(strSupportUrl));
+        std::wstring wstrWbDomain = CUtils::s2ws(CUtils::UTF_82ASCII(strWbDomain));
+
+        CBusinessLogic::GetInstance()->SetWaitTimeOut(nTimeOut);
+        CBusinessLogic::GetInstance()->SetAsynchronous(bAsynchronous);
 
         // 拼接初始化参数
         ZOOM_SDK_NAMESPACE::InitParam zm_param;
-        zm_param.strWebDomain = g_strWebDomain.c_str();
-        zm_param.strBrandingName = CUtils::s2ws(strBandingName).c_str();
+        zm_param.strWebDomain = wstrWbDomain.c_str();
+        zm_param.strBrandingName = wstrBandingName.c_str();
+        zm_param.strSupportUrl = wstrSupportUrl.c_str();
         zm_param.emLanguageID = SDK_LANGUAGE_ID(nSdkLangId);
-        zm_param.strSupportUrl = CUtils::s2ws(strSupportUrl).c_str();
         zm_param.uiWindowIconSmallID = IDI_ICON1;
         zm_param.uiWindowIconBigID = IDI_ICON1;
         zm_param.enableLogByDefault = true;
 
-        SDKError err = CZhumuSdkAgency::GetInstance()->InitZhunmuSDK(zm_param);
+        if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+        {
+            err = CZhumuSdkAgency::GetInstance()->InitZhunmuSDK(zm_param);
+        }
+        else
+        {
+            err = SDKERR_SUCCESS;
+        }
 
         // 初始化成功反馈结果
         CBusinessLogic::GetInstance()->FeedbackInitResult(err);
@@ -485,14 +500,14 @@ LRESULT CZhumuSdkProgressDlg::OnStartAppointmentMeetingZhumuSDK(WPARAM wParam, L
         bool bIsAudioOff = root["isAudioOff"].asBool();
         bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
 
-        std::string strParticipantIdTemp = CUtils::UTF_82ASCII(strParticipantId);
+        std::wstring wstrParticipantIdTemp = CUtils::s2ws(CUtils::UTF_82ASCII(strParticipantId));
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
         ZOOM_SDK_NAMESPACE::StartParam startParam;
         startParam.userType = SDK_UT_NORMALUSER;
         startParam.param.normaluserStart.meetingNumber = nMeetingNumber;
-        startParam.param.normaluserStart.participantId = CUtils::s2ws(strParticipantIdTemp).c_str();
+        startParam.param.normaluserStart.participantId = wstrParticipantIdTemp.c_str();
         startParam.param.normaluserStart.isVideoOff = bIsVideoOff;
         startParam.param.normaluserStart.isAudioOff = bIsAudioOff;
         startParam.param.normaluserStart.isDirectShareDesktop = bIsDirectShareDesktop;
@@ -595,13 +610,13 @@ LRESULT CZhumuSdkProgressDlg::OnStartInstantMeetingZhumuSDK(WPARAM wParam, LPARA
         bool bIsAudioOff = root["isAudioOff"].asBool();
         bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
 
-        std::string strParticipantIdTemp = CUtils::UTF_82ASCII(strParticipantId);
+        std::wstring wstrParticipantIdTemp = CUtils::s2ws(CUtils::UTF_82ASCII(strParticipantId));
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
         ZOOM_SDK_NAMESPACE::StartParam startParam;
         startParam.userType = SDK_UT_NORMALUSER;
-        startParam.param.normaluserStart.participantId = CUtils::s2ws(strParticipantIdTemp).c_str();
+        startParam.param.normaluserStart.participantId = wstrParticipantIdTemp.c_str();
         startParam.param.normaluserStart.isVideoOff = bIsVideoOff;
         startParam.param.normaluserStart.isAudioOff = bIsAudioOff;
         startParam.param.normaluserStart.isDirectShareDesktop = bIsDirectShareDesktop;
@@ -704,16 +719,16 @@ LRESULT CZhumuSdkProgressDlg::OnJoinMeetingZhumuSDK(WPARAM wParam, LPARAM lParam
         bool bIsAudioOff = root["isAudioOff"].asBool();
         bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
 
-        std::string strUserNameTemp = CUtils::UTF_82ASCII(strUserName);
-        std::string strPswTemp = CUtils::UTF_82ASCII(strPsw);
+        std::wstring strUserNameTemp = CUtils::s2ws(CUtils::UTF_82ASCII(strUserName));
+        std::wstring strPswTemp = CUtils::s2ws(CUtils::UTF_82ASCII(strPsw));
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
         JoinParam joinParam;
         joinParam.userType = SDK_UT_NORMALUSER;
         joinParam.param.normaluserJoin.meetingNumber = nMeetingNumber;
-        joinParam.param.normaluserJoin.userName = CUtils::s2ws(strUserNameTemp).c_str();
-        joinParam.param.normaluserJoin.psw = CUtils::s2ws(strPswTemp).c_str();
+        joinParam.param.normaluserJoin.userName = strUserNameTemp.c_str();
+        joinParam.param.normaluserJoin.psw = strPswTemp.c_str();
         joinParam.param.normaluserJoin.isVideoOff = bIsVideoOff;
         joinParam.param.normaluserJoin.isAudioOff = bIsAudioOff;
         joinParam.param.normaluserJoin.isDirectShareDesktop = bIsDirectShareDesktop;
@@ -809,16 +824,16 @@ LRESULT CZhumuSdkProgressDlg::OnAnonymityJoinMeetingZhumuSDK(WPARAM wParam, LPAR
         bool bIsAudioOff = root["isAudioOff"].asBool();
         bool bIsDirectShareDesktop = root["isDirectShareDesktop"].asBool();
 
-        std::string strUserNameTemp = CUtils::UTF_82ASCII(strUserName);
-        std::string strPswTemp = CUtils::UTF_82ASCII(strPsw);
+        std::wstring wstrUserName = CUtils::s2ws(CUtils::UTF_82ASCII(strUserName));
+        std::wstring wstrPsw = CUtils::s2ws(CUtils::UTF_82ASCII(strPsw));
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
         JoinParam joinParam;
         joinParam.userType = SDK_UT_WITHOUT_LOGIN;
         joinParam.param.withoutloginuserJoin.meetingNumber = nMeetingNumber;
-        joinParam.param.withoutloginuserJoin.userName = CUtils::s2ws(strUserNameTemp).c_str();
-        joinParam.param.withoutloginuserJoin.psw = CUtils::s2ws(strPswTemp).c_str();
+        joinParam.param.withoutloginuserJoin.userName = wstrUserName.c_str();
+        joinParam.param.withoutloginuserJoin.psw = wstrPsw.c_str();
         joinParam.param.withoutloginuserJoin.isVideoOff = bIsVideoOff;
         joinParam.param.withoutloginuserJoin.isAudioOff = bIsAudioOff;
         joinParam.param.withoutloginuserJoin.isDirectShareDesktop = bIsDirectShareDesktop;

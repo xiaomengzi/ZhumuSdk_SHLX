@@ -7,6 +7,7 @@
 #include "Utils.h"
 #include "BusinessLogic.h"
 #include <stddef.h>
+#include "TimeUtil.h"
 
 
 
@@ -110,12 +111,54 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         {
             auto body = root["body"];
             int nRet = CBusinessLogic::GetInstance()->InitZhumuSDK(CUtils::json2Str(body));
+            UINT nTime = TimeUtil::milliseconds();
+            CBusinessLogic::GetInstance()->SetAuthResultReturned(false);
+            while (CBusinessLogic::GetInstance()->GetAsynchronous() == false)
+            {
+                if (TimeUtil::milliseconds() - nTime >= CBusinessLogic::GetInstance()->GetWaitTimeOut())
+                {
+                    // 等待超时
+                    nRet = -1;
+                    break;
+                }
+                else if (true == CBusinessLogic::GetInstance()->GetAuthResultReturned())
+                {
+                    if (true == CBusinessLogic::GetInstance()->GetAlreadyAuth() )
+                    {
+                        nRet = 0;
+                    }
+                    break;
+                }
+                Sleep(5);
+            }
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("LoginSDK" == strMethod)
         {
             auto body = root["body"];
             int nRet = CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
+            UINT nTime = TimeUtil::milliseconds();
+            CBusinessLogic::GetInstance()->SetLoginResultReturned(false);
+            // 等待超时
+            while (CBusinessLogic::GetInstance()->GetAsynchronous() == false)
+            {
+                if (TimeUtil::milliseconds() - nTime >= CBusinessLogic::GetInstance()->GetWaitTimeOut())
+                { 
+                    // 超时
+                    nRet = -1;
+                    break;
+                }
+                else if (true == CBusinessLogic::GetInstance()->GetLoginResultReturned())
+                {
+                    // 登录结果
+                    if (true == CBusinessLogic::GetInstance()->GetAlreadyLanding())
+                    {
+                        nRet = 0;
+                    }
+                    break;
+                }
+                Sleep(5);
+            }
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("StartAppointmentMeeting" == strMethod)
@@ -232,11 +275,11 @@ void CCustomTcpServer::OnResponse(ITcpServer* pSender, CONNID dwConnID, std::str
     root["method"] = strMethod;
     root["errorCode"] = nErrCode;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     bool bRet = false;
     LPCSTR name = "suirui_head";
-    LPCSTR desc = strSendConteng.c_str();
+    LPCSTR desc = strSendContent.c_str();
     int desc_len = (int)strlen(desc) + 1;
     int body_len = offsetof(TPkgBody, desc) + desc_len;
 
@@ -247,8 +290,10 @@ void CCustomTcpServer::OnResponse(ITcpServer* pSender, CONNID dwConnID, std::str
     strcpy(pBody->name, name);
     strcpy(pBody->desc, desc);
 
+    bool bSend = false;
     if (nullptr != pSender)
     {
         pSender->Send(dwConnID, (BYTE*)pBody, body_len);
     }
+    LOGI << "[" << __FUNCTION__ << "] Feedback TCP connection! Content: " << strSendContent << " to Client " << dwConnID << std::endl;
 }

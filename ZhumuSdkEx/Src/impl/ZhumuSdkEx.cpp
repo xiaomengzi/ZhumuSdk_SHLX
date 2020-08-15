@@ -19,6 +19,7 @@ ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(ZhumuSdkEx_Event* event, const char* exe
     bool bRet = false;
     // 初始化日志
     plog::init(plog::info, CUtils::GetLogFilePath().c_str(), 1000000, 5);
+    LOGI << "*************[ Initialization! ]*****************" << std::endl;
 
     // 创建接口代理
     if (nullptr == g_pZhumuSdkImpl)
@@ -41,7 +42,7 @@ ZHUMUSDKEX_API SDKError Zhumu_CreateSDK(ZhumuSdkEx_Event* event, const char* exe
     return SDKERR_SUCCESS;
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam)
+ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam& initParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -60,7 +61,7 @@ ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam)
 
 
 
-ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
+ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam& loginParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -76,7 +77,7 @@ ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam)
     return SDKERR_SUCCESS;
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam)
+ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam& meetingParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -93,7 +94,7 @@ ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingP
     return SDKERR_SUCCESS;
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam meetingParam)
+ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam& meetingParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -111,7 +112,7 @@ ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam mee
 }
 
 
-ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam)
+ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam& meetingParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -128,7 +129,7 @@ ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam)
     return SDKERR_SUCCESS;
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam)
+ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam& meetingParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -175,7 +176,7 @@ ZHUMUSDKEX_API SDKError Zhumu_DestroySettingService(ISettingService* pSettingSer
     return SDKError(result);
 }
 
-ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam directSharingParam)
+ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam& directSharingParam)
 {
     if (nullptr == g_pZhumuSdkImpl)
     {
@@ -212,8 +213,5 @@ ZHUMUSDKEX_API SDKError Zhumu_DestorySDK()
 
     return SDKERR_SUCCESS;
 }
-
-
-
 
 END_ZHUMUSDKEX_NAMESPACE

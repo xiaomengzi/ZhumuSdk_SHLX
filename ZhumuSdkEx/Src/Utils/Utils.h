@@ -30,6 +30,8 @@ public:
 
 
     static std::string json2Str(const Json::Value& data);
+    static std::string UTF8_To_string(const std::string & str);
+    static std::string string_To_UTF8(const std::string & str);
 };
 
 #endif // _UTILS_H_

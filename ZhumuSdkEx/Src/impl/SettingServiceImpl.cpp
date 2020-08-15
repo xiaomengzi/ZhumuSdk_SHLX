@@ -19,6 +19,8 @@ CSettingServiceImpl::~CSettingServiceImpl()
 
 ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectMic(const char* deviceId, const char* deviceName)
 {
+    std::string strDeviceId = CUtils::ASCII2UTF_8(deviceId);
+    std::string strDdeviceName = CUtils::ASCII2UTF_8(deviceName);
     bool bRet = false;
     SDKError err = SDKERR_SUCCESS;
     // 拼接协议
@@ -28,16 +30,16 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectMic(const char* device
 
     // 协议内容
     Json::Value body;
-    body["deviceId"] = deviceId;
-    body["deviceName"] = deviceName;
+    body["deviceId"] = strDeviceId;
+    body["deviceName"] = strDdeviceName;
     root["body"] = body;
-
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strJson = root.toStyledString();
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -60,12 +62,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SetMicVol(int& value)
     body["value"] = value;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -78,6 +80,9 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectSpeaker(const char* de
 {
     bool bRet = false;
     SDKError err = SDKERR_SUCCESS;
+    std::string strDeviceId = CUtils::ASCII2UTF_8(deviceId);
+    std::string strDeviceName = CUtils::ASCII2UTF_8(deviceName);
+
     // 拼接协议
     Json::Value root;
     // 接口名
@@ -85,16 +90,16 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectSpeaker(const char* de
 
     // 协议内容
     Json::Value body;
-    body["deviceId"] = deviceId;
-    body["deviceName"] = deviceName;
+    body["deviceId"] = strDeviceId;
+    body["deviceName"] = strDeviceName;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -117,12 +122,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SetSpeakerVol(int& value)
     body["value"] = value;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -145,12 +150,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableAutoFullScreenVideoWhe
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -173,12 +178,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EanbleAlwaysDisplayedMeeting
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -201,12 +206,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EanbleAlwaysJoinMeetingbefor
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -229,12 +234,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableAutoJoinAudio(bool bEn
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -257,12 +262,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableParticipantsUnmuteWhen
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -285,12 +290,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableEchoCancellation(bool 
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -303,6 +308,7 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectCamera(const char* dev
 {
     bool bRet = false;
     SDKError err = SDKERR_SUCCESS;
+    std::string strDeviceId = CUtils::ASCII2UTF_8(deviceId);
     // 拼接协议
     Json::Value root;
     // 接口名
@@ -313,12 +319,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::SelectCamera(const char* dev
     body["deviceId"] = deviceId;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -341,12 +347,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableHDVideo(bool bEnable)
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;
@@ -369,12 +375,12 @@ ZHUMUSDKEX_NAMESPACE::SDKError CSettingServiceImpl::EnableAutoTurnOffVideoWhenJo
     body["enable"] = bEnable;
     root["body"] = body;
 
-    std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
+    std::string strSendContent = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //发送数据
     CCustomTcpClient tcpClient;
     std::string strReceive;
-    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendConteng, strReceive);
+    bRet = tcpClient.InterfaceCommunicate(g_strServerIp, g_nServerPort, strSendContent, strReceive);
     if (false == bRet)
     {
         LOGE << "[" << __FUNCTION__ << "] On failure ! " << std::endl;

@@ -16,15 +16,20 @@ CBusinessLogic *CBusinessLogic::m_pInstance = nullptr;
 
 CBusinessLogic::CBusinessLogic()
 {
-    m_hWndMainDlg = NULL;
-    m_bZhumuSdkAlreadyInit = false; // 瞩目SDK是否已经初始化 true-初始化 false-未初始化
-    m_bIsLanding = false;           // 瞩目SDK是否正在登陆 true-正在登陆 false-未登录
-    m_bAlreadyLanding = false;      // 瞩目SDK是否已经登录 true-已经登录 false-未登录
-    m_bIsDirectLogin = false;       // 登录SDK 
-    m_bIsAnonymousJoin = false;     // 是否为匿名入会
-    m_bAlreadyAuth = false;
-    m_bReadyMeeting = false;;       // 是否正在准备会议 true-正在准备会议 false-未准备会议
-    m_bAttendMeeting = false;       // 是否正在准备会议 true-正在准备会议 false-未准备会议
+   m_hWndMainDlg = nullptr;
+   m_bZhumuSdkAlreadyInit = false; // 瞩目SDK是否已经初始化 true-初始化 false-未初始化
+   m_bIsLanding = false;           // 瞩目SDK是否正在登陆 true-正在登陆 false-未登录
+   m_bAlreadyLanding = false;      // 瞩目SDK是否已经登录 true-已经登录 false-未登录
+   m_bIsDirectLogin = false;       // 登录SDK 
+   m_bIsAnonymousJoin = false;     // 是否为匿名入会
+   m_bAlreadyAuth = false;         // 是否已经认证
+   m_bReadyMeeting = false;        // 是否正在准备会议 true-正在准备会议 false-未准备会议
+   m_bAttendMeeting = false;       // 是否正在参加会议 true-正在参加会议 false-参加会议
+   m_nWaitTimeOut = false;         // 协议处理超时时间
+   m_bAsynchronous = false;       // 协议处理是否异步
+   m_bAuthResultReturned = false;  // 验证结果是否返回 true-已经翻译 false-未返回
+   m_bLoginResultReturned = false; // 登录结果是否返回 true-已经翻译 false-未返回
+   m_pZhumuSdkAgency = nullptr;
 }
 
 
@@ -114,10 +119,25 @@ void CBusinessLogic::StopTcpServer()
 int CBusinessLogic::InitZhumuSDK(std::string strContent)
 {
     int nRet = -1;
-    if (true == m_bZhumuSdkAlreadyInit)
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
     {
-        LOGE << "[" << __FUNCTION__ << "] Zhumu SDK Already initialized!" << std::endl;
-        return nRet;
+        // 解析字符串，拼接初始化参数
+        bool        bAsynchronous = root["asynchronous"].asBool();
+        int         nTimeOut = root["timeOut"].asInt();
+        int         nSdkLangId = root["sdkLangId"].asInt();
+
+        CBusinessLogic::GetInstance()->SetWaitTimeOut(nTimeOut);
+        CBusinessLogic::GetInstance()->SetAsynchronous(bAsynchronous);
+    }
+    else
+    {
+        LOGE << "json reader error! content:[" << strContent << "] " << __FUNCTION__;
+        return -1;
     }
 
     std::string *pStr = new std::string(strContent);
@@ -273,6 +293,7 @@ int CBusinessLogic::SettingMeetingZhumu(std::string strContent)
 
 int CBusinessLogic::SelectMicZhumuSDK(std::string strContent)
 {
+
     LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
     int nRet = -1;
 
@@ -511,6 +532,10 @@ void CBusinessLogic::DestroyZhumuSDK()
 // 反馈初始化SDK结果
 bool CBusinessLogic::FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret)
 {
+    if (false == m_bAsynchronous)
+    {
+        return false;
+    }
     bool bRet = false;
 
     // 拼接协议
@@ -538,6 +563,10 @@ bool CBusinessLogic::FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret)
 // 反馈认证结果
 bool CBusinessLogic::FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret)
 {
+    if (false == m_bAsynchronous)
+    {
+        return false;
+    }
     bool bRet = false;
 
     // 拼接协议
@@ -565,6 +594,10 @@ bool CBusinessLogic::FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret)
 // 反馈登录结果
 bool CBusinessLogic::FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret)
 {
+    if (false == m_bAsynchronous)
+    {
+        return false;
+    }
     bool bRet = false;
 
     // 拼接协议
@@ -672,6 +705,7 @@ void CBusinessLogic::AuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret)
         PostMessage(m_hWndMainDlg, WMUSER_BUSINESS_CUSTOM_ERROR, (WPARAM)pStr, 1);
         LOGI << "[" << __FUNCTION__ << "] Zhumu SDK authentication failure ! error code:" << ret << std::endl;
     }
+    m_bAuthResultReturned = true;
 }
 
 void CBusinessLogic::LoginReturn(LOGINSTATUS ret, IAccountInfo* pAccountInfo)
@@ -684,12 +718,14 @@ void CBusinessLogic::LoginReturn(LOGINSTATUS ret, IAccountInfo* pAccountInfo)
         m_bIsLanding = false;
         // 将验证结果回调给上层
         FeedbackLoginResult(ret);
+        m_bLoginResultReturned = true;
     }
     else if (ret == LOGIN_FAILED)
     {
         m_bAlreadyLanding = false;
         m_bIsLanding = false;
         FeedbackLoginResult(ret);
+        m_bLoginResultReturned = true;
 
         // 弹出错误提示
         CString strErrMsg;
@@ -883,4 +919,44 @@ LoginSDKParam CBusinessLogic::GetLoginSDKParam() const
 void CBusinessLogic::SetLoginSDKParam(LoginSDKParam val)
 {
     m_loginSDKParam = val;
+}
+
+int CBusinessLogic::GetWaitTimeOut() const
+{
+    return m_nWaitTimeOut;
+}
+
+void CBusinessLogic::SetWaitTimeOut(int val)
+{
+    m_nWaitTimeOut = val;
+}
+
+bool CBusinessLogic::GetAsynchronous() const
+{
+    return m_bAsynchronous;
+}
+
+void CBusinessLogic::SetAsynchronous(bool val)
+{
+    m_bAsynchronous = val;
+}
+
+bool CBusinessLogic::GetAuthResultReturned() const
+{
+    return m_bAuthResultReturned;
+}
+
+void CBusinessLogic::SetAuthResultReturned(bool val)
+{
+    m_bAuthResultReturned = val;
+}
+
+bool CBusinessLogic::GetLoginResultReturned() const
+{
+    return m_bLoginResultReturned;
+}
+
+void CBusinessLogic::SetLoginResultReturned(bool val)
+{
+    m_bLoginResultReturned = val;
 }

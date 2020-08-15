@@ -18,32 +18,32 @@ extern "C"
     /************************************************************************/
     /* 初始化SDK                                                             */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam initParam);
+    ZHUMUSDKEX_API SDKError Zhumu_InitSDK(ZmSdkInitParam& initParam);
 
     /************************************************************************/
     /* 登录瞩目SDK                                                           */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam loginParam);
+    ZHUMUSDKEX_API SDKError Zhumu_SLoginSDK(ZmSdkLoginParam& loginParam);
 
     /************************************************************************/
     /* 开启预约会议                                                          */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam meetingParam);
+    ZHUMUSDKEX_API SDKError Zhumu_StartAppointmentMeeting(ZmStartAppointmentMeetingParam& meetingParam);
 
     /************************************************************************/
     /* 开启即时会议                                                          */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam meetingParam);
+    ZHUMUSDKEX_API SDKError Zhumu_StartInstantMeeting(ZmStartInstantMeetingParam& meetingParam);
 
     /************************************************************************/
     /* 加入会议                                                              */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam meetingParam);
+    ZHUMUSDKEX_API SDKError Zhumu_JoinMeeting(ZmJoinMeetingParam& meetingParam);
 
     /************************************************************************/
     /*  匿名加入会议                                                         */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingParam);
+    ZHUMUSDKEX_API SDKError Zhumu_AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam& meetingParam);
 
     /************************************************************************/
     /* 创建设置服务                                                          */
@@ -58,7 +58,7 @@ extern "C"
     /************************************************************************/
     /* 直接共享                                                              */
     /************************************************************************/
-    ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam directSharingParam);
+    ZHUMUSDKEX_API SDKError Zhumu_DirectSharing(ZmDirectSharingParam& directSharingParam);
 
     /************************************************************************/
     /* 销毁SDK                                                               */

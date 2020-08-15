@@ -179,15 +179,22 @@ enum SettingServerType
 /************************************************************************/
 typedef struct stZmSdkInitParam
 {
-    char* bindingName; // 进程名称
-    char* supportUrl;   // url
-    SDK_LANGUAGE_ID language; // 语言id
+    char* bindingName;              // 标题名
+    char* supportUrl;               // 技术支持URL
+    char* webDomain;                // 网络域
+    bool  asynchronous;             // 是否异步反馈 true-异步 false-同步
+    int   timeOut;                  // 同步超时时间 单位毫秒 默认10秒
+    SDK_LANGUAGE_ID language;       // 语言id
 
     stZmSdkInitParam()
     {
         bindingName = "TiYiYun";
         supportUrl = "https://www.cloudmeeting.com";
+        webDomain = "https://launcher.zhumu.me";
+        asynchronous = true;
+        timeOut = 10000;
         language = LANGUAGE_Chinese_Simplified;
+
     }
 
 }ZmSdkInitParam;

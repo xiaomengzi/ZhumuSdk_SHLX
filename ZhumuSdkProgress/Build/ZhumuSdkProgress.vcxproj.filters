@@ -43,6 +43,12 @@
     <Filter Include="Src\UI\res">
       <UniqueIdentifier>{e37d72fc-3011-470f-b6a1-dadd257a79b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Depends\SystemTime">
+      <UniqueIdentifier>{22041b16-fc47-4d33-b927-646f78dac9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Depends\Minithread">
+      <UniqueIdentifier>{fcb6ad92-6299-448f-938c-08b4cc4ce2eb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h">
@@ -225,6 +231,18 @@
     <ClInclude Include="..\Src\Net\TcpServer\CustomTcpServer.h">
       <Filter>Src\Net\TcpServer</Filter>
     </ClInclude>
+    <ClInclude Include="..\Depends\Minithread\Minithread.hpp">
+      <Filter>Depends\Minithread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\FakeSystemTime.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\GCommon.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\SystemTime\TimeUtil.h">
+      <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Src\Zhumu\ZhumuSdkAgency.cpp">
@@ -256,6 +274,12 @@
     </ClCompile>
     <ClCompile Include="..\Src\Net\TcpServer\CustomTcpServer.cpp">
       <Filter>Src\Net\TcpServer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Depends\SystemTime\FakeSystemTime.cpp">
+      <Filter>Depends\SystemTime</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Depends\SystemTime\TimeUtil.cpp">
+      <Filter>Depends\SystemTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

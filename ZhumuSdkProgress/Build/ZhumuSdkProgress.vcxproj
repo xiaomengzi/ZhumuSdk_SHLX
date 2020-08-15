@@ -96,7 +96,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_WINDOWS;_DEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\Utils;..\Depends\ZhumuSDK\include;..\Src;..\Src\Business;..\Src\Net;..\Src\UI;..\Src\Zhumu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\Utils;..\Depends\ZhumuSDK\include;..\Depends\Minithread;..\Depends\SystemTime;..\Src;..\Src\Business;..\Src\Net;..\Src\UI;..\Src\Zhumu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -145,7 +145,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;_CRT_NON_CONFORMING_SWPRINTFS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\Utils;..\Depends\ZhumuSDK\include;..\Src;..\Src\Business;..\Src\Net;..\Src\UI;..\Src\Zhumu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Depends;..\Depends\HPSocket\Include;..\Depends\jsoncpp\include;..\Depends\Utils;..\Depends\ZhumuSDK\include;..\Depends\Minithread;..\Depends\SystemTime;..\Src;..\Src\Business;..\Src\Net;..\Src\UI;..\Src\Zhumu;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,6 +195,10 @@
     <ClInclude Include="..\Depends\HPSocket\Include\HPSocket.h" />
     <ClInclude Include="..\Depends\HPSocket\Include\HPTypeDef.h" />
     <ClInclude Include="..\Depends\HPSocket\Include\SocketInterface.h" />
+    <ClInclude Include="..\Depends\Minithread\Minithread.hpp" />
+    <ClInclude Include="..\Depends\SystemTime\FakeSystemTime.h" />
+    <ClInclude Include="..\Depends\SystemTime\GCommon.h" />
+    <ClInclude Include="..\Depends\SystemTime\TimeUtil.h" />
     <ClInclude Include="..\Depends\Utils\DirectoryUtil.h" />
     <ClInclude Include="..\Depends\Utils\FileUtil.h" />
     <ClInclude Include="..\Depends\Utils\Utils.h" />
@@ -254,6 +258,8 @@
     <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\Depends\SystemTime\FakeSystemTime.cpp" />
+    <ClCompile Include="..\Depends\SystemTime\TimeUtil.cpp" />
     <ClCompile Include="..\Depends\Utils\DirectoryUtil.cpp" />
     <ClCompile Include="..\Depends\Utils\FileUtil.cpp" />
     <ClCompile Include="..\Depends\Utils\Utils.cpp" />
