@@ -105,4 +105,11 @@ public:
     CComboBox m_comboxMicList;
     ISettingService* m_pSettingService;
 
+    CEdit m_editExePath;
+    CEdit m_editBindingName;
+    CEdit m_editSupportUrl;
+    CEdit m_editWebDomain;
+    CEdit m_editTimeOut;
+    CButton m_btnAsynchronous;
+    CComboBox m_conboxLanguageId;
 };

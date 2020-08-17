@@ -90,6 +90,13 @@ void CZhumuSdkExDemoDlg::DoDataExchange(CDataExchange* pDX)
     DDX_Control(pDX, IDC_CHECK_HDVIDEO, m_btnHDVideo);
     DDX_Control(pDX, IDC_CHECK_AUTOTURNOFFVIDEO, m_btnAutoTurnOffVideo);
     DDX_Control(pDX, IDC_COMBO1, m_comboxMicList);
+    DDX_Control(pDX, IDC_EDIT_EXEPATH, m_editExePath);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER2, m_editBindingName);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER3, m_editSupportUrl);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER4, m_editWebDomain);
+    DDX_Control(pDX, IDC_EDIT_NORMALSTARTMEETINGNUMBER5, m_editTimeOut);
+    DDX_Control(pDX, IDC_NORMALSTARTISVIDEOOFF2, m_btnAsynchronous);
+    DDX_Control(pDX, IDC_COMBO2, m_conboxLanguageId);
 }
 
 BEGIN_MESSAGE_MAP(CZhumuSdkExDemoDlg, CDialogEx)
@@ -151,6 +158,7 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
     // TODO: 在此添加额外的初始化代码
     m_editPassword.SetWindowTextW(_T("zm123456"));
     m_editUserName.SetWindowTextW(_T("mengxw@suirui.com"));
+    m_editExePath.SetWindowTextW(_T("D:\\07 GitHub\\01 Suirui\\ZhumuSdk_SHLX\\ZhumuSdkProgress\\Bin\\Debug\\ZhumuSdkProgress.exe"));
 
     m_editNormalStartMeetingNumber.SetWindowTextW(_T("202444421"));
     m_editNormalStartVanityID.SetWindowTextW(_T("mengxw@suirui.com"));
@@ -169,6 +177,10 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
     m_btnNormalJoinIsAudioOff.SetCheck(1);
     m_btnNormalJoinIsDirectShareDesktop.SetCheck(0);
 
+    m_editBindingName.SetWindowTextW(_T("TiYiYun"));
+    m_editSupportUrl.SetWindowTextW(_T("https://www.cloudmeeting.com"));
+    m_editWebDomain.SetWindowTextW(_T("https://launcher.zhumu.me"));
+    m_editTimeOut.SetWindowTextW(_T("10000"));
 
     CSwtichAudioDev::Instance()->EnumAudioDevice();
     int ictn = CSwtichAudioDev::Instance()->m_strFriedlyName.GetCount();
@@ -178,6 +190,15 @@ BOOL CZhumuSdkExDemoDlg::OnInitDialog()
         m_comboxMicList.SetItemData(i, i);
     }
     m_comboxMicList.SetCurSel(0);
+
+    m_conboxLanguageId.AddString(_T("LANGUAGE_English"));
+    m_conboxLanguageId.SetItemData(0, 1);
+    m_conboxLanguageId.AddString(_T("LANGUAGE_Chinese_Simplified"));
+    m_conboxLanguageId.SetItemData(1, 2);
+    m_conboxLanguageId.AddString(_T("LANGUAGE_Chinese_Traditional"));
+    m_conboxLanguageId.SetItemData(2, 3);
+    m_conboxLanguageId.SetCurSel(1);
+
 
     return TRUE;  // 除非将焦点设置到控件，否则返回 TRUE
 }
@@ -277,7 +298,12 @@ void CZhumuSdkExDemoDlg::AddMsg(CString strMsg)
 
 void CZhumuSdkExDemoDlg::OnBnClickedButton1()
 {
-    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(this, "D:\\07 GitHub\\01 Suirui\\ZhumuSdk_SHLX\\ZhumuSdkProgress\\Bin\\Debug\\ZhumuSdkProgress.exe");
+
+    CString strPath;
+    m_editExePath.GetWindowTextW(strPath);
+    std::string strPathTemp = CT2A(strPath);
+
+    SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(this, strPathTemp.c_str());
 
     CString strMsg;
     strMsg.Format(_T(" SDKError %d = ZHUMUSDKEX_NAMESPACE::Zhumu_CreateSDK(crateParam);"), err);
@@ -288,8 +314,38 @@ void CZhumuSdkExDemoDlg::OnBnClickedButton1()
 void CZhumuSdkExDemoDlg::OnBnClickedButton2()
 {
     // TODO: 在此添加控件通知处理程序代码
+
+    CString cstrBindingName;
+    CString cstrSupportUrl;
+    CString cstrWebDomain;
+    CString cstrTimeOut;
+
+    m_editBindingName.GetWindowTextW(cstrBindingName);
+    m_editSupportUrl.GetWindowTextW(cstrSupportUrl);
+    m_editWebDomain.GetWindowTextW(cstrWebDomain);
+    m_editTimeOut.GetWindowTextW(cstrTimeOut);
+
+    std::string strBindingName = CT2A(cstrBindingName);
+    std::string strSupportUrl = CT2A(cstrSupportUrl);
+    std::string strWebDomain = CT2A(cstrWebDomain);
+
     ZmSdkInitParam initParam;
-    initParam.asynchronous = true;
+    initParam.bindingName = const_cast<char*>(strBindingName.c_str()); 
+    initParam.supportUrl = const_cast<char*>(strSupportUrl.c_str());
+    initParam.webDomain = const_cast<char*>(strWebDomain.c_str());
+    initParam.asynchronous = m_btnAsynchronous.GetCheck() == 1 ? true : false;
+    initParam.timeOut = _ttoi(cstrTimeOut);                  // 同步超时时间 单位毫秒 默认10秒
+
+    int nIndex = m_conboxLanguageId.GetCurSel();
+    if (-1 == nIndex)
+    {
+        return;
+    }
+    int nData = m_conboxLanguageId.GetItemData(nIndex);
+    SDK_LANGUAGE_ID languageId = SDK_LANGUAGE_ID(m_conboxLanguageId.GetItemData(nIndex));
+
+    initParam.language = languageId;
+
     SDKError err = ZHUMUSDKEX_NAMESPACE::Zhumu_InitSDK(initParam);
 
     CString strMsg;
