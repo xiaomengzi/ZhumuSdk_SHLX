@@ -1,544 +1,487 @@
 /*!
-* \file premeeting_service_interface.h
-* \brief PreMeeting Service Interface.
-* 
+* \文件：premeeting_service_interface.h
+* \描述：会前服务接口
+*
 */
-#ifndef _PREMEETING_SERVICE_INTERFACE_H_
-#define _PREMEETING_SERVICE_INTERFACE_H_
-#include "zoom_sdk_def.h"
-
-BEGIN_ZOOM_SDK_NAMESPACE
+#ifndef ZHUMU_PREMEETING_SERVICE_INTERFACE_H_
+#define ZHUMU_PREMEETING_SERVICE_INTERFACE_H_
+#include "zhumu_sdk_def.h"
+#include <vector>
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 
 /*! \enum PremeetingAPIResult
-    \brief The result of premeeting API request.
-    Here are more detailed structural descriptions.
+\描述：会前的 API 请求结果.
+更详细的结构描述。
 */
 enum PremeetingAPIResult
 {
-	PREMETAPIRET_UNKNOW,///<API returns unknown error.
-	PREMETAPIRET_SUCCESS,///<Calls API successfully.
+	PREMETAPIRET_UNKNOW,
+	PREMETAPIRET_SUCCESS,
 };
 
-enum InterpreteLanguageInfo{
-	LANGUAGEINFO_NONE = -1,
-	LANGUAGEINFO_US,	//English
-	LANGUAGEINFO_CN,	//Chinese
-	LANGUAGEINFO_JP,	//Japanese
-	LANGUAGEINFO_DE,	//German
-	LANGUAGEINFO_FR,	//French
-	LANGUAGEINFO_RU,	//Russian
-	LANGUAGEINFO_PT,	//Portuguese
-	LANGUAGEINFO_ES,	//Spanish
-	LANGUAGEINFO_KR,	//Korean
-	LANGUAGEINFO_NUM
-};
-class IInterpreterInfo
-{
-public:
-	virtual const wchar_t* GetEmail() = 0;
-
-	virtual InterpreteLanguageInfo GetFirstLanguageInfo() = 0;
-
-	virtual InterpreteLanguageInfo GetSecendLanguageInfo() = 0;
-
-	virtual ~IInterpreterInfo() {};
-};
-class IAlternativeHostInfo
-{
-public:
-	virtual const wchar_t* GetEmail() = 0;
-
-	virtual ~IAlternativeHostInfo() {};
-};
-
-/// \brief The interface to query the basic information of meeting.
+/// \描述：日程会议项目接口
+/// 此接口用于调度和编辑会议api
+/// 您可以在IPreMeetingService中使用createschscheduling emeetingitem和DestoryScheduleMeetingItem创建和销毁这个对象
+///
 class IQueryMeetingItemDateInfoHelper
 {
 public:
-	/// \brief Get the start time of the specified meeting.
-	/// \return The start time of the specified meeting.
-	virtual time_t      GetCurrentStartTime() = 0; 
-	
-	/// \brief Get the duration of the specified meeting.
-	/// \return The duration of the specified meeting in minutes.
-	virtual int			GetDurationInMinutes() = 0;
-	
-	/// \brief Determine if the recurring meeting mode is selected.
-	/// \return TRUE indicates that it is a recurring meeting. False not.
-	virtual bool		IsRecurringMeetingSelected() = 0;
-	virtual ~IQueryMeetingItemDateInfoHelper(){}
+	/// \描述：获取指定会议的开始时间。
+	/// \返回：指定会议的开始时间。
+	virtual time_t GetCurrentStartTime() = 0;
+
+	/// \描述：获取指定会议的持续时间。
+	/// \返回：指定会议的持续时间(以分钟为单位)
+	virtual int	GetDurationInMinutes() = 0;
+
+	/// \描述：指定会议的持续时间(以分钟为单位)
+	/// \返回：TRUE 表示是一个循环会议. False 表示不是.
+	virtual bool IsRecurringMeetingSelected() = 0;
+	virtual ~IQueryMeetingItemDateInfoHelper() {}
 };
-/// \brief The interface to set the meeting basic information.
+/// \描述：会议基本信息设置接口。
 class ISelectMeetingItemDateHelper
 {
 public:
-	/// \brief Set the start time of the specified meeting. It is recommended to use the time zone of the operating system.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置指定会议的开始时间。建议使用操作系统的时区。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError    SelectStartTime(time_t time) = 0;
-	
-	/// \brief Set the duration of the specified meeting in minutes.
-	/// \param duration The meeting duration in minutes.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：设置指定会议的持续时间
+	/// \参数：会议持续时间以分钟为单位
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError    SetDurationInMinutes(int duration) = 0;
 
-	/// \brief Set the meeting type to recurring or scheduled.
-	/// \param select_ TRYE indicates the meeting type is recurring.  FALSE schedule meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议类型为经常性或计划性。
+	/// \参数： select_ TRYE 表示会议类型是重复会议，FALSE 表示不是.
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError SelectRecurringMeeting(bool select_) = 0;
-	virtual ~ISelectMeetingItemDateHelper(){}
+	virtual ~ISelectMeetingItemDateHelper() {}
 };
 
-/// \brief The callback interface that the selected meeting status changes.
+/// \描述： 所选会议状态更改的回调接口。
 class ISelectMeetingItemDateHelperEvent
 {
 public:
-	/// \brief The callback event that the selected meeting status changes.
-	/// \param can_use TRUE indicates to be available.
-	/// \param date_select_helper An object pointer to ISelectMeetingItemDateHelper. For more details, see \link ISelectMeetingItemDateHelper \endlink.
+	/// \描述： 所选会议状态更改的回调事件。
+	/// \参数： can_use TRUE 表示可用。
+	/// \参数： date_select_helper 一个指向ISelectMeetingItemDateHelper的对象指针。有关详细信息，请参见 ISelectMeetingItemDateHelper。
 	virtual void onSupportSelectDateStatusNotification(bool can_use, ISelectMeetingItemDateHelper* date_select_helper) = 0;
 };
 
 /*! \enum SCHEDULEAUDIOTYPE
-    \brief Specify the meeting audio type.
-    Here are more detailed structural descriptions.
+\描述：指定会议音频类型
+下面是更详细的结构描述。
 */
 enum SCHEDULEAUDIOTYPE
 {
-	SCHEDULEAUDIOTYPE_none = 0,///<For initialization.
-	SCHEDULEAUDIOTYPE_telephony = (1<<1),///<Support telephony.
-	SCHEDULEAUDIOTYPE_voip = (1<<2),///<Support VoiP.
-	SCHEDULEAUDIOTYPE_both = (1<<3),///<Support both telephony and VoiP.
-	SCHEDULEAUDIOTYPE_3rd = (1<<4),///<Support the third audio device.
+	SCHEDULEAUDIOTYPE_none = 0,///<初始化。
+	SCHEDULEAUDIOTYPE_telephony = (1 << 1),///<支持电话。
+	SCHEDULEAUDIOTYPE_voip = (1 << 2),///<支持VoiP.
+	SCHEDULEAUDIOTYPE_both = (1 << 3),///<支持电话和VOIP
+	SCHEDULEAUDIOTYPE_3rd = (1 << 4),///<支持第三方音频设备
 };
-/// \brief The interface to query the meeting telephony number information.
+/// \描述：查询会议电话号码信息的界面
 class IQueryMeetingItemTelAudioInfoHelper
 {
 public:
-	virtual ~IQueryMeetingItemTelAudioInfoHelper(){}
-	/// \brief Get the available telephony number list for countries that can be called in.
-	/// \return If the function succeeds, the return value is the telephony number list for countries that can be called in.
-	virtual IList<const wchar_t* >* GetAvailableDialinCountryCode() = 0;
-	
-	/// \brief Get the telephony number list of the selected country that can be called in.
-	/// \return If the function succeeds, the return value is the telephony number of the selected country.
-	virtual IList<const wchar_t* >* GetSelectedDialinCountryCode() = 0;
-	
-	/// \brief Determine if the numbers of visible dialable country contains toll-free numbers.
-	/// \return TRUE indicates to contain.
+	virtual ~IQueryMeetingItemTelAudioInfoHelper() {}
+	/// \描述：获取可调用国家的可用电话号码列表。
+	/// \返回：如果函数成功，返回值是可以调用的国家的电话号码列表。
+	virtual std::vector<const wchar_t*> GetAvailableDialinCountryCode() = 0;
+
+	/// \描述：获取可调用的选定国家的电话号码列表。
+	/// \返回：如果函数成功，返回值是所选国家的电话号码。
+	virtual std::vector<const wchar_t*> GetSelectedDialinCountryCode() = 0;
+
+	/// \描述：确定可视可拨号国家的号码是否包含免费号码。
+	/// \返回：TRUE 包是包含.
 	virtual bool IsIncludeTollFree() = 0;
 };
 
-/// \brief The interface to set the meeting telephony numbers information.
+/// \描述：该接口可设置会议电话号码信息。
 class ISelectMeetingItemTelAudioHelper
 {
 public:
-	virtual ~ISelectMeetingItemTelAudioHelper(){}
-	/// \brief Select the telephone number via specified country ID as the default call-in number.
-	/// \param countryId The ID of the specified country.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError SelectDefaultDialInCountry(const wchar_t* countryId) =0;
-	
-	/// \brief Remove the telephone number in the default call-in number via specified country ID.
-	/// \param countryId The ID of the specified country.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError RemoveDefaultDialInCountry(const wchar_t* countryId) =0;
+	virtual ~ISelectMeetingItemTelAudioHelper() {}
+	/// \描述：通过指定的国家ID选择电话号码作为默认的呼叫号码。
+	/// \参数：countryId 指定国家的ID。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	virtual SDKError SelectDefaultDialInCountry(const wchar_t* countryId) = 0;
 
-	/// \brief Set if the toll-free numbers are enabled in the call-in number list.
-	/// \param bEnable TRUE indicates to enable.	
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：通过指定的国家ID删除默认呼叫号码中的电话号码
+	/// \参数：countryId 指定国家的ID。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	virtual SDKError RemoveDefaultDialInCountry(const wchar_t* countryId) = 0;
+
+	/// \描述：如果在呼叫号码列表中启用免费号码，则设置。
+	/// \参数：bEnable TRUE 表示启用
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError EnableIncludeTollFree(bool bEnable) = 0;
 };
-/// \brief The callback interface that the selected meeting audio function changes.
+/// \描述： 所选会议音频函数更改的回调接口。
 class ISelectMeetingItemAudioOptionHelperEvent
 {
 public:
-	/// \brief The callback event that the selected meeting audio function changes.
-	/// \param can_use TRUE indicates that the dial-in in the currently selected meeting is available.
+	/// \描述：所选会议音频函数更改的回调事件。
+	/// \参数：can_use TRUE 表明当前选定会议中的拨号可用。
 	virtual void onSupportTelAudioNotification(bool can_use) = 0;
 };
 
-/// \brief The interface to query the meeting audio information.
+/// \描述：查询会议音频信息的界面。
 class IQueryMeetingItemAudioOptionHelper
 {
 public:
-	virtual ~IQueryMeetingItemAudioOptionHelper(){}
-	/// \brief Get the meeting audio type.
-	/// \param [out] type_ The meeting audio type. For more details, see \link SCHEDULEAUDIOTYPE \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	virtual ~IQueryMeetingItemAudioOptionHelper() {}
+	/// \描述：获取会议音频类型。
+	/// \参数：[out] type_ 会议音频类型。有关详细信息，请参见 SCHEDULEAUDIOTYPE enum
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError GetSelectedAudioType(SCHEDULEAUDIOTYPE& type_) = 0;
-	
-	/// \brief Get the meeting telephone number information.
-	/// \return If the function succeeds, the return value is the pointer to the IQueryMeetingItemTelAudioInfoHelper. 
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IQueryMeetingItemTelAudioInfoHelper \endlink.
+
+	/// \描述：获取会议电话号码信息。
+	/// \返回：如果函数成功，返回值是指向IQueryMeetingItemTelAudioInfoHelper的指针。
+	/// 否则失败，返回NULL。
+	/// 有关详细信息，请参见 IQueryMeetingItemTelAudioInfoHelper
 	virtual IQueryMeetingItemTelAudioInfoHelper* GetQueryTelAudioInfoHelper() = 0;
 };
 
-/// \brief The interface to set the meeting audio information.
+/// \描述：设置会议音频信息的接口。
 class ISelectMeetingItemAudioOptionHelper
 {
 public:
-	virtual ~ISelectMeetingItemAudioOptionHelper(){}
-	/// \brief Determine if the specified audio type is supported by the meeting.
-	/// \param audio_type The specified audio type. For more details, see \link SCHEDULEAUDIOTYPE \endlink enum.
-	/// \return If the specified audio type is supported, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
+	virtual ~ISelectMeetingItemAudioOptionHelper() {}
+	/// \描述：确定会议是否支持指定的音频类型。
+	/// \参数：指定的音频类型。有关详细信息，请参见 SCHEDULEAUDIOTYPE enum。
+	/// \返回：如果支持指定的音频类型，返回值为SDKErr_Success。
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError  IsSupportAudioType(SCHEDULEAUDIOTYPE audio_type) = 0;
-	
-	/// \brief Set the audio type of the specified meeting.
-	/// \param audio_type The audio type. For more details, see \link SCHEDULEAUDIOTYPE \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：设置指定会议的音频类型。
+	/// \参数：audio_type 音频类型。有关详细信息，请参见 SCHEDULEAUDIOTYPE enum。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError  SelectAudioType(SCHEDULEAUDIOTYPE audio_type) = 0;
 
-	/// \brief Get the meeting telephone number information.
-	/// \return If the function succeeds, the return value is the pointer to the ISelectMeetingItemTelAudioHelper.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link ISelectMeetingItemTelAudioHelper \endlink.
+	/// \描述：获取会议电话号码信息。
+	/// \返回：如果函数成功，返回值是指向ISelectMeetingItemTelAudioHelper的指针。
+	/// 否则失败，返回NULL。
+	/// 有关详细信息，请参见 ISelectMeetingItemTelAudioHelper 
 	virtual ISelectMeetingItemTelAudioHelper* GetScheduleTelAudioHelper() = 0;
 };
-
-/// \brief The interface to query meeting video information.
+/// \描述：查询会议视频信息的接口。
 class IQueryMeetingItemVideoOptionHelper
 {
 public:
-	virtual ~IQueryMeetingItemVideoOptionHelper(){}
-	/// \brief Determine if the host enables the video when joins the meeting.
-	/// \return TRUE indicates that the video of host is enabled.
+	virtual ~IQueryMeetingItemVideoOptionHelper() {}
+	/// \描述：确定加入会议是时是否启用主持人的视频。
+	/// \返回：TRUE 表示启用主持人的视频。
 	virtual bool IsHostVideoOnOrOff() = 0;
-	
-	/// \brief Determine if the video of the participant is enabled when joining meeting.
-	/// \return TRUE indicates that the video of the participant is enabled.
+
+	/// \描述：确定加入会议时是否启动参与者的视频。
+	/// \返回：TRUE 表示启动
 	virtual bool IsAttendeeVideoOnOrOff() = 0;
 };
 
-/// \brief The interface to set the meeting video information.
+/// \描述：设置会议视频信息的接口
 class ISelectMeetingItemVideoOptionHelper
 {
 public:
 	virtual ~ISelectMeetingItemVideoOptionHelper() {};
-	/// \brief Enable or disable the host video function.
-	/// \param bOn TRUE indicates to enable the host video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：启用或禁用主持人视频功能
+	/// \参数： bOn TRUE 能启动或禁止主持人的视频
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError SelectHostVideoOnOrOff(bool bOn) = 0;
-	
-	/// \brief Set to enable or disable the video of the participants.
-	/// \param bOn TRUE indicates to enable the video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：设置是否能启用或禁用参与者的视频。
+	/// \参数： bOn TRUE 表示能
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError SelectAttendeeVideoOnOrOff(bool bOn) = 0;
 };
 /*! \enum SCHEDULERECTYPE
-    \brief Specify the meeting recording type.
-    Here are more detailed structural descriptions.
+\描述：指定会议录制类型。
+下面是更详细的结构描述
 */
 enum SCHEDULERECTYPE
 {
-	SCHEDULERecordType_none = 0,///<For initialization.
-	SCHEDULERecordType_Cloud = 1,///<Cloud recording.
-	SCHEDULERecordType_Local = (1<<1),///<Local recording.
+	SCHEDULERecordType_none = 0,///<初始化
+	SCHEDULERecordType_Cloud = 1,///<云录制
+	SCHEDULERecordType_Local = (1 << 1),///<本地录制
 };
-	
-/// \brief The callback interface to configure the meeting basic information.
+
+/// \描述：配置会议基本信息的回调接口
 class ISelectMeetingItemMeetingOptionHelperEvent
 {
 public:
 	virtual ~ISelectMeetingItemMeetingOptionHelperEvent() {}
-	/// \brief The callback event to request to fill in the password when the participants join the meeting.
-	/// \param enable TRUE indicates to fill in the password.
-	/// \param default_psw  The meeting original password. This password is only valid when the ENABLE value is TRUE.
+	/// \描述：要求在参与者加入会议时填写密码的回调事件
+	/// \参数：enable TRUE 表示要填写密码。
+	/// \参数：default_psw  会议原密码。此密码仅在enable值为真时有效。
 	virtual void onMeetingPasswordEnabledStatusNotification(bool enable, const wchar_t* default_psw) = 0;
-	
-	/// \brief The callback event that the status JBH(Join meeting Before Host) changes.
-	/// \param enable TRUE indicates to enable.
+
+	/// \描述：JBH(主持人之前加入会议)状态更改的回调事件
+	/// \参数：enable TRUE 表明启用
 	virtual void onJoinBeforeHostEnabledStatusNotification(bool enable) = 0;
-	/// \brief  The callback event that the status MUTE ALL THE PARTICIPANTS changes.
-	/// \param enable TRUE indicates to mute the participants.
+
+	/// \描述：静音所有参与者状态更改的回调事件。
+	/// \参数：enable TRUE 指示将参与者静音.
 	virtual void onMuteUponEntryEnabledStatusNotification(bool enable) = 0;
-	
-	/// \brief The callback event that the status USE THE PERSONAL MEETING ID changes.
-	/// \param enable TRUE indicates to use the personal meeting ID.
+
+	/// \描述：使用个人会议ID预约会议状态更改的回调事件。
+	/// \参数：enable TRUE 指示使用个人会议ID。
 	virtual void onScheduleWithPmiEnabledStatusNotification(bool enable) = 0;
-	
-	/// \brief The callback event that the status ONLY THE SPECIFIED USERS ARE ALLOWED TO JOIN THE MEETING changes.
-	/// \param enable TRUE indicates that only the specified users are allowed to join the meeting.
-	/// \param default_specified_domain_can_join The users in the domain are specified. It is valid only when the ENABLE value is TRUE.
+
+	/// \描述：仅允许指定用户参加会议的状态更改的回调事件。
+	/// \参数：enable TRUE 指示只允许指定的用户参加会议。
+	/// \参数：default_specified_domain_can_join 指定域中的用户。只有在ENABLE值为真时才有效。
 	virtual void onOnlySignedInUserCanJoinEnabledStatusNotification(bool enable, const wchar_t* default_specified_domain_can_join) = 0;
-	
-	/// \brief The callback event that the status HOSTING A MEETING IN CHINA changes.
-	/// \param enable TRUE indicates to enable.
+
+	/// \描述：在中国主持会议状态改变的回叫事件。
+	/// \参数：enable TRUE 表明能.
 	virtual void onHostInChinaEnabledStatusNotification(bool enable) = 0;
-	
-	/// \brief The callback event that the status AUTO RECORDING IN THE MEETING changes.
-	/// \param enable TRUE indicates to enable the auto recording.
-	/// \param default_type The default meeting recording type. For more details, see \link SCHEDULERECTYPE \endlink enum.
+
+	/// \描述：会议自动录制状态更改的回调事件。
+	/// \参数：enable TRUE 指示启用自动记录。
+	/// \参数：default_type 默认的会议录制类型。有关详细信息，请参阅 SCHEDULERECTYPE enum。
 	virtual void onAutoRecordEnabledStatusNotification(bool enable, SCHEDULERECTYPE& default_type) = 0;
-	
-	/// \brief The callback event that the status SPECIFY OTHERS AS THE HOST changes.
-	/// \param can_use TRUE indicates to enable to specify others as the host.
+
+	/// \描述：指定其他人为主持人的状态改变的回调事件。
+	/// \参数：can_use TRUE 指示能将其他用户指定为主持人
 	virtual void onSupportScheduleForNotification(bool can_use) = 0;
-
-	virtual void onWaitingRoomEnabledStatusNotification(bool enable) = 0;
-
-	virtual void onMeetingToPublicEnabledStatusNotification(bool enable) = 0;
-
-	virtual void onLanguageInterpretationEnabledStatusNotification(bool enable) = 0;
 };
-	
-/// \brief The interface of the user who can be specified as the host.
+
+/// \描述： 可以指定为主持人的用户的接口。
 class IScheduleForUser
 {
 public:
 	virtual ~IScheduleForUser() {};
-	/// \deprecated This interface is deprecated because of security reason. The return value will always be NULL now. Please stop using it. 
-	/// \brief Get the user email.
-	/// \return The user email.
+	/// \描述：获取用户电子邮件.
+	/// \返回：用户的电子邮件.
 	virtual const wchar_t* GetEmail() = 0;
-	
-	/// \brief Get the screen name of the user.
-	/// \return The screen name of the user.
+
+	/// \描述：获取用户的显示名字。
+	/// \返回：用户的显示名字.
 	virtual const wchar_t* GetDisplayName() = 0;
-	
-	/// \brief Get the user personal meeting ID.
-	/// \return The user personal meeting ID.
+
+	/// \描述：获取用户个人会议ID.
+	/// \返回：用户个人会议ID.
 	virtual UINT64 GetPMINumber() = 0;
 };
-	
-/// \brief The interface to query the information of the user who is specified as the meeting host.
+/// \描述：用于查询指定为会议主机的用户的信息的接口。
 class IQueryMeetingItemScheduleForHelper
 {
 public:
 	virtual ~IQueryMeetingItemScheduleForHelper() {}
-	/// \brief Get the information of the user who is specified as the meeting host.
-	/// \return A pointer to the IScheduleForUser. For more details, see \link IScheduleForUser \endlink.
-	virtual IScheduleForUser* GetCurrentSelectedScheduleForUser() =0;
+	/// \描述：获取指定为会议主持人的用户的信息。
+	/// \返回：一个指向IScheduleForUser的指针。有关详细信息，请参见 IScheduleForUser 
+	virtual IScheduleForUser* GetCurrentSelectedScheduleForUser() = 0;
 };
-	
-/// \brief The meeting information interface to specify others as the host.
+
+/// \描述：指定其他人作为主持人的会议信息接口。
 class ISelectMeetingItemScheduleForHelper
 {
 public:
-	virtual ~ISelectMeetingItemScheduleForHelper(){}
-	/// \brief Get the user list who can be specified as the host.
-	/// \param [out] can_select_schedule_for TRUE indicates that the current meeting can specify other user as the host.
-	/// \return If the function succeeds, the return value is the meeting list to specify others as the host. It is only valid when the can_select_schedule_for is true. Otherwise failed, returns NULL.
-	virtual IList<IScheduleForUser* >* GetAvailableScheduleForList(bool& can_select_schedule_for) = 0;
-	
-	/// \brief Specify a new host for the meeting.
-	/// \param alternateHost Specify a new host. For more details, see \link IScheduleForUser \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError SelectScheduleForUser(IScheduleForUser* alternateHost) =0;
+	virtual ~ISelectMeetingItemScheduleForHelper() {}
+	/// \描述：获取可指定为支持人的用户列表。
+	/// \参数：[out] can_select_schedule_for TRUE 指示当前会议可以指定其他用户作为主持人。
+	/// \返回：如果函数成功，返回的值是指定其他人作为主机的会议列表。它只在can_select_schedule_for为真时有效。否则失败，返回NULL。
+	virtual std::vector<IScheduleForUser*> GetAvailableScheduleForList(bool& can_select_schedule_for) = 0;
+
+	/// \描述：为会议指定一个新主持人
+	/// \参数：alternateHost 指定一个新的主持人。有关详细信息，请参见 IScheduleForUser 
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	virtual SDKError SelectScheduleForUser(IScheduleForUser* alternateHost) = 0;
 };
-	
-///\brief The interface to query the meeting basic configuration information.
+///\描述：查询会议基本配置信息的接口。
 class IQueryMeetingItemMeetingOptionHelper
 {
 public:
-	virtual ~IQueryMeetingItemMeetingOptionHelper(){}
-	/// \brief Get the topic of the specified meeting.
-	/// \return The topic of the specified meeting.	
-	virtual const wchar_t*	 GetMeetingTopic() = 0;
-	
-	/// \brief Determine if the password is required when join the meeting. 
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates that the password is required.
-	virtual bool     IsMeetingPasswordEnabled(bool& can_change) = 0;
-	
-	/// \brief Get the password of the specified meeting.
-	/// \return The password of the specified meeting.
+	virtual ~IQueryMeetingItemMeetingOptionHelper() {}
+	/// \描述：获取指定会议的主题。
+	/// \返回：指定会议的主题。
+	virtual const wchar_t* GetMeetingTopic() = 0;
+
+	/// \描述：确定参加会议时是否需要密码。
+	/// \参数：[out] can_change TRUE 指示此特征是否可以修改。
+	/// \返回：TRUE 指示需要密码。
+	virtual bool IsMeetingPasswordEnabled(bool& can_change) = 0;
+
+	/// \描述：获取指定会议的密码。
+	/// \返回：指定会议的密码。
 	virtual const wchar_t* GetMeetingPassword() = 0;
-	
-	/// \brief Determine if it is enabled to join the meeting before the host.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates it is enabled to join the meeting before the host.
-	virtual bool     IsJoinBeforeHostEnabled(bool& can_change) = 0;
-	
-	/// \brief Determine if the meeting mutes all the participants.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates to currently mute all the participants.
-	virtual bool     IsMuteUponEntryEnabled(bool& can_change) = 0;
-	
-	/// \brief Determine if the personal meeting ID is used in the meeting.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates to use the PMI.
-	virtual bool     IsScheduleWithPmiEnabled(bool& can_change) = 0;
-	
-	/// \brief Determine if only the specified user is allowed to join the meeting.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates to allow only the specified user to join the meeting.
-	virtual bool     IsOnlySignedInUserCanJoinEnabled(bool& can_change) = 0;
-	
-	/// \brief Get the domain to join the meeting.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return The domain to join the meeting.
+
+	/// \描述：确定是否允许在主持人之前加入会议。
+	/// \参数：[out] can_change TRUE 指示此特征是否可以更改。
+	/// \返回：TRUE 指示启用在主持人之前加入会议。
+	virtual bool IsJoinBeforeHostEnabled(bool& can_change) = 0;
+
+	/// \描述：确定会议是否静音所有人。
+	/// \参数：[out] can_change TRUE 指示此功能可以更改。
+	/// \返回：TRUE 指示当前静音所有参与者。
+	virtual bool IsMuteUponEntryEnabled(bool& can_change) = 0;
+
+	/// \描述：确定是否在会议中使用了个人会议ID。
+	/// \参数：[out] can_change TRUE 指示此特征可以更改。
+	/// \返回：TRUE 指示使用PMI。
+	virtual bool IsScheduleWithPmiEnabled(bool& can_change) = 0;
+
+	/// \描述：确定是否只允许指定的用户参加会议。
+	/// \参数：[out] can_change TRUE 指示此特征可以更改。
+	/// \返回：TRUE 指示仅允许指定用户参加会议。
+	virtual bool IsOnlySignedInUserCanJoinEnabled(bool& can_change) = 0;
+
+	/// \描述：获取加入会议的domain。
+	/// \参数：[out] can_change TRUE 指示此特征可以更改。
+	/// \返回：加入会议的domain.
 	virtual const wchar_t* GetSpecifiedDomainCanJoin(bool& can_change) = 0;
-	
-	/// \brief Determine if hosting the meeting in China is enabled.
-	/// \param [out] can_change TRUE indicates that this feature can be changed.
-	/// \return TRUE indicates that hosting the meeting in China is enabled.
-	virtual bool     IsHostInChinaEnabled(bool& can_change) = 0;
-	
-	/// \brief Determine that if auto video recording is enabled in the meeting.
-	/// \param [out] can_change TRUE indicates that the record type can be changed.
-	/// \param [out] support_rec_type indicates the recording type supported by the meeting. For more details, see \link SCHEDULERECTYPE \endlink enum.
-	/// \return TRUE indicates to enable auto video recording.
-	virtual bool     IsAutoRecordEnabled(bool& can_change, int& support_rec_type) = 0;
-	
-	/// \brief Get the recording type supported by the meeting.
-	/// \return The recording type supported by the meeting. For more details, see \link SCHEDULERECTYPE \endlink enum.
+
+	/// \描述：确定是否可以在中国主持会议。
+	/// \参数：[out] can_change TRUE 指示此特征可以更改。
+	/// \返回：TRUE 表示可以在中国主持会议。
+	virtual bool IsHostInChinaEnabled(bool& can_change) = 0;
+
+	/// \描述：确定是否在会议中启用了自动录制功能
+	/// \参数：[out] can_change TRUE 指示可以更改录制类型。
+	/// \参数：[out] support_rec_type 指示会议支持的录制类型。有关详细信息，请参阅 SCHEDULERECTYPE enum。
+	/// \返回：TRUE 指示启用自动录制。
+	virtual bool IsAutoRecordEnabled(bool& can_change, int& support_rec_type) = 0;
+
+	/// \描述：获取会议支持的录制类型。
+	/// \返回：会议支持的录制类型。有关详细信息，请参阅 SCHEDULERECTYPE enum。
 	virtual SCHEDULERECTYPE GetSelectedAutoRecordType() = 0;
 
-	virtual bool     IsWaitingRoomEnabled(bool& can_change) = 0;
-
-	virtual bool	 IsMeetingToPublicEnabled(bool& can_change) = 0;
-
-	virtual const wchar_t* GetPublicEventListUrl() = 0;
-
-	virtual bool     IsLanguageInterpretationEnabled(bool& can_change) = 0;
-
-	virtual IList<IInterpreterInfo* >* GetInterpreterInfoList() = 0;
-
-	virtual IList<IAlternativeHostInfo* >* GetAlternativeHostInfoList() = 0;
-	
-	virtual bool isDisabledPMI() = 0;
-	
-	/// \brief Get the meeting information interface for the specified meeting. 
-	/// \return A pointer to the IQueryMeetingItemScheduleForHelper. For more details, see \link IQueryMeetingItemScheduleForHelper \endlink.
+	/// \描述：获取指定会议的会议信息接口。
+	/// \返回：一个指向IQueryMeetingItemScheduleForHelper的指针。有关详细信息，请参见IQueryMeetingItemScheduleForHelper
 	virtual IQueryMeetingItemScheduleForHelper* GetQueryScheduleForHelper() = 0;
 };
-	
-///\brief The interface to configure the meeting basic information.
+
+///\描述：会议基本信息配置接口。
 class ISelectMeetingItemMeetingOptionHelper
 {
 public:
 	virtual ~ISelectMeetingItemMeetingOptionHelper() {};
 	virtual SDKError SetMeetingTopic(const wchar_t* topic) = 0;
-	/// \brief Set whether the password is required when joining the meeting.
-	/// \param bEnable TRUE indicates that the password is required.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
-	/// \remarks The ISelectMeetingItemMeetingOptionHelperEvent::onMeetingPasswordEnabledStatusNotification() will be triggered each time this function is called.
+	/// \描述：设置加入会议时是否需要密码。
+	/// \参数：bEnable TRUE 指示需要密码。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
+	/// \注意：ISelectMeetingItemMeetingOptionHelperEvent::onMeetingPasswordEnabledStatusNotification() 将在每次调用此函数时触发。
 	virtual SDKError EnableMeetingPassword(bool bEnable) = 0;
-	
-	/// \brief Set the meeting password.
-	/// \param meetingPsw Meeting password.
+
+	/// \描述：设置会议密码。
+	/// \参数：meetingPsw 会议密码。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError SetMeetingPassword(const wchar_t* meetingPsw) = 0;
-	
-	/// \brief Set if it is able to join the meeting before the host.
-	/// \param bEnable TRUE indicates that participants are allowed to join the meeting before the host. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
-	/// \remarks The ISelectMeetingItemMeetingOptionHelperEvent::onJoinBeforeHostEnabledStatusNotification() will be triggered each time this function is called.
+
+	/// \描述：设置它是否能在主人之前加入会议。
+	/// \参数：bEnable TRUE 表示允许参会者在主持人之前参加会议t. FALSE 不允许.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
+	/// \注意：ISelectMeetingItemMeetingOptionHelperEvent::onJoinBeforeHostEnabledStatusNotification() 将在每次调用此函数时触发。
 	virtual SDKError EnableJoinBeforeHost(bool bEnable) = 0;
-	
-	/// \brief Set if it is able to mute attendees automatically when join the meeting.
-	/// \param bEnable TRUE indicates that participants are muted when they join the meeting. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
-	/// \remarks The ISelectMeetingItemMeetingOptionHelperEvent::onMuteUponEntryEnabledStatusNotification()	will be triggered each time this function is called.
+
+	/// \描述：设置是否能够在参加会议时自动静音参会者。
+	/// \参数：bEnable TRUE 表示与参会者在参加会议时保持静音. FALSE 不静音.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
+	/// \注意：ISelectMeetingItemMeetingOptionHelperEvent::onMuteUponEntryEnabledStatusNotification()	将在每次调用此函数时触发。
 	virtual SDKError EnableMuteUponEntry(bool bEnable) = 0;
-	
-	/// \brief Set if it is able to schedule meeting by PMI(Personal meeting ID).
-	/// \param bEnable TRUE indicates to use the PMI as the meeting ID.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
+
+	/// \描述：设置是否可以通过PMI(个人会议ID)安排会议。
+	/// \参数：bEnable TRUE indicates to use the PMI as the meeting ID.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError EnableScheduleWithPmi(bool bEnable) = 0;
-	
-	/// \brief Set if only the specified user can join the meeting.
-	/// \param bEnable TRUE indicates that only the specified user can join the meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum. 
-	/// \remarks The ISelectMeetingItemMeetingOptionHelperEvent::onOnlySignedInUserCanJoinEnabledStatusNotification() will be triggered each time this function is called.
+
+	/// \描述：设置是否只有指定的用户可以参加会议。
+	/// \参数：bEnable TRUE 指示只有指定的用户可以参加会议。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 否则失败。要获取扩展的错误信息，请参见 SDKError enum。
+	/// \注意：ISelectMeetingItemMeetingOptionHelperEvent::onOnlySignedInUserCanJoinEnabledStatusNotification() 将在每次调用此函数时触发。
 	virtual SDKError EnableOnlySignedInUserCanJoin(bool bEnable) = 0;
-	
-	/// \brief Set a specified domain.
-	/// \param specified_domain_can_join Specify the domain.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum. 
-	/// \remarks The users in the domain are specified.
+
+	/// \描述：设置指定domain.
+	/// \参数：specified_domain_can_join 指定domain.
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：指定域中的用户.
 	virtual SDKError SetSpecifiedDomainCanJoin(const wchar_t* specified_domain_can_join) = 0;
-	
-	/// \brief Set if it is able to host a meeting in China.
-	/// \param bEnable TRUE indicates that it is enabled to host the meeting in China.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum. 
+
+	/// \描述：设置是否可以在中国主持会议
+	/// \参数：bEnable TRUE 表示能在中国主持会议。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError EnableHostInChina(bool bEnable) = 0;
-	
-	/// \brief Set if it is able to record the meeting automatically.
-	/// \param bEnable TRUE indicates that the meeting will be recorded automatically. False not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.	
-	/// \remarks The ISelectMeetingItemMeetingOptionHelperEvent::onAutoRecordEnabledStatusNotification() will be triggered each time this function is called.	
+
+	/// \描述：设置它是否能够自动录制会议。
+	/// \参数：bEnable TRUE 表示会议将自动录制。FALSE 表示不会。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。	
+	/// \注意：ISelectMeetingItemMeetingOptionHelperEvent::onAutoRecordEnabledStatusNotification() 将在每次调用此函数时触发	
 	virtual SDKError EnableAutoRecord(bool bEnable) = 0;
-	
-	/// \brief Set the meeting recording type.
-	/// \param type_ Specify the recording type of meeting. For more details, see \link SCHEDULERECTYPE \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：设置会议记录制类型。
+	/// \参数：type_ 指定会议的录制类型。有关详细信息，请参阅 SCHEDULERECTYPE enum。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
 	virtual SDKError SelectAutoRecordType(SCHEDULERECTYPE type_) = 0;
 
-	virtual SDKError EnableWaitingRoom(bool bEnable) = 0;
-
-	virtual SDKError EnableMeetingToPublic(bool bEnable) = 0;
-
-	virtual SDKError EnableLanguageInterpretation(bool bEnable) = 0;
-
-	virtual SDKError SetInterpreterInfoList(IList<IInterpreterInfo* >* lst_interpreters) = 0;
-
-	virtual SDKError SetAlternativeHostList(IList<IAlternativeHostInfo* >* lst_althosts) = 0;
-	
-	/// \brief Get the specified meeting information interface.
-	/// \return A pointer to the ISelectMeetingItemScheduleForHelper. For more details, see \link ISelectMeetingItemScheduleForHelper \endlink.
+	/// \描述：获取指定的会议信息。
+	/// \返回：指向ISelectMeetingItemScheduleForHelper的指针。有关详细信息，请参见 ISelectMeetingItemScheduleForHelper
 	virtual ISelectMeetingItemScheduleForHelper* GetScheduleForHelper() = 0;
 };
 
-///\brief Meeting item information interface.
-class IMeetingItemInfo 
+///\描述：会议项目信息接口
+class IMeetingItemInfo
 	: public IQueryMeetingItemDateInfoHelper
 	, public IQueryMeetingItemVideoOptionHelper
 	, public IQueryMeetingItemAudioOptionHelper
 	, public IQueryMeetingItemMeetingOptionHelper
 {
 public:
-	/// \brief Get the exclusive meeting number.
-	/// \return If the function succeeds, the return value is the non-zero meeting number.
+	/// \描述：获取会议唯一ID。
+	/// \返回：如果函数成功，则返回非零的会议编号。
 	virtual UINT64 GetUniqueMeetingID() = 0;
-	
-	/// \brief Get the exclusive meeting number.
-	/// \return If the function succeeds, the return value is the non-zero meeting number.	
+
+	/// \描述：获取会议ID。
+	/// \返回：如果函数成功，则返回非零的会议编号。	
 	virtual UINT64 GetMeetingID() = 0;
-	
-	/// \brief Determine if the specified meeting is personal.
-	/// \return TRUE indicates that it is a personal meeting. False no.
-	virtual bool   IsPMI() = 0;
-	
-	/// \brief Determine if the specified meeting is a webinar.
-	/// \return TRUE indicates that it is a webinar. False no.
-	virtual bool   IsWebinar() = 0;
-	
-	/// \brief Get the content of the email to invite the users to join the meeting.
-	/// \return If the function succeeds, the return value is the content of the email. Otherwise failed, returns NULL.
+
+	/// \描述：确定指定的会议是否是个人会议。
+	/// \返回：TRUE 表示这是个人会议。 False 不是.
+	virtual bool IsPMI() = 0;
+
+	/// \描述：确定指定的会议是否是网络研讨会。
+	/// \返回：TRUE 表示这是一个网络研讨会. False 不是.
+	virtual bool IsWebinar() = 0;
+
+	/// \描述：获取邀请用户参加会议的电子邮件内容.
+	/// \返回：如果函数成功，则返回电子邮件的内容。否则失败，返回NULL。
 	virtual const wchar_t* GetInviteEmailContent() = 0;
-	
-	/// \brief Get the subject of the email to invite the users to join the meeting.
-	/// \return If the function succeeds, the return value is the subject of the email. Otherwise failed, returns NULL.
+
+	/// \描述：获取邀请用户参加会议的电子邮件的主题
+	/// \返回：如果函数成功，则返回值是电子邮件的主题。否则失败，返回NULL。
 	virtual const wchar_t* GetInviteEmailSubject() = 0;
-	
-	/// \brief Get the URL to invite the users to join the meeting.
-	/// \return If the function succeeds, the return value is the URL of the email. Otherwise failed, returns NULL.
+
+	/// \描述：获取邀请用户参加会议的URL。
+	/// \返回：如果函数成功，则返回电子邮件的URL。否则失败，返回NULL。
 	virtual const wchar_t* GetJoinMeetingUrl() = 0;
 };
 
-///\brief The interface to query the meeting information.
+///\描述：查询会议信息的接口。
 class IMeetingItemInfoQueryHelper : public IMeetingItemInfo
 {
 public:
@@ -553,126 +496,124 @@ class IMeetingItemInfoSelectHelper
 public:
 };
 
-/// \brief The interface to configure the meeting information.
+/// \描述：配置会议信息的接口。
 class IScheduleMeetingItemStatusCallback
 	: public ISelectMeetingItemDateHelperEvent
 	, public ISelectMeetingItemAudioOptionHelperEvent
 	, public ISelectMeetingItemMeetingOptionHelperEvent
 {
 public:
-	/// \brief Callback event of destroying schedule meeting item.
 	virtual void onScheduleMeetingItemDestroyed() = 0;
 };
 
-/// \brief Schedule meeting item interface.
-///The APIs are used to schedule meeting and edit scheduled meeting.
-///You can create/destroy the interface via CreateScheduleMeetingItem and DestoryScheduleMeetingItem in IPreMeetingService
+/// \描述：安排会议事项。
+/// 这些api用于安排会议和编辑安排的会议。
+/// 你可以在IPreMeetingService中通过createsch调度emeetingitem和DestoryScheduleMeetingItem来创建/销毁接口
 class IScheduleMeetingItem
 	: public IMeetingItemInfoSelectHelper
 	, public IMeetingItemInfoQueryHelper
 {
 public:
-	/// \brief Set the scheduled meeting service callback handler.
-	/// \param callback A pointer to the IScheduleMeetingItemStatusCallback that receives the scheduled meeting service event.
+	/// \描述：设置预定的会议服务回调处理程序。
+	/// \参数：callback 一个指向接收预定会议服务事件的IScheduleMeetingItemStatusCallback指针。
 	virtual SDKError SetEvent(IScheduleMeetingItemStatusCallback* callback) = 0;
 };
 
-/// \brief Pre-meeting service event interface.
+/// \描述：会议前服务事件接口
 class IPreMeetingServiceEvent
 {
 public:
-	/// \brief List meeting callback event.
-	/// \param result The result of calling IPreMeetingService::ListMeeting(). For more details, see \link PremeetingAPIResult \endlink enum.
-	/// \param lstMeetingList A pointer to the list of meeting ID. 
-	virtual void onListMeeting(PremeetingAPIResult result, IList<UINT64 >* lstMeetingList) = 0;	
-	
-	/// \brief Schedule or edit meeting callback event.
-	/// \param result The result of calling IPreMeetingService::ScheduleMeeting(). For more details, see \link PremeetingAPIResult \endlink enum.
-	/// \param meetingUniqueID The meeting ID to schedule or edit the meeting.
+	/// \描述：列表会议回调事件
+	/// \参数：result 调用IPreMeetingService::ListMeeting()的结果。有关详细信息，请参见PremeetingAPIResult enum。
+	/// \参数：lstMeetingList 一个指向会议ID列表的指针。
+	virtual void onListMeeting(PremeetingAPIResult result, std::vector<UINT64 >* lstMeetingList) = 0;
+
+	/// \描述：安排或编辑会议回调事件。
+	/// \参数：result 调用IPreMeetingService::ScheduleMeeting()的结果。有关详细信息，请参见PremeetingAPIResult enum。
+	/// \参数：meetingUniqueID 安排或编辑会议的会议ID。
 	virtual void onScheduleOrEditMeeting(PremeetingAPIResult result, UINT64 meetingUniqueID) = 0;
 
-	/// \brief Delete meeting callback.
-	/// \param result The result of calling IPreMeetingService::DeleteMeeting(). For more details, see \link PremeetingAPIResult \endlink enum.
+	/// \描述：删除会议回调。
+	/// \参数：result 调用IPreMeetingService::DeleteMeeting()的结果。有关详细信息，请参见PremeetingAPIResult enum。
 	virtual void onDeleteMeeting(PremeetingAPIResult result) = 0;
 };
 
-/// \brief Pre-meeting service interface.
+/// \描述：会前服务接口。
 class IPreMeetingService
 {
 public:
-	/// \brief Create an item to schedule meeting.
-	/// \return If the function succeeds, the return value is the object pointer to IScheduleMeetingItem. Otherwise failed, returns NULL.
+	/// \描述：创建一个项目来安排会议。
+	/// \返回：如果函数成功，返回值是指向IScheduleMeetingItem对象的指针。否则失败，返回NULL。
 	virtual IScheduleMeetingItem* CreateScheduleMeetingItem() = 0;
 
-	/// \brief Destroy the item of scheduling meeting created via CreateScheduleMeetingItem().
-	/// \param pMeeting A pointer to the item created via CreateScheduleMeetingItem().
+	/// \描述：销毁通过CreateScheduleMeetingItem()创建的日程安排会议的项目
+	/// \参数：pMeeting 指向通过CreateScheduleMeetingItem()创建的项的指针 .
 	virtual void DestoryScheduleMeetingItem(IScheduleMeetingItem* pMeeting) = 0;
-	
-	/// \param meetingUniqueID Specify the meeting ID.
-	/// \return If the function succeeds, the return value is the object pointer to IScheduleMeetingItem. Otherwise failed, returns NULL.
-	///Notice that if the specified meeting is a webinar, NULL will be returned. This interface doesn't support a webinar or a recurring one.
+
+	/// \参数：meetingUniqueID 指定会议ID。
+	/// \返回：如果函数成功，返回值是指向IScheduleMeetingItem的对象指针。否则失败，返回NULL。
 	virtual IScheduleMeetingItem* CreateEditMeetingItem(UINT64 meetingUniqueID) = 0;
-	
-	/// \brief Destroy the item of editing meeting created via CreateEditMeetingItem().
-	/// \param pMeeting A pointer to the item created via CreateEditMeetingItem().
-	virtual void DestoryEditMeetingItem(IScheduleMeetingItem* pMeeting) = 0;	
-	
-	/// \brief Set pre-meeting service event.
-	/// \param pEvent A pointer to the IPreMeetingServiceEvent which is used to receive pre-meeting service callback events. For more details, see \link IPreMeetingServiceEvent \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The event is used by the SDK to pass the callback event to user's application. If the function is not called or failed, the user's application can not retrieve the callback event.
+
+	/// \描述：销毁通过CreateEditMeetingItem()创建的编辑会议项。
+	/// \参数：pMeeting 指向通过CreateEditMeetingItem()创建的项的指针。.
+	virtual void DestoryEditMeetingItem(IScheduleMeetingItem* pMeeting) = 0;
+
+	/// \描述：设置会前服务事件
+	/// \参数：pEvent 指向IPreMeetingServiceEvent的指针，用于接收会前服务回调事件。有关详细信息，请参见IPreMeetingServiceEvent
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：SDK使用该事件将回调事件传递给用户的应用程序。如果函数未被调用或失败，用户的应用程序将无法检索回调事件。
 	virtual SDKError SetEvent(IPreMeetingServiceEvent* pEvent) = 0;
 
-	/// \brief Schedule Meeting.
-	/// \param pItem The object created via CreateScheduleMeetingItem().
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEventreMeetingSer::onScheduleOrEditMeeting().
-	virtual SDKError ScheduleMeeting(IScheduleMeetingItem* pItem) = 0;		
-	
-	/// \brief Schedule Meeting.
-	/// \param wndParam Schedule a meeting in the dialog window box by setting its parameter. For more details, see \link WndPosition \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success. 
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEventreMeetingSer::onScheduleOrEditMeeting().
+	/// \描述：安排会议。
+	/// \参数：pItem 通过CreateScheduleMeetingItem()创建的对象。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEventreMeetingSer::onScheduleOrEditMeeting()接收回调事件。
+	virtual SDKError ScheduleMeeting(IScheduleMeetingItem* pItem) = 0;
+
+	/// \描述：安排会议。
+	/// \参数：wndParam 通过设置其wndParameter在对话框窗口框中安排会议。有关详细信息，请参见\link WndPosition \endlink结构。
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEventreMeetingSer::onScheduleOrEditMeeting()接收回调事件。
 	virtual SDKError ScheduleMeeting(WndPosition& wndParam) = 0;
 
-	/// \brief Edit Meeting.
-	/// \param pItem The object created via CreateEditMeetingItem.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEvent::onScheduleOrEditMeeting ().
-	///Notice that if the specified meeting is a recurring one or a webinar, a SDKERR_INVALID_PARAMETER error will be returned. In these cases, edit the meeting via IPreMeetingService::EditMeeting(WndPosition& wndParam, UINT64 meetingUniqueID).
+	/// \描述：编辑会议
+	/// \参数：pItem 通过CreateEditMeetingItem创建的对象.
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEvent::onScheduleOrEditMeeting()接收回调事件。
+	///注意,如果指定的会议是一个反复出现的一个或一个网络研讨会,一个SDKERR_INVALID_参数:一特将返回错误。在这些情况下,编辑会议通过IPreMeetingService::EditMeeting (WndPosition& wndparam:,UINT64 meetingUniqueID)。
 	virtual SDKError EditMeeting(IScheduleMeetingItem* pItem) = 0;
-	
-	/// \brief Edit Meeting.
-	/// \param wndParam Edit the meeting through the dialog window by setting its parameter. For more details, see \link WndPosition \endlink structure.
-	/// \param meetingUniqueID Assign a meeting ID to schedule or edit related meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEvent::onScheduleOrEditMeeting ().
-	///The recurring meeting and webinar can only be edited via this function.
+
+	/// \描述：编辑会议
+	/// \参数：wndParam 编辑会议通过对话框窗口设置wndParam。有关详细信息，请参见 WndPosition 结构。
+	/// \参数：meetingUniqueID 分配一个会议ID来安排或编辑相关会议
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEvent::onScheduleOrEditMeeting()接收回调事件。
+	///重复会议和网络研讨会只能通过这个功能进行编辑。
 	virtual SDKError EditMeeting(WndPosition& wndParam, UINT64 meetingUniqueID) = 0;
 
-	/// \brief Delete the specified scheduled meeting.
-	/// \param meetingUniqueID Assign a meeting ID to delete meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEvent::onDeleteMeeting ().
-	///It is forbidden to delete personal meeting or webinar or a recurring one.
+	/// \描述：删除指定的预定会议。
+	/// \参数：meetingUniqueID 分配一个会议ID来删除会议
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEvent::onDeleteMeeting()接收回调事件
+	///不能删除个人会议、网络会议或重复召开的会议。
 	virtual SDKError DeleteMeeting(UINT64 meetingUniqueID) = 0;
-	
-	/// \brief Get the list of current meetings.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Once the function is called successfully, the user will receive the callback event via IPreMeetingServiceEvent::onListMeeting ().
+
+	/// \描述：获取当前会议的列表
+	/// \返回：如果函数成功，返回值为SDKErr_Success
+	/// 否则失败。要获得扩展的错误信息，请参见 SDKError enum。
+	/// \注意：一旦函数被成功调用，用户将通过IPreMeetingServiceEvent::onListMeeting()接收回调事件
 	virtual SDKError ListMeeting() = 0;
 
-	/// \brief Get a pointer to IMyMeeingItem.
-	/// \param meetingUniqueID Specifies meeting ID to get the related object of the IMeetingItemInfo. 
-	/// \return If the function succeeds, the return value is not NULL. Otherwise failed, returns NULL.
+	/// \描述：获取指向IMeetingItemInfo的指针。
+	/// \参数：meetingUniqueID 指定获取IMeetingItemInfo的相关对象的会议ID。
+	/// \返回：如果函数成功，返回值不是NULL。否则失败，返回NULL。
 	virtual IMeetingItemInfo* GetMeeingItem(UINT64 meetingUniqueID) = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

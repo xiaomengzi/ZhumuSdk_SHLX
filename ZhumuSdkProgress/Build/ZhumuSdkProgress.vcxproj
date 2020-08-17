@@ -101,7 +101,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>..\Depends\ZhumuSDK\lib;..\Depends\HPSocket\Win32;..\Depends\jsoncpp\lib\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdk.lib;HPSocket_x86UD.lib;jsoncpp_staticd.lib</AdditionalDependencies>
+      <AdditionalDependencies>ZhumuSDK.lib;HPSocket_x86UD.lib;jsoncpp_staticd.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -152,7 +152,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\Depends\ZhumuSDK\lib;..\Depends\HPSocket\Win32;..\Depends\jsoncpp\lib\win32;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdk.lib;HPSocket_x86U.lib;jsoncpp_static.lib</AdditionalDependencies>
+      <AdditionalDependencies>ZhumuSDK.lib;HPSocket_x86U.lib;jsoncpp_static.lib</AdditionalDependencies>
     </Link>
     <Midl>
       <MkTypLibCompatible>false</MkTypLibCompatible>
@@ -210,13 +210,12 @@
     <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_share_render.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_ui_mgr.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_video_container.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zoom_customized_ui.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zhumu_customized_ui.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\direct_share_helper_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\embedded_browser_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_annotation_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_audio_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface_v2.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_chat_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_closedcaption_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_configuration_interface.h" />
@@ -224,7 +223,6 @@
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_live_stream_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_participants_ctrl_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_phone_helper_interface.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_qa_ctrl_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_recording_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_remote_ctrl_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_sharing_interface.h" />
@@ -238,14 +236,10 @@
     <ClInclude Include="..\Depends\ZhumuSDK\include\premeeting_service_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\setting_service_interface.h" />
     <ClInclude Include="..\Depends\ZhumuSDK\include\ui_hook_interface.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_def.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_ext.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_platform.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_def.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_helper_interface.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_sms_helper_interface.h" />
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_util_define.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_def.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_ext.h" />
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_util_define.h" />
     <ClInclude Include="..\Src\Business\BusinessLogic.h" />
     <ClInclude Include="..\Src\Business\CustomData.h" />
     <ClInclude Include="..\Src\Net\TcpClient\CustomTcpClient.h" />

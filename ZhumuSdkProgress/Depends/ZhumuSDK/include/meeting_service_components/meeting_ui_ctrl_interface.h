@@ -1,86 +1,89 @@
 /*!
-* \file meeting_ui_ctrl_interface.h
-* \brief UI Controller of Meeting Service Interface
-* Valid only for ZOOM style user interface mode.
+* \文件：meeting_ui_ctrl_interface.h
+* \描述：会议服务接口UI控制器
+* \仅适用于zhumu风格的UI模式
 */
-#ifndef _MEETING_UI_CTRL_INTERFACE_H_
-#define _MEETING_UI_CTRL_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_MEETING_UI_CTRL_INTERFACE_H_
+#define ZHUMU_MEETING_UI_CTRL_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 /*! \enum SDKMeetingUIType
-    \brief The displayed type of the user videos in the meeting.
-    Here are more detailed structural descriptions.
+\描述：会议ui的类型。
+更详细的结构描述。
 */
 enum SDKMeetingUIType
 {
-	SDK_Meeting_UI_None,///<For initialization.
-	SDK_Meeting_UI_VideoWall_Mode,///<Video wall mode. 
-	SDK_Meeting_UI_ActiveRender_Mode,///<Active user mode. 
+	SDK_Meeting_UI_None,
+	SDK_Meeting_UI_VideoWall_Mode,
+	SDK_Meeting_UI_ActiveRender_Mode,
 };
 
 /*! \struct tagVideoWallPageInfoParam
-    \brief Video wall page information.
-    Here are more detailed structural descriptions.
+\描述：视频页面的信息。
+更详细的结构描述。
 */
 typedef struct tagVideoWallPageInfoParam
 {
-	int nCurrentPage;///<The page in video wall mode for the moment.
-	int nTotalPages;///<The total number of pages in video wall mode.
+	int nCurrentPage;
+	int nTotalPages;
 }VideoWallPageInfoParam;
 
 /*! \struct tagShowChatDlgParam
-    \brief The configuration of the parameters to display the dialog. 
-    Here are more detailed structural descriptions.
+\描述：显示会议聊天对话框参数。
+更详细的结构描述。
 */
 typedef struct tagShowChatDlgParam
 {
-	HWND hParent;///<Parent window handle.
-	RECT rect;///<Chat dialog position.
-	HWND hChatWnd;///<Chat dialog handle. 
+	HWND hParent;///<父窗口句柄
+	RECT rect;///< 聊天对话框位置
+	HWND hChatWnd;///< 返回聊天窗口句柄
 	tagShowChatDlgParam()
 	{
 		hParent = NULL;
 		hChatWnd = NULL;
- 		rect.top = 0;
- 		rect.bottom = 0;
- 		rect.left = 0;
- 		rect.right = 0;
+		rect.top = 0;
+		rect.bottom = 0;
+		rect.left = 0;
+		rect.right = 0;
 	}
 }ShowChatDlgParam;
 
 /*! \enum SDKFloatVideoType
-    \brief The user interface type of float video.
-    Here are more detailed structural descriptions.
+\描述：浮动视频ui的类型。
+更详细的结构描述。
 */
 enum SDKFloatVideoType
 {
-	FLOATVIDEO_List,///<Type of list.
-	FLOATVIDEO_Small,///<Small. 
-	FLOATVIDEO_Large,///<Large.
-	FLOATVIDEO_Minimize,///<Minimized.
+	FLOATVIDEO_List,
+	FLOATVIDEO_Small,
+	FLOATVIDEO_Large,
+	FLOATVIDEO_Minimize,
 };
 
 /*! \enum SDKMinimizeUIMode
-    \brief The type of minimize user interface mode.
-    Here are more detailed structural descriptions.
+\描述：最小化UI模式的类型。
+更详细的结构描述。
 */
 enum SDKMinimizeUIMode
 {
-	MinimizeUIMode_NONE,///<For initialization.
-	MinimizeUIMode_SHARE,///<Minimized mode for sharing.
-	MinimizeUIMode_VIDEO,///<Minimized mode for video.
-	MinimizeUIMode_ACTIVESPEAKER,///<Minimized mode for speaking.
+	MinimizeUIMode_NONE,
+	MinimizeUIMode_SHARE,
+	MinimizeUIMode_VIDEO,
+	MinimizeUIMode_ACTIVESPEAKER,
 };
 
 /*! \struct tagSplitScreenInfo
-    \brief Split screen mode information.
-    Here are more detailed structural descriptions.
+\描述：分屏模式信息。
+更详细的结构描述.
 */
 typedef struct tagSplitScreenInfo
 {
-	bool bSupportSplitScreen;///<Support display the video in a row.
-	bool bInSplitScreenMode;///<In the process of displaying the video in the row.
+	bool bSupportSplitScreen;
+	bool bInSplitScreenMode;
 	tagSplitScreenInfo()
 	{
 		bSupportSplitScreen = false;
@@ -89,28 +92,28 @@ typedef struct tagSplitScreenInfo
 }SplitScreenInfo;
 
 /*! \enum AudioCallbackActionInfo
-    \brief The action user suggested to take after getting the callback event "IMeetingUIControllerEvent::onAudioBtnClicked()"
-    Here are more detailed structural descriptions.
+    \描述：用户在获取回调事件"IMeetingUIControllerEvent::onAudioBtnClicked()"后建议采取的操作 
+    下面是更详细的结构描述。
 */
 enum AudioCallbackActionInfo
 {
-	ACTION_NONE = 0,///<For initialization.
-	ACTION_CHOOSE_AUDIO_DEVICE_NOAUDIODEVICECONNECTTED,///<Choose audio device because no audio device is connected yet.
-	ACTION_CHOOSE_AUDIO_DEVICE_COMPUTERAUDIODEVICEERROR,///<Choose audio device because there is an error in the connected computer audio device.
-	ACTION_CHOOSE_AUDIO_DEVICE_PHONECALLDEVICEERROR,///<Choose audio device because there is an error in the connected phone call device.
-	ACTION_NEED_JOIN_VOIP,///<Need to join voip.
-	ACTION_MUTE_UNMUTE_AUDIO,///<Mute or unmute some user's audio according to the "AudioBtnClickedCallbackInfo::userid_MuteUnmute"
-	ACTION_SHOW_AUDIO_SETTING_WINDOW,///<Show audio setting window.
+	ACTION_NONE = 0,///<用于初始化.
+	ACTION_CHOOSE_AUDIO_DEVICE_NOAUDIODEVICECONNECTTED,///<选择音频设备，因为尚未连接音频设备。
+	ACTION_CHOOSE_AUDIO_DEVICE_COMPUTERAUDIODEVICEERROR,///<选择音频设备，因为在连接计算机音频设备时发生错误。
+	ACTION_CHOOSE_AUDIO_DEVICE_PHONECALLDEVICEERROR,///<选择音频设备，因为在连接电话呼叫设备时发生错误。
+	ACTION_NEED_JOIN_VOIP,///<需要假如voip
+	ACTION_MUTE_UNMUTE_AUDIO,///<根据 "AudioBtnClickedCallbackInfo::userid_MuteUnmute" 静止或开启用户音频
+	ACTION_SHOW_AUDIO_SETTING_WINDOW,///<显示音频设置窗口
 };
 
 /*! \struct tagAudioBtnClickedCallbackInfo
-    \brief The suggested action information for user to handle after getting the callback event "IMeetingUIControllerEvent::onAudioBtnClicked()"
-    Here are more detailed structural descriptions.
+    \描述: 用户在获取回调事件"IMeetingUIControllerEvent::onAudioBtnClicked()"后建议采取的操作 
+    下面是更详细的结构描述。
 */
 typedef struct tagAudioBtnClickedCallbackInfo
 {
-	unsigned int userid_MuteUnmute;///<The id of the user that should be muted or unmuted. When no mute or unmute operation is required, the value is 0
-	AudioCallbackActionInfo audio_clicked_action;///<The suggested action for user to take.
+	unsigned int userid_MuteUnmute;///<应禁用或取消禁用的用户的id。当不需要静音或取消静音操作时，该值为0
+	AudioCallbackActionInfo audio_clicked_action;///<建议用户采取的操作。
 	tagAudioBtnClickedCallbackInfo()
 	{
 		userid_MuteUnmute = 0;
@@ -119,232 +122,210 @@ typedef struct tagAudioBtnClickedCallbackInfo
 
 }AudioBtnClickedCallbackInfo;
 
-/// \brief Callback Event of Meeting UI Controller.
+/// \描述：Meeting UI Controller回调事件.
 ///
 class IMeetingUIControllerEvent
 {
 public:
-	/// \brief Callback event to click the INVITE button.
-	/// \param [out] bHandled True indicates to show the user's own custom dialog interface. Default value: FALSE.
-	/// \remarks If the value of bHandled is not set to TRUE, the default interface will pop up. 
+	/// \描述：当单击Invite按钮时的回调过程。
+	/// \参数：[in out] bHandled 如果应用程序显示自己的invite对话框，则将其设置为TRUE。如果为FLASE，则为默认值。
+	/// \注意：如果bhandle未设置为true。无论应用程序是否处理，都会显示默认的Zhumu invite对话框。
 	virtual void onInviteBtnClicked(bool& bHandled) = 0;
-	
-	/// \brief Callback event for clicking START SHARE button.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the SHARE button. For more details, see \link IMeetingUIElemConfiguration::RedirectClickShareBTNEvent() \endlink.
 	virtual void onStartShareBtnClicked() = 0;
-	
-	/// \brief Callback event of clicking the END MEETING button.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the END MEETING button. For more details, see \link IMeetingUIElemConfiguration::RedirectClickEndMeetingBTNEvent() \endlink.
 	virtual void onEndMeetingBtnClicked() = 0;
-	
-	/// \brief Callback event of clicking PRTICIPANT LIST button.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the PARTICIPANT LIST button. For more details, see \link IMeetingUIElemConfiguration::RedirectClickParticipantListBTNEvent() \endlink.
 	virtual void onParticipantListBtnClicked() = 0;
-	
-	/// \brief Callback event of clicking CUSTOME LIVE STREAM menu.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the CUSTOME LIVE STREAM menu. For more details, see \link IMeetingUIElemConfiguration::RedirectClickCustomLiveStreamMenuEvent() \endlink.
 	virtual void onCustomLiveStreamMenuClicked() = 0;
-	
-	/// \brief Notification occurs only when the SDK fails to display the default ZOOM INVITE dialog.
+
+	/// \描述：只在SDK无法显示默认的ZHUMU INVITE对话框时发出通知。
 	virtual void onZoomInviteDialogFailed() = 0;
 
-	/// \brief Callback event of clicking CC menu.
-	/// \remarks The user won't receive this callback event unless he redirects the process of clicking the CUSTOME LIVE STREAM menu. For more details, see \link IMeetingUIElemConfiguration::RedirectClickCCBTNEvent() \endlink.
+	/// \描述：单击CC菜单的回调事件。
+	/// \注意：除非用户重定向单击CUSTOME LIVE流菜单的进程，否则他不会收到这个回调事件。有关详细信息，请参见IMeetingUIElemConfiguration::RedirectClickCustomLiveStreamMenuEvent();
 	virtual void onCCBTNClicked() = 0;
 
-	/// \brief Callback event for clicking Audio button in the meeting.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the Audio button in the meeting. For more details, see \link IMeetingUIElemConfiguration::RedirectClickAudioBTNEvent() \endlink.
+	/// \描述：用于在会议中单击音频按钮的回调事件。
+	/// \注意：除非用户设置重定向在会议中单击音频按钮的过程，否则不会接收此回调事件。详细请看: IMeetingUIElemConfiguration::RedirectClickAudioBTNEvent().
 	virtual void onAudioBtnClicked(AudioBtnClickedCallbackInfo info) = 0;
 	
-	/// \brief Callback event for clicking Audio Menu button in the meeting.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the Audio Menu button in the meeting. For more details, see \link IMeetingUIElemConfiguration::RedirectClickAudioMenuBTNEvent() \endlink.
+	/// \描述：用于在会议中单击音频菜单按钮的回调事件。
+	/// \注意：除非用户设置重定向在会议中单击音频菜单按钮的过程，否则不会接收此回调事件。详细请看: IMeetingUIElemConfiguration::RedirectClickAudioMenuBTNEvent().
 	virtual void onAudioMenuBtnClicked() = 0;
 
-	/// \brief Callback event for clicking Breakout Room button in the meeting.
-	/// \remarks The user won't receive this callback event unless he sets to redirect the process of clicking the Breakout Room button in the meeting. For more details, see \link IMeetingUIElemConfiguration::RedirectClickBreakoutRoomButtonEvent() \endlink.
+	/// \描述：会议中单击“会议室”按钮的回调事件。
+	/// \注意：除非用户设置重定向在会议中单击会议室按钮的过程，否则不会接收此回调事件。详细请看: IMeetingUIElemConfiguration::RedirectClickBreakoutRoomButtonEvent().
 	virtual void onBreakoutRoomBtnClicked() = 0;
 	
 };
 
-/// \brief Meeting UI Controller Interface.
+/// \描述：会议UI控制器接口
 ///
 class IMeetingUIController
 {
 public:
-	/// \brief Set meeting UI controller callback event handler. 
-	/// \param pEvent A pointer to the IMeetingUIControllerEvent that receives the meeting user interface event. For more details, see \link IMeetingUIControllerEvent \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议ui控制器回调事件
+	/// \参数：pEvent 一个指向IMeetingUIControllerEvent*的指针，它接收会议ui事件。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingUIControllerEvent* pEvent) = 0;
 
-	/// \brief Show the chat dialog during the meeting.
-	/// \param param Specifies the way to show the chat dialog. For more details, see \link ShowChatDlgParam \endlink structure. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示会议聊天对话框
+	/// \参数：param 指定如何显示聊天对话框。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowChatDlg(ShowChatDlgParam& param) = 0;
 
-	/// \brief Hide the chat dialog during the meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：隐藏会议聊天对话框
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError HideChatDlg() = 0;
 
-	/// \brief Enter full screen display mode.
-	/// \param firstView True indicates to enable the full screen mode for the first view.
-	/// \param secondView True indicates to enable the full screen mode for the second view if it is in the dual view mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：进入全屏模式
+	/// \参数：firstView 指定第一个屏幕是否进入全屏模式
+	/// \参数：secondView 如果启用双显示器模式，指定第二个显示器是否进入全屏模式。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError EnterFullScreen(bool firstView, bool secondView) = 0;
 
-	/// \brief Exit the full screen display mode.
-	/// \param firstView True indicates to exit the full screen mode for the first view.
-	/// \param secondView True indicates to exit the full screen mode for the second view if it is in the dual view mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：退出全屏模式
+	/// \参数: firstView 指定第一个显示器是否退出全屏模式。
+	/// \参数：secondView 如果启用双监视器模式，指定第二个监视器是否退出全屏模式。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ExitFullScreen(bool firstView, bool secondView) = 0;
 
-	/// \brief Active the principal window of meeting and place it on top.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///If the function fails, the return value is not SDKErr_Success. To get extended error information, refer to SDKError enum.
+	/// \描述：返回到会议中
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError BackToMeeting() = 0;
 
-	/// \brief Switch to video wall mode. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： Switch to video wall mode. 
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwitchToVideoWall() = 0;
 
-	/// \brief Switch to the mode of showing the current speaker.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：切换到主动式扬声器视图
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwtichToAcitveSpeaker() = 0;
 
-	/// \brief Move the floating video window.
-	/// \param left Sets the left margin edge for the floating video window. Please use the coordinate of the screen.
-	/// \param top Sets the top margin edge for the floating video window. Please use the coordinate of the screen.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：移动浮动视频窗口
+	/// \参数：left 指定浮动视频窗口的左侧位置。
+	/// \参数：top 指定浮动视频窗口的顶部位置。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError MoveFloatVideoWnd(int left, int top) = 0;
 
-	/// \brief Enable or disable to display the floating sharing toolbar.
-	/// \param bShow TRUE indicates to display the floating toolbar.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks This function works only in the share mode. 
+	/// \描述：显示共享浮动工具栏
+	/// \参数：bShow 指定是否显示共享浮动工具栏
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowSharingToolbar(bool bShow) = 0;
 
-	/// \brief Switch to current speaker mode on the floating window. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：将浮动视频条切换到主动式扬声器视图
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwitchFloatVideoToActiveSpkMod() = 0;
 
-	/// \brief Adjust the display mode of floating window. 
-	/// \param type Specify the type of the floating video. For more details, see \link SDKFloatVideoType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：改变浮动主动式音箱视频条的大小
+	/// \参数：type 指定浮动视频面板视图类型。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ChangeFloatoActiveSpkVideoSize(SDKFloatVideoType type) = 0;
 
-	/// \brief Switch to gallery view mode on the floating window. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：将浮动视频栏切换到画廊视图
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwitchFloatVideoToGalleryMod() = 0;
 
-	/// \brief Display/hide the window which is used to display the list of the participants. 
-	/// \param bShow TRUE indicates to display the list of the participants.
-	/// \param [out] hParticipantsListWnd This function will return the window handle if the bShow value is set to TRUE and API calls successfully. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示参与者列表窗口
+	/// \参数：bShow Specifies the participants List Window show or not
+	/// \参数：hParticipantsListWnd if bShow is true,and api call success, will return the handle of the participants List window
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowParticipantsListWnd(bool bShow, HWND& hParticipantsListWnd) = 0;
 
-	/// \brief Display/hide the toolbar at the bottom of the meeting window. 
-	/// \param bShow TRUE indicates to display the toolbar.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks This function does not work if the user sets to hide the toolbar via IMeetingUIElemConfiguration::SetBottomFloatToolbarWndVisibility().
+	/// \描述：显示底部浮动工具栏窗口
+	/// \参数：bShow 指定底部浮动工具栏窗口显示与否
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowBottomFloatToolbarWnd(bool bShow) = 0;
 
-	/// \brief Get the window handle of the meeting user interface.
-	/// \param [out] hFirstView If the function succeeds, the parameter will save the window handle of the meeting user interface displayed by the first view.
-	/// \param [out] hSecondView If the function succeeds, the parameter will save the window handle of the meeting user interface displayed by the second view.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取会议UI窗口的句柄
+	/// \参数：hFirstView 返回会议UI窗口的第一个视图句柄的变量。
+	/// \参数：hSecondView 返回会议UI窗口的第二个视图句柄的变量。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetMeetingUIWnd(HWND& hFirstView, HWND& hSecondView) = 0;
 
-	/// \brief Display the dialog to choose the audio to join the meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示连接音频对话框
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowJoinAudioDlg() = 0;
 
-	/// \brief Hide the dialog to choose the audio to join the meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：隐藏连接音频对话框
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError HideJoinAudioDlg() = 0;
 
-	/// \brief Get the information in video wall mode.
-	/// \param [out] videoWallPageInfoParam If the function succeeds, the parameter will save the current page index and the number of the pages. For more details, see \link VideoWallPageInfoParam \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取网页信息的视频墙模式。
+	/// \参数：videoWallPageInfoParam 存储当前页面索引和总页面。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetWallViewPageInfo(VideoWallPageInfoParam& videoWallPageInfoParam) = 0;
 
-	/// \brief Show the video users on previous page or next page in video wall mode.
-	/// \param bPageUp TRUE indicates to show the video users on previous page, FALSE next page.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The function does not work if the window shows the first or last page. The return value is SDKErr_Success in this case.
+	/// \描述：显示前一页或下一页视频用户在视频墙模式。
+	/// \参数：bPageUp 指定上一页或下一页。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowPreOrNextPageVideo(bool bPageUp) = 0;
 
-	/// \brief Set the visibility of the green frame when sharing the application.
-	/// \param bShow TRUE indicates to display the frame. FALSE hide.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示或隐藏您共享的应用程序的共享框架窗口。
+	/// \参数：bShow 指定显示或隐藏.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError ShowSharingFrameWindows(bool bShow) = 0;
 
-	/// \brief Determines the minimize state of the first view.
-	/// \param [out] mode If the function succeeds, the parameter will save the display mode. For more details, see \link SDKMinimizeUIMode \endlink enum.
-	/// \return TRUE indicates the minimize state. FALSE not.
+	/// \描述：确定第一个屏幕上会议ui窗口的最小化状态。
+	/// \参数：mode 如果第一个屏幕上的会议ui窗口处于最小化状态，则返回最小化模式。
+	/// \返回：true 或 false
 	virtual bool IsMinimizeModeOfFristScreenMeetingUIWnd(SDKMinimizeUIMode& mode) = 0;
 
-	/// \brief Change the display mode of the minimized meeting window for the first view.
-	/// \param mode Specifies the minimized mode. For more details, see \link SDKMinimizeUIMode \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：如果第一个屏幕上的会议ui窗口处于最小化状态，则更改最小化模式。
+	/// \参数：mode 指定最小化模式。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwitchMinimizeUIMode4FristScreenMeetingUIWnd(SDKMinimizeUIMode mode) = 0;
 
-	/// \brief Get the information whether the current view supports split screen mode or not. If supports, check it if it is already in the split screen mode.
-	/// \param [out] info If the function succeeds, the parameter will save the configuration of split screen mode. For more details, see \link SplitScreenInfo \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取当前分屏模式的信息
+	/// \参数：info 当前分屏模式的信息。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetCurrentSplitScreenModeInfo(SplitScreenInfo& info) = 0;
 
-	/// \brief Switch to the split screen mode or cancel.
-	/// \param bSplit TRUE indicates to switch to the split screen mode. FALSE cancel.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks TRUE does not work if it is in the split screen mode. FALSE does not work if it is not the split screen mode.
+	/// \描述：在查看共享和不启用双显示器模式时，请切换分屏模式或不切换分屏模式。
+	/// \参数：bSplit 是否分屏模式。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwitchSplitScreenMode(bool bSplit) = 0;
 
-	/// \brief when someone else shares, and meeting window is not full screen. you can call the api to switch video & share display postion. 
-	/// \param bToDisplayShare TRUE means to display share, otherwise video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：当别人分享时，并且会议窗口不是全屏的。你可以调用api来切换视频和共享显示位置。
+	/// \参数：bToDisplayShare TRUE means to display share, otherwise video.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SwapToShowShareViewOrVideo(bool bToDisplayShare) = 0;
 
-	/// \brief Determine if the meeting is displaying the sharing screen now.
-	/// \param [out] bIsShare TRUE means is showing sharing screen, FALSE means is showing video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：确定会议现在是否显示共享屏幕。
+	/// \参数：[out] bIsShare TRUE 意思是显示共享屏幕，FALSE 意思是显示视频。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError IsDisplayingShareViewOrVideo(bool& bIsShare) = 0;
 
-	/// \brief Determine if the user can swap to show sharing screen or video now.
-	/// \param [out] bCan TRUE means Can, otherwise not
-	/// \return SDKErr_Success means success, otherwise not
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：确定用户现在是否可以切换到共享屏幕或视频。
+	/// \参数：[out] bCan TRUE 表示可以, 否则不行
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError CanSwapToShowShareViewOrVideo(bool& bCan) = 0;
-
-	/// \brief Set the meeting topic in the meeting information page. 
-	/// \param meetingtopic Specify the meeting topic in the meeting information page.
-	/// \return SDKErr_Success means success, otherwise not
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError SetMeetingTopic(const wchar_t* meetingtopic) = 0;
 };
 
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

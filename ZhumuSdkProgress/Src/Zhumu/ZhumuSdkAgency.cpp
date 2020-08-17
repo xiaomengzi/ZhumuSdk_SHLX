@@ -4,7 +4,7 @@
 #include "BusinessLogic.h"
 #include "plog/Log.h"
 #include "Utils.h"
-#include "zoom_sdk.h"
+#include "zhumu_sdk.h"
 #include "meeting_service_components/meeting_configuration_interface.h"
 
 
@@ -68,7 +68,7 @@ void CZhumuSdkAgency::onLogout()
 
 }
 
-void CZhumuSdkAgency::onZoomIdentityExpired()
+void CZhumuSdkAgency::onIdentityExpired()
 {
 
 }
@@ -109,12 +109,12 @@ void CZhumuSdkAgency::onMeetingParameterNotification(const MeetingParameter* mee
 
 }
 
-SDKError CZhumuSdkAgency::InitZhunmuSDK(ZOOM_SDK_NAMESPACE::InitParam& zm_param)
+SDKError CZhumuSdkAgency::InitZhunmuSDK(ZHUMU_SDK_NAMESPACE::InitParam& zm_param)
 {
-    return ZOOM_SDK_NAMESPACE::InitSDK(zm_param);
+    return ZHUMU_SDK_NAMESPACE::Zhumu_InitSDK(zm_param);
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AuthSDK(wchar_t *key, wchar_t *secret)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AuthSDK(wchar_t *key, wchar_t *secret)
 {
     if (nullptr != m_pAuthService)
     {
@@ -132,7 +132,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AuthSDK(wchar_t *key, wchar_t *sec
     return SDKERR_SUCCESS;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LoginSDK(std::wstring account, std::wstring password)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LoginSDK(std::wstring account, std::wstring password)
 {
     LoginParam emailLoginParam;
     emailLoginParam.loginType = LoginType_Email;
@@ -153,7 +153,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LoginSDK(std::wstring account, std
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LogOutSDK()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LogOutSDK()
 {
     SDKError err = SDKERR_SUCCESS;
 
@@ -169,7 +169,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LogOutSDK()
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LeaveMeeting()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LeaveMeeting()
 {
     if (nullptr == m_pMeetingService)
     {
@@ -186,7 +186,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::LeaveMeeting()
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartAppointmentMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartAppointmentMeeting(ZHUMU_SDK_NAMESPACE::StartParam& startParam)
 {
     if (nullptr == m_pMeetingService)
     {
@@ -203,7 +203,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartAppointmentMeeting(ZOOM_SDK_N
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartInstantMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartInstantMeeting(ZHUMU_SDK_NAMESPACE::StartParam& startParam)
 {
     if (nullptr == m_pMeetingService)
     {
@@ -220,7 +220,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::StartInstantMeeting(ZOOM_SDK_NAMES
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::JoinMeeting(JoinParam& joinParam)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::JoinMeeting(JoinParam& joinParam)
 {
     if (nullptr == m_pMeetingService)
     {
@@ -237,7 +237,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::JoinMeeting(JoinParam& joinParam)
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AnonymityJoinMeeting(JoinParam& joinParam)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AnonymityJoinMeeting(JoinParam& joinParam)
 {
     if (nullptr == m_pMeetingService)
     {
@@ -254,7 +254,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::AnonymityJoinMeeting(JoinParam& jo
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DirectSharing(UINT64 nMeetingNumber)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DirectSharing(UINT64 nMeetingNumber)
 {
     SDKError err = SDKERR_SUCCESS;
     //if (nullptr == m_pMeetingService)
@@ -271,7 +271,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DirectSharing(UINT64 nMeetingNumbe
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -287,7 +287,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoFullScreenVideoWhenJoinM
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysDisplayedMeetingCtrlBar(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysDisplayedMeetingCtrlBar(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -303,7 +303,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysDisplayedMeetingCtrlBa
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysJoinMeetingbeforeAdmin(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysJoinMeetingbeforeAdmin(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -319,7 +319,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EanbleAlwaysJoinMeetingbeforeAdmin
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectMic(const wchar_t* deviceId, const wchar_t* deviceName)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectMic(const wchar_t* deviceId, const wchar_t* deviceName)
 {
     SDKError err = SDKERR_UNKNOWN;
     err = CreateSettingService();
@@ -336,7 +336,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectMic(const wchar_t* deviceId,
 }
 
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetMicVol(float& value)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetMicVol(float& value)
 {
     SDKError err = SDKERR_UNKNOWN;
     err = CreateSettingService();
@@ -352,7 +352,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetMicVol(float& value)
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName)
 {
     SDKError err = SDKERR_UNKNOWN;
     err = CreateSettingService();
@@ -368,7 +368,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectSpeaker(const wchar_t* devic
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetSpeakerVol(float& value)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetSpeakerVol(float& value)
 {
     SDKError err = SDKERR_UNKNOWN;
     err = CreateSettingService();
@@ -384,7 +384,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SetSpeakerVol(float& value)
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoJoinAudio(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoJoinAudio(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -400,7 +400,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoJoinAudio(bool bEnable)
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableParticipantsUnmuteWhenMeeting(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableParticipantsUnmuteWhenMeeting(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -416,7 +416,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableParticipantsUnmuteWhenMeetin
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableEchoCancellation(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableEchoCancellation(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -432,7 +432,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableEchoCancellation(bool bEnabl
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectCamera(const wchar_t* deviceId)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectCamera(const wchar_t* deviceId)
 {
     SDKError err = SDKERR_UNKNOWN;
     err = CreateSettingService();
@@ -448,7 +448,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::SelectCamera(const wchar_t* device
     return err;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableHDVideo(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableHDVideo(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -464,7 +464,7 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableHDVideo(bool bEnable)
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable)
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable)
 {
     SDKError err;
     err = CreateSettingService();
@@ -480,11 +480,11 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::EnableAutoTurnOffVideoWhenJoinMeet
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateAuthService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateAuthService()
 {
     if (nullptr == m_pAuthService)
     {
-        SDKError err = ZOOM_SDK_NAMESPACE::CreateAuthService(&m_pAuthService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_CreateAuthService(&m_pAuthService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {
@@ -499,12 +499,12 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateAuthService()
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyAuthService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyAuthService()
 {
     if (nullptr != m_pAuthService)
     {
         m_pAuthService->SetEvent(nullptr);
-        SDKError err = ZOOM_SDK_NAMESPACE::DestroyAuthService(m_pAuthService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_DestroyAuthService(m_pAuthService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {
@@ -516,11 +516,11 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyAuthService()
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateMeetingService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateMeetingService()
 {
     if (nullptr == m_pMeetingService)
     {
-        SDKError err = ZOOM_SDK_NAMESPACE::CreateMeetingService(&m_pMeetingService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_CreateMeetingService(&m_pMeetingService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {
@@ -535,12 +535,12 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateMeetingService()
     return SDKERR_SUCCESS;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyMeetingService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyMeetingService()
 {
     if (nullptr != m_pMeetingService)
     {
         m_pMeetingService->SetEvent(nullptr);
-        SDKError err = ZOOM_SDK_NAMESPACE::DestroyMeetingService(m_pMeetingService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_DestroyMeetingService(m_pMeetingService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {
@@ -552,11 +552,11 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroyMeetingService()
     return SDKERR_UNKNOWN;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateSettingService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateSettingService()
 {
     if (nullptr == m_pSettingService)
     {
-        SDKError err = ZOOM_SDK_NAMESPACE::CreateSettingService(&m_pSettingService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_CreateSettingService(&m_pSettingService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {
@@ -569,11 +569,11 @@ ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::CreateSettingService()
     return SDKERR_SUCCESS;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroySettingService()
+ZHUMU_SDK_NAMESPACE::SDKError CZhumuSdkAgency::DestroySettingService()
 {
     if (nullptr != m_pSettingService)
     {
-        SDKError err = ZOOM_SDK_NAMESPACE::DestroySettingService(m_pSettingService);
+        SDKError err = ZHUMU_SDK_NAMESPACE::Zhumu_DestroySettingService(m_pSettingService);
 
         if (err != SDKError::SDKERR_SUCCESS)
         {

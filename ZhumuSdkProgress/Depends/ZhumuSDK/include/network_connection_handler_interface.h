@@ -1,14 +1,14 @@
 /*!
-* \file network_connection_handler_interface.h
-* \brief Network Connection Message Notification Handler.
-* 
+* \文件 network_connection_handler_interface.h
+* \描述：网络连接消息通知处理程序
+*
 */
 
-#ifndef _NETWORK_CONNECTION_HANDLER_H_
-#define _NETWORK_CONNECTION_HANDLER_H_
-
-BEGIN_ZOOM_SDK_NAMESPACE
-
+#ifndef ZHUMU_NETWORK_CONNECTION_HANDLER_H_
+#define ZHUMU_NETWORK_CONNECTION_HANDLER_H_
+/// \描述： Zhumu SDK Namespace
+/// 
+BEGIN_ZHUMU_SDK_NAMESPACE
 /*! \struct tagProxySettings
     \brief The proxy that the user want to use according to the net environment.
     Here are more detailed structural descriptions.
@@ -23,91 +23,76 @@ typedef struct tagProxySettings
 		auto_detect = false;
 	}
 }ProxySettings;
-
-/// \brief Proxy setting information callback interface.
+/// \描述： 代理设置信息回调接口
 ///
 class IProxySettingHandler
 {
 public:
-	virtual ~IProxySettingHandler(){};
-	/// \brief Get the address of the proxy host.
-	/// Return the address of the proxy host.
+	virtual ~IProxySettingHandler() {};
+	/// \描述：返回代理主机的值
 	virtual const wchar_t* GetProxyHost() = 0;
-	/// \brief Get the proxy port.
-	///Return The value of the proxy port.
+	/// \描述：返回代理端口的值
 	virtual unsigned int GetProxyPort() = 0;
-	/// \brief Get the description of the proxy.
-	///Return The description of the proxy.
+	/// \描述：返回代理描述的值
 	virtual const wchar_t* GetProxyDescription() = 0;
 
-	/// \brief Input the username and password when using the proxy.
-	/// \param userName The username when using the proxy.
-	/// \param psw The password when using the proxy.
+	/// \描述：为此代理的连接输入用户名和密码
 	virtual void InputUsernamePassword(const wchar_t* userName, const wchar_t* psw) = 0;
 
-	/// \brief Cancel the process to input the username and password of the proxy.
+	/// \描述：取消输入此代理的用户名和密码
 	virtual void Cancel() = 0;
 
 };
 
-/// \brief Verification of the SSL certificate callback interface.
+/// \描述：SSL证书验证回调接口
 ///
 class ISSLCertVerificationHandler
 {
 public:
-	virtual ~ISSLCertVerificationHandler(){};
+	virtual ~ISSLCertVerificationHandler() {};
 
-	/// \brief Get the value of whom the SSL certificate is issued to.
+	// \描述：返回颁发给的SSL证书的值
 	virtual const wchar_t* GetCertIssuedTo() = 0;
-	
-	/// \brief Get the value that who issues the SSL certificate.
+	// \描述：返回SSL证书的值
 	virtual const wchar_t* GetCertIssuedBy() = 0;
-	
-	/// \brief Get the serial number of the SSL certificate.
+	// \描述：返回SSL证书的序列号
 	virtual const wchar_t* GetCertSerialNum() = 0;
-	
-	/// \brief get the SSL certificate's fingerprint
+	/// \描述：返回ssl证书的指纹
 	virtual const wchar_t* GetCertFingerprint() = 0;
-
-	/// \brief The SSL certificate is trusted.
+	// \描述：信任此SSL证书
 	virtual void Trust() = 0;
-	/// \brief The SSL certificate is not trusted.
+	// \描述：不要信任此SSL证书
 	virtual void Cancel() = 0;
 
 };
 
-/// \brief The network connection handler callback event.
+/// \描述：网络连接处理程序回调事件
 ///
 class INetworkConnectionHandler
 {
 public:
-	/// \brief Notification callback of completing the proxy detection.
+	/// \描述：代理检测完成通知
 	virtual void onProxyDetectComplete() = 0;
-	/// \brief The callback will be triggered if the proxy requests to input the username and password.
-	/// \remarks Use the handler to configure the related information. For more details, see \link IProxySettingHandler \endlink. 
-	///The handler will be destroyed once the function calls end.
+	/// \描述：当收到此消息时，必须提示用户输入代理的用户名和密码
 	virtual void onProxySettingNotification(IProxySettingHandler* handler) = 0;
-	
-	/// \brief The callback will be triggered when the SSL is verified.
-	/// \remarks Use the handler to check the related information. For more details, see \link ISSLCertVerificationHandler \endlink.
-	///The handler will be destroyed once the function calls end.
+	/// \描述：当收到此消息时，必须提示用户进行SSL证书验证吗
 	virtual void onSSLCertVerifyNotification(ISSLCertVerificationHandler* handler) = 0;
 };
 
-/// \brief The network connection helper interface.
+/// \描述：网络连接帮助接口
 ///
 class INetworkConnectionHelper
 {
 public:
-	/// \brief Set the callback handler to receive the INetworkConnectionHandler.
-	/// \param pNetworkHandler The SDK will invoke the handler once received this type of message. For more details, see \link INetworkConnectionHandler \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：为网络连接消息通知注册处理程序。
+	/// \参数：pNetworkHandler 当接收到此消息类型时将调用Handler
+	/// \返回: 如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError RegisterNetworkConnectionHandler(INetworkConnectionHandler* pNetworkHandler) = 0;
 
-	/// \brief Unregister the callback handler which is used to receive the INetworkConnectionHandler.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：注销网络连接消息通知的处理程序。
+	/// \返回: 如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError UnRegisterNetworkConnectionHandler() = 0;
 
 	/// \brief Set the proxy that the user want to use according to your net environment.
@@ -116,5 +101,5 @@ public:
 	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
 	virtual SDKError ConfigureProxy(ProxySettings& proxy_setting) = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

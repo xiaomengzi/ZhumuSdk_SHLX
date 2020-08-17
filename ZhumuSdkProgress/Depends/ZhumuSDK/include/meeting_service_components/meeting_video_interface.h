@@ -1,146 +1,135 @@
 /*!
-* \file meeting_video_interface.h
-* \brief Meeting Service Video Interface
-* 
+* \文件：meeting_video_interface.h
+* \描述：会议视频服务接口
+*
 */
-#ifndef _MEETING_VIDEO_INTERFACE_H_
-#define _MEETING_VIDEO_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
-#include "..\zoom_sdk_util_define.h"
-BEGIN_ZOOM_SDK_NAMESPACE
-
-/*! \enum VideoStatus
-    \brief The video status of the user.
-    Here are more detailed structural descriptions.
-*/
+#ifndef ZHUMU_MEETING_VIDEO_INTERFACE_H_
+#define ZHUMU_MEETING_VIDEO_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
+#include "..\zhumu_sdk_util_define.h"
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 enum VideoStatus
 {
-	Video_ON, ///<Video is on.
-	Video_OFF, ///<Video is off.
+	Video_ON,
+	Video_OFF,
 };
 
-/// \brief Process after the user receives the requirement from the host to turn on the video.
 class IRequestStartVideoHandler
 {
 public:
-	virtual ~IRequestStartVideoHandler(){};
-	/// \brief Get the user ID who asks to turn on the video.
-	/// \return If the function succeeds, the return value is the user ID. FALSE 0.
+	virtual ~IRequestStartVideoHandler() {};
+
 	virtual unsigned int GetReqFromUserId() = 0;
-	/// \brief Instance to ignore the requirement, return nothing and finally self-destroy.
 	virtual SDKError Ignore() = 0;
-	/// \brief Instance to accept the requirement, turn on the video and finally self-destroy.
 	virtual SDKError Accept() = 0;
-	
-	/// \brief Ignore the request to enable the video in the meeting and finally the instance self-destroys.
 	virtual SDKError Cancel() = 0;
 };
 
-/// \brief Meeting video controller event callback
+/// \描述：会议视频控制器回调事件
 ///
 class IMeetingVideoCtrlEvent
 {
 public:
-	/// \brief Callback event of the user video status changes.
-	/// \param userId The user ID whose video status changes
-	/// \param status New video status. For more details, see \link VideoStatus \endlink enum.
+	/// \描述：用户的视频状态变化回调
+	/// \参数：userId 
+	/// \参数：status
 	virtual void onUserVideoStatusChange(unsigned int userId, VideoStatus status) = 0;
 
-	/// \brief Callback event of the user video spotlight status changes. 
-	/// \param bSpotlight TRUE indicates that the video is currently spotlighted.
-	/// \param userid The ID of user whose spotlight status changes.
+	/// \描述：焦点视频变化回调
+	/// \参数：userId 
 	virtual void onSpotlightVideoChangeNotification(bool bSpotlight, unsigned int userid) = 0;
 
-	/// \brief Callback event of the requirement to turn on the video from the host.
-	/// \param handler_ A pointer to the IRequestStartVideoHandler. For more details, see \link IRequestStartVideoHandler \endlink.
+	/// \描述：主持人请求开始视频回调
+	/// \参数：handler_
 	virtual void onHostRequestStartVideo(IRequestStartVideoHandler* handler_) = 0;
 
-	/// \brief Callback event of the active speaker video user changes. 
-	/// \param userid The ID of user who becomes the new active speaker.
+	/// \描述：音频活动者变化回调
+	/// \参数：userId 
 	virtual void onActiveSpeakerVideoUserChanged(unsigned int userid) = 0;
 
-	/// \brief Callback event of the active video user changes. 
-	/// \param userid The ID of user who becomes the new active speaker.
+	/// \描述：视频活动者变化回调
+	/// \参数：userId 
 	virtual void onActiveVideoUserChanged(unsigned int userid) = 0;
 };
 
-/// \brief Meeting video controller interface
+/// \描述：会议视频控制器接口
 ///
 class IMeetingVideoController
 {
 public:
-	/// \brief Set the meeting video controller callback event handler
-	/// \param pEvent A pointer to the IRequestStartVideoHandler that receives the video controller event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议视频控制器回调事件
+	/// \参数：pEvent 一个指向IMeetingVideoCtrlEvent*的接收视频事件的指针。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingVideoCtrlEvent* pEvent) = 0;
-	
-	/// \brief Turn off the user's own video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+
+	/// \描述：静音视频
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError MuteVideo() = 0;
 
-	/// \brief Turn on the user's own video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：取消静音视频
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError UnmuteVideo() = 0;
 
-	/// \brief Pin the video of the assigned user.
-	/// \param bPin TRUE indicates to pin.
-	/// \param bFirstView TRUE indicates to pin the video on the primary view. FALSE indicates to pin the video on the secondary view. The function does not work when the user chooses FALSE without dual view.
-	/// \param userid Specifies the user ID to be pinned. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for Zoom style user interface mode. 
+	/// \描述：固定或不固定视频
+	/// \参数：bPin 固定或不固定视频
+	/// \参数：bFirstView 第一个屏幕或不固定的视频.
+	/// \参数：userid 指定要固定哪个用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu UI风格
 	virtual SDKError PinVideo(bool bPin, bool bFirstView, unsigned int userid) = 0;
 
-	/// \brief Spotlight the video of the assigned user.
-	/// \param bSpotlight TRUE indicates to spotlight.
-	/// \param userid Specifies the user ID to be spotlighted.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：焦点视频
+	/// \参数：bSpotlight 焦点视频
+	/// \参数：userid 指定要焦点视频显示的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError SpotlightVideo(bool bSpotlight, unsigned int userid) = 0;
 
-	/// \brief Display or not the user who does not turn on the video in the video all mode.
-	/// \return TRUE indicates to hide, FALSE show.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for Zoom style user interface mode.
+	/// \描述：隐藏或显示没有视频用户在视频墙模式
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu UI风格
 	virtual SDKError HideOrShowNoVideoUserOnVideoWall(bool bHide) = 0;
 
-	/// \brief Query if it is able to demand the specified user to turn on the video.
-	/// \param userid Specifies the user ID to query.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：检测是否能要求参会者打开视频
+	/// \参数：userid 指定要检查的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError CanAskAttendeeToStartVideo(unsigned int userid) = 0;
 
-	/// \brief Demand the assigned user to turn on the video.
-	/// \param userid Specifies the user ID to demand.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：要求参会者打开视频
+	/// \参数：userid 指定要求的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError AskAttendeeToStartVideo(unsigned int userid) = 0;
 
-	/// \brief Query if it is able to demand the specified user to turn off the video.
-	/// \param userid Specifies the user ID to query.  
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：检测是否能停止参会者的视频
+	/// \参数：userid Specifies which user you want to check.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError CanStopAttendeeVideo(unsigned int userid) = 0;
 
-	/// \brief Turn off the video of the assigned user.
-	/// \param userid Specifies the user ID to turn off.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both Zoom style and customize user interface mode.
+	/// \描述：停止参会者的视频
+	/// \参数：userid 指定要停止的用户
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义Ui风格
 	virtual SDKError StopAttendeeVideo(unsigned int userid) = 0;
 
-	/// \brief Get camera controller interface.
-	/// \return If the function succeeds, the return value is a pointer to ICameraController. Otherwise returns NULL.
 	virtual ICameraController* GetMyCameraController() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

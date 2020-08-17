@@ -1,98 +1,100 @@
 /*!
-* \file meeting_live_stream_interface.h
-* \brief Meeting Service Live Streaming Interface.
-* 
+* \文件：meeting_sharing_interface.h
+* \描述：会议共享服务接口
+*
 */
-#ifndef _MEETING_LIVE_STREAM_INTERFACE_H_
-#define _MEETING_LIVE_STREAM_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_MEETING_LIVE_STREAM_INTERFACE_H_
+#define ZHUMU_MEETING_LIVE_STREAM_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 
 /*! \enum LiveStreamStatus
-    \brief Status of live stream.
-    Here are more detailed structural descriptions.
+\描述：直播状态
+更详细的结构描述。
 */
-enum LiveStreamStatus 
+enum LiveStreamStatus
 {
-	LiveStreamStatus_None,///<Only for initialization.
-	LiveStreamStatus_InProgress,///<In progress.
-	LiveStreamStatus_Connecting,///<Be connecting.
-	LiveStreamStatus_Start_Failed_Timeout,///<Connect timeout.
-	LiveStreamStatus_Start_Failed,///<Failed to start live streaming. 
-	LiveStreamStatus_Ended,///<Live stream ends.
+	LiveStreamStatus_None,///< None
+	LiveStreamStatus_InProgress,///< 正在进行
+	LiveStreamStatus_Connecting,///< 连接中
+	LiveStreamStatus_Start_Failed_Timeout,///< 连接超时
+	LiveStreamStatus_Start_Failed,///< 连接失败
+	LiveStreamStatus_Ended,///< 结束
 };
 
-/// \brief Live stream meeting controller callback event.
+/// \描述：会议直播流控制器回调事件
 ///
 class IMeetingLiveStreamCtrlEvent
 {
 public:
-	/// \brief Callback event that live stream status changes.
-	/// \param status Live stream status. For more details, see \link LiveStreamStatus \endlink enum.
+	/// \描述：直播状态改变回调
+	/// \参数：status 状态。
 	virtual void onLiveStreamStatusChange(LiveStreamStatus status) = 0;
 };
 
-/// \brief Live stream of current meeting.
+/// \描述：当前会议的直播项目
 ///
 class IMeetingLiveStreamItem
 {
 public:
-	/// \brief Get URL of the live stream meeting.
-	/// \return If the function succeeds, the return value is the URL of the live stream meeting.
+	/// \描述：获取直播的url
+	/// \返回：如果函数成功，返回值是直播的url。
 	virtual const wchar_t* GetLiveStreamURL() = 0;
 
-	/// \brief Get the descriptions of live stream.
-	/// \return If the function succeeds, the return value is the description of live stream.
+	/// \描述：获取直播的描述
+	/// \返回：如果函数成功，则返回直播的描述。
 	virtual const wchar_t* GetLiveStreamURLDescription() = 0;
 	virtual ~IMeetingLiveStreamItem() {};
 };
 
-/// \brief Live stream meeting controller interface.
+/// \描述：会议直播控制器接口
 ///
 class IMeetingLiveStreamController
 {
 public:
-	/// \brief Set live stream meeting callback event handler
-	/// \param pEvent A pointer to the IMeetingLiveStreamCtrlEvent that receives live stream event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议直播回调事件
+	/// \参数：pEvent 一个指向IMeetingLiveStreamCtrlEvent*的指针，该指针接收实时流事件。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingLiveStreamCtrlEvent* pEvent) = 0;
 
-	/// \brief Determine if it is able to start live streaming.
-	/// \return If it is enabled to start the live streaming, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：检查是否可以启动直播
+	/// \返回：如果可以启动直播，返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError CanStartLiveStream() = 0;
 
-	/// \brief Start live streaming.
-	/// \param item_ A pointer to the IMeetingLiveStreamItem created via IMeetingLiveStreamController::GetSupportLiveStreamURL() API. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：开启直播
+	/// \参数：item_ 指向 IMeetingLiveStreamController::GetSupportLiveStreamURL() API创建的IMeetingLiveStreamItem指针。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError StartLiveStream(IMeetingLiveStreamItem* item_) = 0;
 
-	/// \brief Start live streaming.
-	/// \param streamingURL The URL of live streaming.
-	/// \param streamingKey The key of live streaming. 
-	/// \param broadcastURL The broadcast URL of live-stream.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Get the parameters from the third party of live stream service
+	/// \描述：开启直播
+	/// \参数：streamingURL 直播的URL
+	/// \参数：streamingKey 直播的key。
+	/// \参数：broadcastURL 直播的广播URL。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// 您可以从第三方直播服务获得这些参数
 	virtual SDKError StartLiveStreamWithSteamingURL(const wchar_t* streamingURL, const wchar_t* streamingKey, const wchar_t* broadcastURL) = 0;
 
-	/// \brief Stop live streaming.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：停止直播
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError StopLiveStream() = 0;
 
-	/// \brief Get the list of URL and associated information used by live streaming in the current meeting. 
-	/// \return If the function succeeds, the return value is the meeting information to be live streamed.
-	///Otherwise failed, the return value is NULL. For more details, see \link IMeetingLiveStreamItem \endlink.
+	/// \描述：获取当前会议直播使用的URL和关联信息列表。
+	/// \返回：如果函数成功，返回的值就是要进行直播的会议信息。
+	/// 否则失败，返回值为NULL。更多信息，请参见IMeetingLiveStreamItem
 	virtual IList<IMeetingLiveStreamItem* >* GetSupportLiveStreamURL() = 0;
 
-	/// \brief Get live stream status of current meeting.
-	/// \return If the function succeeds, the return value is the live stream status of current meeting.  
-	///Otherwise failed. For more details, see \link LiveStreamStatus \endlink enum.
+	/// \描述：获取当前会议的直播状态。
+	/// \返回：如果函数成功，则返回当前会议的直播状态，查看LiveStreamStatus。
 	virtual LiveStreamStatus GetCurrentLiveStreamStatus() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

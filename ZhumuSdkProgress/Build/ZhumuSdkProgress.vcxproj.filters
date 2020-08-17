@@ -51,138 +51,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\calender_service_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_resource_helper_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\direct_share_helper_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\embedded_browser_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\network_connection_handler_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\outlook_plugin_integration_helper_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\premeeting_service_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\setting_service_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\ui_hook_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_def.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_ext.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_platform.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_def.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_raw_data_helper_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_sms_helper_interface.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\zoom_sdk_util_define.h">
-      <Filter>Depends\ZhumuSDK</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_annotation.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_local_recording.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_share_render.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_ui_mgr.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_video_container.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zoom_customized_ui.h">
-      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_annotation_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_audio_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface_v2.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_chat_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_closedcaption_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_configuration_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_h323_helper_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_live_stream_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_participants_ctrl_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_phone_helper_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_qa_ctrl_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_recording_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_remote_ctrl_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_sharing_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_ui_ctrl_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_video_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_waiting_room_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_webinar_interface.h">
-      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
-    </ClInclude>
     <ClInclude Include="..\Src\Zhumu\ZhumuSdkAgency.h">
       <Filter>Src\Zhumu</Filter>
     </ClInclude>
@@ -242,6 +110,120 @@
     </ClInclude>
     <ClInclude Include="..\Depends\SystemTime\TimeUtil.h">
       <Filter>Depends\SystemTime</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\auth_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\calender_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_resource_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\direct_share_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\embedded_browser_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\network_connection_handler_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\outlook_plugin_integration_helper_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\premeeting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\setting_service_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\ui_hook_interface.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_def.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_ext.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\zhumu_sdk_util_define.h">
+      <Filter>Depends\ZhumuSDK</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_annotation_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_audio_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_breakout_rooms_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_chat_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_closedcaption_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_configuration_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_h323_helper_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_live_stream_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_participants_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_phone_helper_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_recording_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_remote_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_sharing_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_ui_ctrl_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_video_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_waiting_room_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\meeting_service_components\meeting_webinar_interface.h">
+      <Filter>Depends\ZhumuSDK\meeting_service_components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_annotation.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_local_recording.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_share_render.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_ui_mgr.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\customized_video_container.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Depends\ZhumuSDK\include\customized_ui\zhumu_customized_ui.h">
+      <Filter>Depends\ZhumuSDK\customized_ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

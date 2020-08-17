@@ -1,84 +1,88 @@
 /*!
-* \file setting_service_interface.h
-* \brief Configure Service Interface.
+* \文件 setting_service_interface.h
+* \描述 Setting Service Interface
 * 
 */
-#ifndef _SETTING_SERVICE_INTERFACE_H_
-#define _SETTING_SERVICE_INTERFACE_H_
-#include "zoom_sdk_def.h"
-#include "zoom_sdk_util_define.h"
-
-BEGIN_ZOOM_SDK_NAMESPACE
-/// \brief Camera device information interface.
+#ifndef _ZHUMU_SETTING_SERVICE_INTERFACE_H_
+#define _ZHUMU_SETTING_SERVICE_INTERFACE_H_
+#include "zhumu_sdk_def.h"
+#include "zhumu_sdk_util_define.h"
+#include <vector>
+/// \brief Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
+/// \描述：摄像头设备信息接口
 ///
 class ICameraInfo
 {
 public:
-	/// \brief Get the camera device ID.
-	/// \return If the function succeeds, the return value is the camera device ID.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取摄像头设备ID
+	/// \返回：如果方法调用成功吗，返回值是摄像头的设备ID.
+	/// 如果方法失败，返回值是空.
 	virtual const wchar_t* GetDeviceId() = 0;
 
-	/// \brief Get the camera device name
-	/// \return If the function succeeds, the return value is the camera device name.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取摄像头设备名
+	/// \返回：如果方法调用成功，返回值是摄像头的设备名字。
+	/// 如果失败， 返回值是NULL.
+	///If the function fails, the return value is NULL.
 	virtual const wchar_t* GetDeviceName() = 0;
 
-	/// \brief Determine if the current device is selected to use.
-	/// \return TRUE indicates that the current device is selected.
+	/// \描述：所选摄像头标志
+	/// \返回：入伙方法调用成功，返回值是true,该摄像头是被选择的摄像头。
 	virtual bool IsSelectedDevice() = 0;
 
 	virtual ~ICameraInfo() {};
 };
 
-/// \brief Microphone device information interface.
+/// \描述：麦克风设备信息接口
 ///
 class IMicInfo
 {
 public:
-	/// \brief Get the microphone device ID.
-	/// \return If the function succeeds, the return value is the camera device ID.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取麦克风设备ID
+	/// \返回：如果方法调用成功，返回值是摄像头设备ID.
+	///	如果失败，返回值是NULL.
 	virtual const wchar_t* GetDeviceId() = 0;
 
-	/// \brief Get the microphone device name.
-	/// \return If the function succeeds, the return value is the camera device name.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取摄像头设备名
+	/// \返回:如果方法调用成功，返回值是麦克分设置名.
+	/// 如果失败， 返回值是NULL.
 	virtual const wchar_t* GetDeviceName() = 0;
 
-	/// \brief Determine if the current device is selected to use.
-	/// \return TRUE indicates that the current device is selected.
+	/// \描述：所选设备标志
+	/// \返回：如果返回true,表示该设备被选择.
 	virtual bool IsSelectedDevice() = 0;
 
 	virtual ~IMicInfo() {};
 };
 
-/// \brief Audio speaker device information interface.
+/// \描述：音频外放设备信息接口
 ///
 class ISpeakerInfo
 {
 public:
-	/// \brief Get the speaker device ID.
-	/// \return If the function succeeds, the return value is the camera device ID.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取外放设备ID
+	/// \返回：如果方法调用成功， 返回值是设备Id.
+	/// 如果失败，返回值是NULL.
 	virtual const wchar_t* GetDeviceId() = 0;
 
-	/// \brief Get the speaker device name.
-	/// \return If the function succeeds, the return value is speaker device name.
-	///Otherwise failed, returns NULL.
+	/// \描述：获取外放设备名
+	/// \返回：如果方法调用成功，返回值是设备名.
+	/// 如果方法失败，返回值是NULL.
 	virtual const wchar_t* GetDeviceName() = 0;
 
-	/// \brief Determine if the current device is selected to use.
-	/// \return TRUE indicates that the current device is selected.
+	/// \描述：所选设备标志
+	/// \返回：如果返回值是true, 表示该设别是被选择的设备.
 	virtual bool IsSelectedDevice() = 0;
 
 	virtual ~ISpeakerInfo() {};
 };
 
 /*! \enum LimitFPSValue
-    \brief Specify the values of available limit fps.
-    Here are more detailed enum descriptions.
-*/ 
+	\描述 指定可用限制fps的值.
+	下面是结构的详细描述
+*/
 enum LimitFPSValue
 {
 	limitfps_Not_Enable, ///<The feature is not enabled.
@@ -91,29 +95,25 @@ enum LimitFPSValue
 	limitfps_15_frame,///<15 frames per second.
 };
 
-/*! \enum SettingTabPage
-    \brief Specify the shown tab page at the top of the displayed setting dialog.
-    Here are more detailed enum descriptions.
-*/ 
 enum SettingTabPage
 {
-	SettingTabPage_General,///<General setting page.
-	SettingTabPage_Audio,///<Audio setting page.
-	SettingTabPage_Video,///<Video setting page.
+	SettingTabPage_General,///<常规设置页.
+	SettingTabPage_Audio,///<语音设置页.
+	SettingTabPage_Video,///<视频设置页.
 };
 /*! \struct tagShowChatDlgParam
-    \brief Display the parameter of the meeting chat dialog.
-    Here are more detailed structural descriptions.
+    \描述：展示会议中聊天窗口的参数.
+	下面是结构的详细描述
 */
 typedef struct tagShowSettingDlgParam
 {
-	HWND hParent;///<Parent window handle.
-	int top;///<The Y-axis value of the top-left corner of the dialog uses the coordinate system of the monitor.
-	int left;///<The X-axis value of the top-left corner of the dialog uses the coordinate system of the monitor.
-	HWND hSettingWnd;///<Window handle of the dialog setting.
-	bool bShow;///<Enable to display or nor.
+	HWND hParent;///< 父窗口句柄
+	int top;///< 设置窗口顶部位置
+	int left;///< 设置窗口左边位置
+	HWND hSettingWnd;///< 返回设置窗口句柄
+	bool bShow;///< 显示或隐藏
 	bool bCenter;///<Enable to display the dialog at the center of the screen and discard the value of top and left 
-	SettingTabPage eTabPageType; ///<The tab page shown at the top of the displayed setting dialog.
+	SettingTabPage eTabPageType;
 	tagShowSettingDlgParam()
 	{
 		hParent = NULL;
@@ -127,22 +127,22 @@ typedef struct tagShowSettingDlgParam
 }ShowSettingDlgParam;
 
 /*! \struct tagSettingDlgShowTabPageOption
-    \brief Define the strategy to show the tab pages in the setting dialog.
-    Here are more detailed structural descriptions.
+    \描述：定义设置窗口中的标签显示策略
+    下面是结构的详细描述
 */
 typedef struct tagSettingDlgShowTabPageOption
 {
-	bool bShowGeneral;///<True indicates to show general page
-	bool bShowVideo; ///<True indicates to show video page
-	bool bShowAudio;///<True indicates to show audio page
+	bool bShowGeneral;///<True 表示显示常规页
+	bool bShowVideo; ///<True 表示显示视频页
+	bool bShowAudio;///<True 表示显示音频页
 	bool bShowShareScreen; ///<True indicates to show share screen page
-	bool bShowVirtualBackGround;///<True indicates to show virtual background page
-	bool bSHowRecording;///<True indicates to show recording page
-	bool bShowAdvancedFeature;///<True indicates to show advance feature page
-	bool bShowStatistics;///<True indicates to show staticstics page
-	bool bShowFeedback;///<True indicates to show feed back page
+	bool bShowVirtualBackGround;///<True 表示显示虚拟背景页 
+	bool bSHowRecording;///<True 表明显示录制页
+	bool bShowAdvancedFeature;///<True 表明显示高级属性页
+	bool bShowStatistics;///<True 表明显示统计页 
+	bool bShowFeedback;///<True 表示显示反馈页
 	bool bShowKeyboardShortcuts;///<True indicates to show keyboard shortcuts page
-	bool bShowAccessibility;///<True indicates to show accessibility page
+	bool bShowAccessibility;///<True 表示显示辅助功能页
 	tagSettingDlgShowTabPageOption()
 	{
 		bShowGeneral = true;
@@ -161,212 +161,199 @@ typedef struct tagSettingDlgShowTabPageOption
 }SettingDlgShowTabPageOption;
 
 /*! \enum SDK_TESTMIC_STATUS
-    \brief Notify the status of the mic when testing.
-    Here are more detailed structural descriptions.
+    \描述： 测试时麦克风的通知状态.
+    下面是结构的详细描述
 */
 typedef	enum
 {
-	enuCanTest = 0,///<Test the mic via TestMicStartRecording. It is useless to call TestMicStopTesting/TestMicPlayRecording in this status.
-	enuMicRecording,///<Test the mic via TestMicStopTesting/TestMicPlayRecording. It is useless to call TestMicStartRecording in this status.
-	enuCanPlay,///<Test the mic via TestMicStopTesting/TestMicPlayRecording. It is useless call TestMicStartRecording in this status.
+	enuCanTest = 0, ///< 能调用测试TestMicStartRecording开始麦克风测试，此时调用TestMicStopTesting/TestMicPlayRecording无用.
+	enuMicRecording,///< 能调用TestMicStopTesting/TestMicPlayRecording，此时调用TestMicStartRecording无用.
+	enuCanPlay,		///< 能调用TestMicStopTesting/TestMicPlayRecording，此时调用TestMicStartRecording无用.
+					///< enuCanPlay 状态表示SDK已经录制了6s的声音。在这种状态下，如果bHandled没有设置为true. SDK将主动调用TestMicStopTesting.
 } SDK_TESTMIC_STATUS;
 
-/// \brief Audio device testing callback events.
+/// \描述：音频设备测试回调事件
 //
 class ITestAudioDeviceHelperEvent
 {
 public:
-	/// \brief Notify the current mic or speaker volume when testing.
-	/// \param MicVolume Specify the volume of the mic.
-	/// \param SpkVolume Specify the volume of the speaker.
+	/// \描述：在测试期间，通知当前麦克分音量和扬声器音量大小.
+	/// \参数：MicVolume [out] 麦克风音量.
+	/// \参数：SpkVolume [out] 扬声器音量.
+	/// 这些值能用于在麦克风或扬声器测试期间显示音量进度条.
 	virtual void OnMicSpkVolumnChanged(unsigned int MicVolume, unsigned int SpkVolume) = 0;
 
-	/// \brief Notify that either mic device or speaker device is not found.
-	/// \param bMicOrSpk TRUE indicates no mic device. False no speaker device.
+	/// \描述：未找到麦克风或扬声器时的通知回调.
+	/// \参数 bMicOrSpk True 表示没有麦克风设备，False 表示没有扬声器设备.
 	virtual void OnNoAudioDeviceIsUseful(bool bMicOrSpk) = 0; 
 
-	/// \brief Notify the mic status when testing.
-	/// \param status The mic status. For more details, see \link SDK_TESTMIC_STATUS \endlink enum.
-	/// \param bHandled The SDK default logic won't handle the mic status the value is set to be TRUE.
-	///For more details, see \link SDK_TESTMIC_STATUS \endlink.
-	/// \remarks The enuCanPlay status indicates that the SDK has recorded the microphone sound for the longest time (6 seconds). If the bHandled is not set to TURE hereby, the SDK will call TestMicStopTesting() itself. 
+	/// 描述：麦克风测试期间的状态通知.
+	/// \参数 status 查看 enum SDK_TESTMIC_STATUS 获取更多详细信息
+	/// \参数 bHandled 设置为true时表示忽略SDK的默认麦克风状态逻辑. 
+	/// \查看 SDK_TESTMIC_STATUS
 	virtual void OnTestMicStatusChanged(SDK_TESTMIC_STATUS status,bool& bHandled) = 0; 
 
-	/// \brief Notify the user that a mic/speaker device is selected when testing. Then the SDK will close the mic/speaker testing. The user shall restart the test manually if he still wants to test.
+	/// \描述：在测试期间通知用户一个麦克分或扬声器设备被选择。SDK将关闭测试，用户需要手动重新启动测试.
 	virtual void OnSelectedAudioDeviceIsChanged() = 0;
 };
 
-/// \brief Audio device test interface.
+/// \描述： 音频设备测试接口.
 ///
 class ITestAudioDeviceHelper
 {
 public:
-	/// \brief Audio device test callback handler. 
-	/// \param pEvent A pointer to the ITestAudioDeviceHelperEvent that receives audio device test event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Call the function before using any other interface of the same class.
+	/// \描述：音频设备测试回调事件. 
+	/// \参数：pEvent [in] 一个接收音频设备测试事件的指针 ITestAudioDeviceHelperEvent*. 
+	/// \返回：如果方法调用成功，返回SDKErr_Success.
+	/// 如果方法调用失败，返回值不是SDKErr_Success, 获取更多错误信息查看：SDKError enum.
+	/// \查看：ITestAudioDeviceHelperEvent
+	/// \注意：这个方必须在使用这个类的其他接口之前调用.
 	virtual SDKError SetEvent(ITestAudioDeviceHelperEvent* pEvent) = 0;
 
-	/// \brief Start to test the mic.
-	/// \param deviceID Specify to test a mic device. If the param is a wrong mic ID, the SDK will return an error. Otherwise the SDK tests the specified device and sets it as selected.
-	///The SDK will test the default device if no parameter is input.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks The function is disabled if no event handler is set.
+	/// \描述：开始测试麦克风
+	/// \参数 deviceID [in] 指定一个需要测试的麦克风，如果参数是一个错误的麦克风ID, SDK返回一个错误，否则SDK开始测试麦克风，并且设置为被选择.
+	/// 如果没有参数输入，SDK测试默认的设备.
+	///\注意：如果event没有设置, 这个方法没有作用.
 	virtual SDKError TestMicStartRecording(const wchar_t* deviceID = NULL) = 0;
 
-	/// \brief Stop the mic test. The SDK will return an error if there is no mic test.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks The function is disabled if no event handler is set.
+	/// \描述：停止测试麦克风，如果没有麦克风正在测试，SDK返回error.
+	///\注意：如果event没有设置, 这个方法没有作用.
 	virtual SDKError TestMicStopTesting() = 0;
 
-	/// \brief Play the mic recorded sound. If there is no mic testing, SDK return an error.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks The function is disabled if no event handler is set.
+	/// \描述：播放和麦克风录制的声音，如果没有麦克分测试，SDK返回一个错误。.
+	///\注意：如果event没有设置, 这个方法没有作用.
 	virtual SDKError TestMicPlayRecording() = 0;
 	
-	/// \brief Start to test the speaker.
-	/// \param deviceID Specify to test a speaker device. If the param is a wrong speaker ID, the SDK will return an error. Otherwise the SDK tests the specified device and sets it as selected.
-	///The SDK will test the default device if no parameter is input.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks The function is disabled if no event handler is set.
+	/// \描述：开始测试扬声器.
+	/// \ 参数 deviceID [in] 指定一个测试的设备。如果参数时一个错误的ID,SDK返回一个错误，否则SDK测试指定的设备，并设置此设备为被选设备.
+	/// 如果没有输入参数，SDK将测试默认的设备.
+	///\注意：如果event没有设置, 这个方法没有作用.
 	virtual SDKError TestSpeakerStartPlaying(const wchar_t* deviceID = NULL) = 0;
 	
-	/// \brief Stop the speaker test. The SDK will return an error if there is no speaker test.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks The function is disabled if no event handler is set.
+	/// \描述：通知扬声器测试，如果没有扬声器在测试，SDK将返回一个错误。
+	///\注意：如果event没有设置, 这个方法没有作用.
 	virtual SDKError TestSpeakerStopPlaying() = 0;
 	
-	/// \brief Set the time interval for audio test. 
-	/// \param timerInterval Usually the SDK sends the mic and speaker volumes every 200 ms by default via ITestAudioDeviceHelperEvent::OnMicSpkVolumnChanged(). With this function, the user can modify the time interval instead of 200.
-	///The time interval varies only from 50 to 1000 in millisecond.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///\remarks This interface will stop the mic/speaker test(if there is). It is suggested to call it before audio test.
+	/// \描述：设置音量回调间隔次数. 
+	/// \参数：timerInterval [in] SDK默认每200ms发送一次麦克风和扬声器音量，这个功能允许用户设置其他的时间间隔..
+	/// 时间间隔的单位时毫秒，如果值大于1000或小于50，SDK将会改为200
+	///\注意：使用这个接口将停止麦克风/扬声器测试，所以应该在测试之前调用该接口.
 	virtual SDKError SetTimerInterval(unsigned int timerInterval) = 0;
 };
 
-/// \brief General setting interface.
+/// \描述：常规设置接口
 ///
 class IGeneralSettingContext
 {
 public:
-	/// \brief Enable or disable dual screen mode.
-	/// \param bEnable TRUE indicates to set to enable the dual screen mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用双屏模式.
+	/// \参数：bEnable [in] 指明使能或失效双屏模式.
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableDualScreenMode(bool bEnable) = 0;
 
-	/// \brief Determine if the dual screen mode is supported.
-	/// \return TRUE indicates to enable the dual screen mode.
+	/// \描述：获取双屏模式的设置状态
+	/// \返回：使能或无效
 	virtual bool IsDualScreenModeEnabled() = 0;
 
-	/// \brief Enable or disable the aero mode when sharing the screen.
-	/// \param bTurnoff TRUE indicates to turn off the aero mode when sharing the screen.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The function can only be called in windows 7 environment.
+	/// \描述：共享屏幕时关闭或打开aero模式
+	/// \参数 bTurnoff [in] 指明关闭或打开加速模式
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
+	///仅支持window 7系统.
 	virtual SDKError TurnOffAeroModeInSharing(bool bTurnoff) = 0;
 
-	/// \brief Determine if the aero mode is turned off when sharing the screen.
-	/// \return TRUE indicates to turn off the mode. 
+	/// \描述：获取屏幕共享时的加速模式开关状态
+	/// \返回：打开或关闭
 	virtual bool IsAeroModeInSharingTurnOff() = 0;
 
-	/// \brief Enable or disable to auto-fit the ZOOM window when viewing the shared content.
-	/// \param bEnable TRUE indicates to resize automatically.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：当共享窗口时，设置是否自动适应窗口.
+	/// \参数：bEnable [in] 指明使能或失能自动适应.
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableAutoFitToWindowWhenViewSharing(bool bEnable) = 0;
 
-	/// \brief Determine if it is able to auto-fit the ZOOM window when viewing the shared content.
-	/// \return TRUE indicates to resize automatically.
+	/// \描述：获取是否在屏幕共享中自动适应窗口.
+	/// \返回：true 或者 false
 	virtual bool IsAutoFitToWindowWhenViewSharingEnabled() = 0;
 
-	/// \brief Enable or disable to enter the full screen video mode automatically when join meeting. 
-	/// \param bEnable TRUE indicates to enter the full screen video mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否加入会议时自动进入全屏
+	/// \参数：bEnable [in] 指明使能或失能自动全屏
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable) = 0;
 
-	/// \brief Determine if it is able to enter the full screen video mode automatically when join meeting.
-	/// \return TRUE indicates to enter the full screen video mode. 
+	/// \描述：获取加入会议时是否自动进入全屏的属性
+	/// \返回: true 或者 false
 	virtual bool IsAutoFullScreenVideoWhenJoinMeetingEnabled() = 0;
 
-	/// \brief Enable or disable to enter the full screen video mode automatically when viewing the sharing.
-	/// \param bEnable TRUE indicates to enter the full screen video mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否在共享时自动进入全屏.
+	/// \参数：bEnable [in] 指明失能或使能自动进入全屏
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableAutoFullScreenVideoWhenViewShare(bool bEnable) = 0;
 
-	/// \brief Determine if it is enable to enter the full screen video mode automatically when viewing the sharing.
-	/// \return TRUE indicates to enter the full screen video mode.
+	/// \描述：获取是否在共享时进入全屏.
+	/// \返回：true 或者 false
 	virtual bool IsAutoFullScreenVideoWhenViewShareEnabled() = 0;
 
-	/// \brief Enable or disable to use the split screen mode, which enables the attendees to view the lectures or the gallery.
-	/// \param bEnable TRUE indicates to enter the split screen mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：当屏幕共享时，是否使用分屏模式
+	/// \参数：bEnable [in] 指明是否分屏模式
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableSplitScreenMode(bool bEnable) = 0;
 
-	/// \brief Determine if the split screen mode is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取是否是分屏模式
+	/// \返回：true 或 false
 	virtual bool IsSplitScreenModeEnabled() = 0;
 	
-	/// \brief Enable/Disable reminder window when user exits the meeting. Available only for normal attendees (non-host).
-	/// \param bEnable TRUE indicates to enable reminder window.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：当用户退出会议时，设置是否显示提示窗口。注意：仅对正常参会者有效，除去主持人.
+	/// \参数：bEnable TRUE 指明能弹出提示框
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableDisplayReminderWindowWhenExit(bool bEnable) = 0;
 	
-	/// \brief Determine if reminder window is enabled when user exits the meeting.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取当用户退出会议时是否弹出提示框.
+	/// \返回： TRUE 指明可以弹出. FALSE 不弹出.
 	virtual bool IsDisplayReminderWindowWhenExitEnabled() = 0;
 	
-	/// \brief Enable/Disable to show the elapsed time of the meeting.
-	/// \param bEnable TRUE indicates to show the elapsed time. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否显示会议时长.
+	/// \参数：bEnable TRUE 表示显示. FALSE 不显示.
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableShowMyMeetingElapseTime(bool bEnable) = 0;
 	
-	/// \brief Determine if showing elapsed time of the meeting is enabled.
-	/// \return TRUE indicates to show. FALSE not.
+	/// \描述：获取是否显示会议时常.
+	/// \返回：TRUE 显示. FALSE 不显示.
 	virtual bool IsShowMyMeetingElapseTimeEnabled() = 0;
 	
-	/// \brief Determine if the operating system supports the GPU acceleration when user shares.
-	/// \return TRUE indicates support. FALSE not.
+	/// \描述：当用户共享时，获取操作系统是否支持GPU计算
+	/// \返回：TRUE 支持. FALSE 不支持.
 	virtual bool IsCurrentOSSupportAccelerateGPUWhenShare() = 0;
 	
-	/// \brief Enable/Disable the GPU acceleration when user shares.
-	/// \param bEnable TRUE indicates to enable the acceleration. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用GPU计算（用户共享时）.
+	/// \参数：bEnable TRUE 表明使能计算. FALSE 不支持.
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableAccelerateGPUWhenShare(bool bEnable) = 0;	
 	
-	/// \brief Determine if GPU acceleration is enabled when user shares.
-	/// \param [out]bEnable TRUE indicates the GPU acceleration is enabled. FALSE not. It validates only when the return value is SDKErr_Success. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取是否在使用GPU计算
+	/// \参数：[out]bEnable TRUE 表示使用GPU计算. FALSE 表示不使用. 仅当返回值为SDKErr_Success时有效。
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError IsAccelerateGPUWhenShareEnabled(bool& bEnable) = 0;
 	
-	/// \brief Enable/disable remote control of all applications.
-	/// \param bEnable TRUE indicates to enable the remote control. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否能远程控制所有应用.
+	/// \参数：bEnable TRUE 表述能远程控制， FALSE 不能.
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError EnableRemoteControlAllApplications(bool bEnable) = 0;	
 	
-	/// \brief Determine if remote control of all applications is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取是否能远程控制所有应用.
+	/// \返回：TRUE 能. FALSE 不能.
 	virtual bool IsRemoteControlAllApplicationsEnabled() = 0;
 
-	/// \brief Set the visibility of the green border when sharing the application.
-	/// \param bShow TRUE indicates to display the frame. FALSE hide.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \brief Set the visibility of the green border when sharing the application.	/// \param bShow TRUE indicates to display the frame. FALSE hide.	/// \return If the function succeeds, the return value is SDKErr_Success.	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
 	virtual SDKError EnableGreenBorderWhenShare(bool bEnable) = 0;
 
 	/// \brief Determine if the green border is enabled when user shares.
@@ -377,566 +364,525 @@ public:
 	/// \return TRUE indicates support. FALSE not.
 	virtual bool IsLimitFPSEnabledWhenShare() = 0;
 
-	/// \brief Enable/disable the 'limited sharing fps' feature when uses shares.
-	/// \param bEnable TRUE indicates to enable the litmited fps feature. FALSE hide.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError EnableLimitFPSWhenShare(bool bEnable) = 0;	
+	/// \brief Enable/disable the 'limited sharing fps' feature when uses shares.	/// \param bEnable TRUE indicates to enable the litmited fps feature. FALSE hide.	/// \return If the function succeeds, the return value is SDKErr_Success.	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	virtual SDKError EnableLimitFPSWhenShare(bool bEnable) = 0;
 
 	/// \brief Get the limited sharing fps value when the 'limited sharing fps' feature is enabled.
-	virtual LimitFPSValue GetLimitFPSValueWhenShare() = 0;
+	virtual ZhumuSDK::LimitFPSValue GetLimitFPSValueWhenShare() = 0;
 
 	/// \brief Set the limited sharing fps value when the 'limited sharing fps' feature is enabled.
 	/// \param value Specifies the limited fps value. It validates only when the 'limited sharing fps' feature is enabled.
 	/// \return If the function succeeds, the return value is SDKErr_Success.
 	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError SetLimitFPSValueWhenShare(LimitFPSValue value) = 0;
-
+	virtual SDKError SetLimitFPSValueWhenShare(ZhumuSDK::LimitFPSValue value) = 0;
+	
 };
 
-/*! \enum PREVIEW_VIDEO_ROTATION_ACTION
-    \brief Notify to rotate the video preview based on the current view.
-    Here are more detailed structural descriptions.
-*/
+///\描述：预览视频相对于当前窗口的旋转角度通知.
 typedef enum
 {
-	PREVIEW_VIDEO_ROTATION_ACTION_0,///< No rotation.
-	PREVIEW_VIDEO_ROTATION_ACTION_CLOCK90,///<Rotate to the left.
-	PREVIEW_VIDEO_ROTATION_ACTION_CLOCK180,///<Rotate 180 degrees.
-	PREVIEW_VIDEO_ROTATION_ACTION_ANTI_CLOCK90///<Rotate to the right.
+	PREVIEW_VIDEO_ROTATION_ACTION_0, 			///< 无旋转
+	PREVIEW_VIDEO_ROTATION_ACTION_CLOCK90,		///< 向左旋转
+	PREVIEW_VIDEO_ROTATION_ACTION_CLOCK180,		///< 翻转.
+	PREVIEW_VIDEO_ROTATION_ACTION_ANTI_CLOCK90	///< 向右旋转.
 } PREVIEW_VIDEO_ROTATION_ACTION, *PPREVIEW_VIDEO_ROTATION_ACTION;
 
-/// \brief Video Device test callback event.
+/// \描述：视频设备测试回调事件
 ///
 class ITestVideoDeviceHelperEvent
 {
 public:
-	/// \brief Notify that no camera device is found.
+	/// \描述：未找到摄像头设备通知。
 	virtual void OnNoVideoDeviceIsUseful() = 0;
 	
-	/// \brief Notify the user that a camera device is selected during the test, then the SDK will close the video testing. The user shall restart the test manually if he wants to test.
+	/// \描述：用户在测试期间选择摄像头设备的通知，SDK将关闭视频测试，用户需要重新开始测试。
 	virtual void OnSelectedVideoDeviceIsChanged() = 0; 
 	
-	/// \brief A window is needed to show the video preview. This event notifies that there is no window handle or a wrong window handle is used. 
+	/// \描述：SDK需要一个窗口来显示视频预览， 这个通知表示没有窗口句柄或者使用了错误的窗口句柄。
 	virtual void OnNoWindowToShowPreview() = 0;
 };
 
-/// \brief Video device test interface.
+/// \描述：视屏设备测试接口
 ///
 class ITestVideoDeviceHelper
 {
 public:
-	/// \brief Video device test callback event handler. 
-	/// \param pEvent A pointer to the ITestVideoDeviceHelperEvent that receives video device test event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Call the function before using any other interface of the same class.
+	/// \描述：视频设备测试回调事件，注意：这个方法必须在此类的其他接口方法之前调用。
+	/// \参数：pEvent [in] 一个接收视频设备测试事件的指针 ITestVideoDeviceHelperEvent* 
+	/// \返回：如果方法调用成功，返回值为 SDKErr_Success.
+	/// 如果调用失败，返回值不是SDKErr_Success.具体错误查看 SDKError enum.
 	virtual SDKError SetEvent(ITestVideoDeviceHelperEvent* pEvent) = 0;
 	
-	/// \brief Set the window and the rectangle to display the video preview.
-	/// \param hParentWnd Specify the window to display the video preview.
-	/// \param rc Specify a rectangle on the window to display the video preview. The default value is {0,0,0,0}, which means the whole client area of the window.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks This function SHOULD only be called ONCE. Any redundant calling will return SDKERR_WRONG_USEAGE.
+	/// \描述：设置显示预览视频的窗口及窗口大小 
+	/// \参数： hParentWnd [in] 指定显示预览的窗口
+	/// \参数： rc [in] 指定一个显示预览的矩形，默认为{0，0，0，0}，默认表示使用客户端的整个窗口大小显示预览视频。
 	virtual SDKError SetVideoPreviewParentWnd(HWND hParentWnd, RECT rc = _SDK_TEST_VIDEO_INIT_RECT) = 0;
 	
-	/// \brief Start to test the camera. 
-	/// \param deviceID Specify a camera device to test. If the param is a wrong camera ID, SDK returns an error. Otherwise SDK tests the specified device and sets it to be the selected one.
-	///The SDK will test the default device if no parameter is input.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The function can not work if no event is set or no window handle is set.
+	/// \描述：开始测试摄像头。
+	/// \参数： deviceID [in] 指定一个测试的摄像头设备。如果参数是一个错误的摄像头ID,SDK返回一个错误。否则SDK将测试改设备，并将其设置为选中状态。
+	/// 如果没有输入参数，SDK将测试默认设备。.
+	/// \注意： 如果没有设置event,或者没有设置窗口句柄，这个方法都不能工作。
 	virtual SDKError TestVideoStartPreview(const wchar_t* deviceID = NULL) = 0;
 	
-	/// \brief Stop testing the camera.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The function can not work if there is no event or window handle to be set.
+	/// \描述： 停止测试摄像头。
+	/// \注意：如果没有设置event,或者没有设置窗口句柄，这个方法都不能工作。
 	virtual SDKError TestVideoStopPreview() = 0;
 	
-	/// \brief Rotate the video preview.
-	/// \param action Specify the action to rotate the video. 
-	///For more details, see \link PREVIEW_VIDEO_ROTATION_ACTION \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The function can not work if there is no event or window handle to be set. 
-	///It works also in the meeting video when you rotate the preview video. Please use it with cautions.
+	/// \描述：预览视频旋转.
+	/// \参数：action [in] 指定旋转动作。详细查看 enum PREVIEW_VIDEO_ROTATION_ACTION。
+	/// \注意：如果没有设置event,或者没有设置窗口句柄，这个方法都不能工作。
 	virtual SDKError TestVideoRotate(PREVIEW_VIDEO_ROTATION_ACTION action) = 0;	
 
 	virtual ICameraController* GetTestCameraController() = 0;
 };
 
-/// \brief Video setting context callback event.
+/// \描述：视频设置内容回调事件。
 class IVideoSettingContextEvent
 {
 public:
-	/// \brief Callback event if the SDK detects that the computer camera devices have been changed.
-	/// \param pNewCameraList The new list of all camera devices plugged into the computer. 
-	virtual void onComputerCamDeviceChanged(IList<ICameraInfo*>* pNewCameraList) = 0;
+	/// \描述： 如果sdk检测到计算机摄像机设备的回调
+	/// \参数： pNewCameraList 是新插入计算机的摄像头设备. 
+	virtual void onComputerCamDeviceChanged(std::vector<ICameraInfo*> pNewCameraList) = 0;
 
-	/// \brief Notify the user that a camera device is selected.
-	/// \param deviceId Specify a device to be selected.
-	/// \param deviceName Specify the device name assigned by deviceId.
+	/// \描述： 通知用户有一个摄像头设备被选择
+	/// \参数： deviceId 被选择的设备
+	/// \参数： deviceName 备选的设备的设备名
 	virtual void onDefaultCamDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
 };
-/// \brief Video setting interface.
+/// \描述：视频设置接口。
 ///
 class IVideoSettingContext
 {
 public:
-	/// \brief Get camera device list.
-	/// \return If the function succeeds, the return value the is camera device list.
-	///Otherwise failed, returns NULL.
-	virtual IList<ICameraInfo* >* GetCameraList() = 0;
+	/// \描述：获取摄像头设备列表。
+	/// \返回：如果方法调用成功，返回值是摄像头列表指针
+	/// 如果方法调用失败，返回值是NULL
+	virtual std::vector<ICameraInfo* > GetCameraList() = 0;
 
-	/// \brief Select camera device.
-	/// \param deviceId Specify a device to be selected.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：选择摄像头设备。
+	/// \参数：[in] deviceId 被选择设备的设备ID
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError SelectCamera(const wchar_t* deviceId) = 0;
 
-	/// \brief Enable or disable video mirror effect.
-	/// \param bEnable TRUE indicates to enable the video mirror effect.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：启用/禁用视频镜像效果
+	/// \param [in] bEnable 启用/禁用视频镜像效果
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableVideoMirrorEffect(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the video mirror effect.
-	/// \return Enabled or disabled.
+	/// \描述：获取启用/禁用视频镜像效果
+	/// \返回：启用/禁用
 	virtual bool IsVideoMirrorEffectEnabled() = 0;
 
-	/// \brief Enable or disable the video facial beauty effect.
-	/// \param bEnable TRUE indicates to enable the video facial beauty effect.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置启用/禁用美颜效果
+	/// \参数：[in] bEnable 启用/禁用美颜效果
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableFaceBeautyEffect(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the video facial beauty effect.
-	/// \return Enabled or disabled.
+	/// \描述：获取启用/禁用美颜效果
+	/// \返回：启用/禁用.
 	virtual bool IsFaceBeautyEffectEnabled() = 0;
 
-	/// \brief Enable or disable HD video.
-	/// \param bEnable TRUE indicates to enable the HD video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置启用/禁用高清视频
+	/// \参数：[in] bEnable 指明启动或禁止使用高清视频
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableHDVideo(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the HD video.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否启用/禁用高清视频
+	/// \返回：启用/禁用.
 	virtual bool IsHDVideoEnabled() = 0;
 
-	/// \brief Enable or disable to show the username on the video.
-	/// \param bEnable TRUE indicates to show the username on the video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	// \描述：设置启用/禁用在视频上显示名字
+	/// \param [in] bEnable 启用/禁用在视频上显示名字
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAlwaysShowNameOnVideo(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to show the username on video.
-	/// \return Enabled or disabled.
+	/// \描述：获取启用/禁用在视频上显示名字
+	/// \返回：启用/禁用.
 	virtual bool IsAlwaysShowNameOnVideoEnabled() = 0;
 
-	/// \brief Enable or disable to turn off the video when join meeting
-	/// \param bEnable TRUE indicates to enable to turn off the video when join meeting
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否在加入会议时关闭视频
+	/// \参数：[in] bEnable 是否在加入会议时关闭视频
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable to turn off the video when join meeting.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否在加入会议时关闭视频
+	/// \返回：Enable or disable.
 	virtual bool IsAutoTurnOffVideoWhenJoinMeetingEnabled() = 0;
 	
-	/// \brief Enable or disable the 16V9 video mode.
-	/// \param bEnable TRUE indicates to enable the 16V9 video mode.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用16:9视频模式
+	/// \参数：bEnable [in] 是否使用16:9视频模式
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAlwaysUse16v9(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the 16V9 video mode.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否使用16:9视频模式
+	/// \返回：是/否.
 	virtual bool IsAlwaysUse16v9() = 0;
 
-	/// \brief Enable or disable to spotlight the video.
-	/// \param bEnable TRUE indicates to enable to spotlight the video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置启用/禁用视频聚光灯.
+	/// \参数：bEnable [in] 启用/禁用视频聚光灯.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableSpotlightSelf(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to spotlight video.
-	/// \return Enabled or disabled.
+	/// \描述：获取启用/禁用视频聚光灯.
+	/// \返回：是/否
 	virtual bool IsSpotlightSelfEnabled() = 0;
 
-	/// \brief Enable or disable the hardware acceleration.
-	/// \param bEnable TRUE indicates to enable the hardware acceleration.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用硬件加速
+	/// \参数：bEnable [in] 是否使用硬件加速
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableHardwareEncode(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the hardware acceleration.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否使用硬件加速
+	/// \返回：是/否.
 	virtual bool IsHardwareEncodeEnabled() = 0;
 
-	/// \brief Enable or disable to show the participants in Gallery View up to 49 per screen.
-	/// \param bEnable TRUE indicates to show the participants in Gallery View up to 49 per screen.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置启用或禁用在画廊视图中每个屏幕最多显示49个参与者.
+	/// \参数：bEnable [in] 启用或禁用在画廊视图中每个屏幕最多显示49个参与者.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError Enable49VideoesInGallaryView(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to show the participants in Gallery View up to 49 per screen.
-	/// \return Enabled or disabled.
+	/// \描述：获取启用或禁用在画廊视图中每个屏幕最多显示49个参与者
+	/// \返回：启用/禁用.
 	virtual bool Is49VideoesInGallaryViewEnabled() = 0;
 
-	/// \brief Enable or disable to hide the non-video participants.
-	/// \param bEnable TRUE indicates to hide the non-video Participants.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否隐藏没有视频的参会者.
+	/// \参数：bEnable [in] 是否隐藏没有视频的参会者.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableHideNoVideoUsersOnWallView(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to hide non-video participants.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否隐藏没有视频的参会者状态.
+	/// \返回：是/否.
 	virtual bool IsHideNoVideoUsersOnWallViewEnabled() = 0;
 
-	/// \brief Get the pointer to ITestVideoDeviceHelper which is used to test camera device.
-	/// \return If the function succeeds, the return value is the pointer to ITestVideoDeviceHelper.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link ITestVideoDeviceHelper \endlink.
+	/// \描述：获取用来测试摄像头设备所指向ITestVideoDeviceHelper对象的指针
+	/// \返回：如果成功，返回指向ITestVideoDeviceHelper的指针.
+	/// 如果失败，返回NULL.
+	/// 更多详细信息查看ITestVideoDeviceHelper.
 	virtual ITestVideoDeviceHelper* GetTestVideoDeviceHelper() = 0;
 
-	/// \brief Video device monitor callback event. 
-	/// \param pEvent A pointer to the IVideoSettingContextEvent. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link IVideoSettingContextEvent \endlink.
-	/// \remarks You must call the function if you want to monitor the video device plugged in/out.
+	/// \描述：视频设置监视回调事件. 
+	/// \参数：pEvent 一个指向IVideoSettingContextEvent对象的指针. 
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
+	/// 更多详细信息查看IVideoSettingContextEvent.
+	/// \注意：如果想监视新插入的视频设备，必须调用该方法.
 	virtual SDKError SetVideoDeviceEvent(IVideoSettingContextEvent* pEvent) = 0;
-
-	/// \brief Enable or disable to show the video preview dialog when join meeting
-	/// \param bEnable TRUE indicates to enable to show the video preview dialog when join meeting
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError EnableVideoPreviewDialog(bool bEnable) = 0;
-
-	/// \brief Get the flag to enable to show the video preview dialog when join meeting.
-	/// \return Enabled or disabled.
-	virtual bool IsVideoPreviewDialogEnabled() = 0;
 };
 
-/// \brief Audio setting context callback event.
+/// \描述：音频设置回调事件
+///
 class IAudioSettingContextEvent
 {
 public:
-	/// \brief Callback event if the SDK detects that the computer mic devices have been changed.
-	/// \param pNewMicList The new list of all mic devices plugged into the computer. 
-	virtual void onComputerMicDeviceChanged(IList<IMicInfo*>* pNewMicList) = 0;
+	/// \描述： SDK检测到计算机麦克分设备变化时的回调事件.
+	/// \参数： pNewMicList 新插入计算机的麦克风设备列表. 
+	virtual void onComputerMicDeviceChanged(std::vector<IMicInfo*> pNewMicList) = 0;
 	
-	/// \brief Callback event if the SDK detects that the computer speaker devices have been changed.
-	/// \param pNewSpeakerList The new list of all speaker devices plugged into the computer. 
-	virtual void onComputerSpeakerDeviceChanged(IList<ISpeakerInfo*>* pNewSpeakerList) = 0;
+	/// \描述： SDK检测到计算机扬声器设备变化时的回调事件.
+	/// \参数： pNewSpeakerList 新插入计算机的扬声器设备列表. 
+	virtual void onComputerSpeakerDeviceChanged(std::vector<ISpeakerInfo*> pNewSpeakerList) = 0;
 
-	/// \brief Notify the user that a microphone device is selected.
-	/// \param deviceId Specify a device to be selected.
-	/// \param deviceName Specify the device name assigned by deviceId.
+	/// \描述： 一个麦克风设备被选择的通知事件.
+	/// \参数： deviceId 指定一个设备被选择.
+	/// \参数： deviceName 指定被选择的名称.
 	virtual void onDefaultMicDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
 
-	/// \brief Notify the user that a speaker device is selected.
-	/// \param deviceId Specify a device to be selected.
-	/// \param deviceName Specify the device name assigned by deviceId.
+	/// \描述： 一个扬声器设备被选择的通知事件.
+	/// \参数： deviceId 指定一个设备被选择.
+	/// \参数： deviceName 指定被选择的名称.
 	virtual void onDefaultSpeakerDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
 };
 
-/// \brief Audio setting interface.
+/// \描述：音频设置接口
 ///
 class IAudioSettingContext
 {
 public:
-	/// \brief Get the mic device list.
-	/// \return If the function succeeds, the return value is the camera device list.
-	///Otherwise failed, returns NULL.
-	virtual IList<IMicInfo* >* GetMicList() = 0;
+	/// \描述：获取麦克风设备列表
+	/// \返回：如果方法调用成功，返回值是音频设备指针列表
+	/// 如果方法调用失败，返回值是NULL
+	virtual std::vector<IMicInfo* > GetMicList() = 0;
 
-	/// \brief Select mic device.
-	/// \param deviceId Specify the device to be selected.
-	/// \param deviceName Specify the device name assigned by deviceId.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \简述：选择麦克风设置
+	/// \参数：deviceId [in] 指明被选设备
+	/// \参数：deviceName [in] 指明被絮设备，应该和指定的设备Id相同
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
 
-	/// \brief Get the speaker device list.
-	/// \return If the function succeeds, the return value is the camera device list.
-	///Otherwise failed, returns NULL.
-	virtual IList<ISpeakerInfo* >* GetSpeakerList() = 0;
+	/// \简述：Get speaker device list
+	/// \返回：如果方法调用成功，返回值是扬声器设备指针列表
+	/// 如果失败，返回值是NULL If the function fails, the return value is NULL.
+	virtual std::vector<ISpeakerInfo* > GetSpeakerList() = 0;
 
-	/// \brief Select speaker device.
-	/// \param deviceId Specify the device to be selected.
-	/// \param deviceName Specify the device the device name assigned by deviceId.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \简述：选择扬声器设备
+	/// \参数：deviceId [in] 被选设备.
+	/// \参数：deviceName [in] 被选设备名字，应该和指定的设备Id相同
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
 
-	/// \brief Enable or disable the audio automatically when join meeting.
-	/// \param bEnable TRUE indicates to enable the audio automatically when join meeting.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \简述：设置是否加入会议是自动打开音频
+	/// \参数：bEnable [in] 是否自动打开音频.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAutoJoinAudio(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the audio automatically when join meeting.
-	/// \return Enabled or disabled.
+	/// \描述：获取加入会议时是否自动打开音频的状态
+	/// \返回：是或否
 	virtual bool IsAutoJoinAudioEnabled() = 0;
 
-	/// \brief Enable or disable the auto-adjust mic volume.
-	/// \param bEnable TRUE indicates to enable to auto-adjust the mic volume.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否自动调整麦克风音量.
+	/// \参数：bEnable [in] 是否自动调整麦克风音量
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAutoAdjustMic(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to auto-adjust the mic volume.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否能自动调整麦克风音量
+	/// \返回：是否
 	virtual bool IsAutoAdjustMicEnabled() = 0;
 
-	/// \brief Enable or disable the stereo audio.
-	/// \param bEnable TRUE indicates to enable the stereo audio.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： 设置是否打开立体声
+	/// \参数： bEnable [in] 指定是否打开立体声
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableStereoAudio(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the stereo audio.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否发打开立体声
+	/// \返回：是否
 	virtual bool IsStereoAudioEnable() = 0;
 
-	/// \brief Enable or disable the original input of mic.
-	/// \param bEnable TRUE indicates to enable the original input of mic.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用麦克风原始输入
+	/// \参数：bEnable [in] 指定是否使用原始输入
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableMicOriginalInput(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable the original input of mic.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否使用麦克风原始输入状态
+	/// \返回：是否
 	virtual bool IsMicOriginalInputEnable() = 0;
 	
- 	/// \brief Enable or disable to press and hold the Space-bar to speak when muted.
-	/// \param bEnable TRUE indicates to press and hold the Space-bar to speak. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+ 	/// \描述：设置是否使用按下空格键说话
+	/// \参数：bEnable [in] 是否按下空格键说话
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableHoldSpaceKeyToSpeak(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to press and hold the Space-bar to speak.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否使用按下空格键说话
+	/// \返回：是或否
 	virtual bool IsHoldSpaceKeyToSpeakEnabled() = 0;
 
-	/// \brief Enable or disable to mute always the mic when join the meeting by VoiP.
-	/// \param bEnable TRUE indicates to enable to mute always the mic when join the meeting by VoiP.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置加入voip会议时总是静音
+	/// \参数：bEnable [in] 是否总是静音加入
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAlwaysMuteMicWhenJoinVoip(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to mute always the mic when join the meeting by VoiP.
-	/// \return Enabled or disabled.
+	/// \描述：获取是否静音加入voip会议
+	/// \返回：是否
 	virtual bool IsAlwaysMuteMicWhenJoinVoipEnabled() = 0;
 
-	/// \brief Enable or disable to prompt when the user joins the meeting using the third party audio.
-	/// \param bEnable TRUE indicates to enable to prompt.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否第三放音频加入时提示
+	/// \参数：bEnable TRUE 表示提示
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableSuppressAudioNotify(bool bEnable) = 0;
 
-	/// \brief Get the flag to enable/disable to prompt when the user joins the meeting using the third party audio.
-	/// \return Enabled or disabled.
+	/// \描述：获取当第三方音频加入时是否提示的状态
+	/// \返回：是或否
 	virtual bool IsSuppressAudioNotifyEnabled() = 0;
 
-	/// \brief Get the pointer to ITestAudioDeviceHelper which is used to test audio devices.
-	/// \return If the function succeeds, the return value is the pointer to ITestAudioDeviceHelper.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link ITestAudioDeviceHelper \endlink.
+	/// \描述：获取测试音频设备对象的指针ITestAudioDeviceHelper*
+	/// \返回：如果方法调用成功，返回指向ITestAudioDeviceHelper的指针
+	/// 如果失败，返回NULL
+	/// 获取更多信息，查看 ITestAudioDeviceHelper.
 	virtual ITestAudioDeviceHelper* GetTestAudioDeviceHelper() = 0;
 	
-	/// \brief Set the volume of the selected mic.
-	/// \param value Specify the volume of the mic that varies between 0 and 255.
-	///The SDK will enable the default mic if there is no mic selected via SelectMic().
+	/// \描述：设置选择麦克风的音量
+	/// \参数：value [in] 音量. 值从 0 到 255
+	/// 如果没有麦克风被选择，SDK将使用默认麦克风
 	virtual SDKError	SetMicVol(FLOAT& value) = 0;
 	
-	/// \brief Get the volume of the selected mic.
-	/// \param value [out] Specify the current volume of the mic.
+	/// \描述：获取麦克风音量
+	/// \param value [out] 麦克风音量值
 	virtual SDKError    GetMicVol(FLOAT& value) = 0;
 	
-	/// \brief Set the volume of the selected speaker.
-	/// \param value Specify the volume of the speaker that varies between 0 and 255.
-	///The SDK will enable the default speaker if there is no speaker selected via SelectSpeaker.
+	/// \描述：设置选择扬声器的音量
+	/// \参数：value [in]指定扬声器的音量.值从0到255
+	/// 如果没设置扬声器，SDK将使用默认扬声器
 	virtual SDKError	SetSpeakerVol(FLOAT& value) = 0;
 	
-	/// \brief Get the volume of the selected speaker.
-	/// \param value [out] Specify the current volume of the speaker.
+	/// \描述：获取选择扬声器的音量
+	/// \参数：value [out] 扬声器的音量
 	virtual SDKError    GetSpeakerVol(FLOAT& value) = 0;
 
-	/// \brief Audio device monitor callback event. 
-	/// \param pEvent A pointer to the IAudioSettingContextEvent that receives audio device plugged in/out event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link IAudioSettingContextEvent \endlink.
-	/// \remarks You must call the function if you want to monitor the audio device plugged in/out.
+	/// \描述：设置音频设备监视回调事件
+	/// \参数表：pEvent 一个指向接受音频设备事件的指针 IAudioSettingContextEvent*
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
+	/// 详细查看 IAudioSettingContextEvent
+	/// \注意：如果想监视音频设备的拔插，必须调用该方法
 	virtual SDKError SetAudioDeviceEvent(IAudioSettingContextEvent* pEvent) = 0;
 
-	/// \brief Set whether to enable the function of echo cancellation or not. 
-	/// \param bEnable True means to enable the function, FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使能消除回音
+	/// \参数：bEnable True 能消除回音, FALSE 不能.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableEchoCancellation(bool bEnable) = 0;
 	
-	/// \brief Check whether the echo cancellation is enabled or not.
-	/// \return If it is TRUE, it means the echo cancellation is enabled 
+	/// \描述：获取是否消除回音
+	/// \返回：如果是TRUE, 意味着能消除回音
 	virtual bool IsEchoCancellationEnabled() = 0;
 	
 
 };
 
-/// \brief Recording setting context callback event.
 class IRecordingSettingContextEvent
 {
 public:
-	/// \brief Notification of the current cloud recording storage information.
-	/// \param storage_total_size Specify the total storage space.
-	/// \param storage_used_size Specify the used storage space.
-	/// \param allow_exceed_storage Specify whether the used space can overflow the total space. 
+	/// \描述：当前云录制存储信息通知
+	/// \参数：存储总大小
+	/// \参数：存储已使用大小
+	/// \参数：允许超出大小
 	virtual void onCloudRecordingStorageInfo(INT64 storage_total_size, INT64 storage_used_size, bool allow_exceed_storage) = 0;
 };
 
-/// \brief Recording setting interface.
+/// \描述：录制设置接口
 ///
 class IRecordingSettingContext
 {
 public:
-	/// \brief Set the path to save the recording file.
-	/// \param szPath Specify the path to save the recording file.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置在设置窗口中的录制路径
+	/// \参数：szPath[in] 指明录制路径
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError SetRecordingPath(const wchar_t* szPath) = 0;
 
-	/// \brief Get the path to save the recording file.
-	/// \return The path to save the recording file.
+	/// \描述：获取设置窗口中的录制路径
+	/// \返回：录制路径
 	virtual const wchar_t* GetRecordingPath() = 0;
 	
-	/// \brief Set the event of recording settings.
-	/// \param pEvent The event of recording settings.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置录制设置event
+	/// \参数：pEvent 录制设置event
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError SetRecordingSettingEvent(IRecordingSettingContextEvent* pEvent) = 0;
 	
-	/// \brief Check if the user has the privilege to get the storage information for cloud recording.
-	/// \return TRUE indicates the user has the privilege. FALSE not.
+	/// \描述：检测是否用户有获取云录制信息的权限
+	/// \返回：TRUE 表示用户有权限. FALSE 表示没权限.
 	virtual bool CanGetCloudRecordingStorageInfo() = 0;
 
-	/// \brief Get the storage information of cloud recording.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// If the return value is SDKErr_Success, IRecordingSettingContextEvent.onCloudRecordingStorageInfo() will be triggered after the infermation has be retrieved.
+	/// \描述：获取云录制信息
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
+	/// 如果返回值是SDKErr_Success, 取回信息后。IRecordingSettingContextEvent.onCloudRecordingStorageInfo()
 	virtual SDKError GetCloudRecordingStorageInfo() = 0;
 
-	/// \brief Get the recording management URL.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取录制管理URL Get the recording management URL.
+	/// \返回 TRUE 表示可以 FALSE 表示不能.
 	virtual const wchar_t* GetRecordingManagementURL() = 0;
 	
-	/// \brief Set if it is able to get recording management URL.
-	/// \param [out]bEnable TRUE means the recording management URL can be retrieved. FALSE not. It validates only when the return value is SDKErr_Success.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否能获取到录制管理URL
+	/// \参数：[out]bEnable TRUE 意味着录制管理URL能被获取到，FALSE表示不能. 仅仅当返回值是SDKErr_Suucess时才有效
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError CanGetRecordingManagementURL(bool& bEnable) = 0;
 	
-	/// \brief Set whether to enable the function of selecting the path to save the recording file after meeting.
-	/// \param bEnable TRUE means to enable, FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： 设置是否能在会议结束后选择录制文件保存位置
+	/// \参数 bEnable TRUE 表示能, FALSE 不能.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableSelectRecordFileLocationAfterMeeting(bool bEnable) = 0;
 	
-	/// \brief Check if the function of selecting storage path for recording file is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取是否能在会议结束后选择录制文件的保存位置 Check if the function of selecting storage path for recording file is enabled.
+	/// \返回：TRUE 表示能. FALSE 表示不能.
 	virtual bool IsSelectRecordFileLocationAfterMeetingEnabled() = 0;
 	
-	/// \brief Enable/Disable multi-audio stream recording.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否开启多路音频录制
+	/// \参数：bEnable TRUE 表示开启. FALSE 不开启.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableMultiAudioStreamRecord(bool bEnable) = 0;
 	
-	/// \brief Determine if multi-audio stream recording is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取是否在使用多路音频录制
+	/// \返回：TRUE 表示是. FALSE 否.
 	virtual bool IsMultiAudioStreamRecordEnabled() = 0;
 	
-	/// \brief Enable/Disable watermark of timestamp.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置是否使用时间戳水印
+	/// \参数： bEnable TRUE 表示使用. FALSE 表示不使用.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAddTimestampWatermark(bool bEnable) = 0;
 	
-	/// \brief Determine if the watermark of timestamps is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取是否使用时间戳水印
+	/// \返回：TRUE 表述 使用. FALSE 不使用.
 	virtual bool IsAddTimestampWatermarkEnabled() = 0;
 	
-	/// \brief Enable/Disable the optimization for the third party video editor.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置使用/禁用第三方视频编辑器的优化 
+	/// \参数：bEnable TRUE 表示使用. FALSE 不使用.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableOptimizeFor3rdPartyVideoEditor(bool bEnable) = 0;
 	
-	/// \brief Determine if the third party video editor is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取使用/禁用第三方视频编辑器的优化
+	/// \返回：TRUE 使用. FALSE 禁用.
 	virtual bool IsOptimizeFor3rdPartyVideoEditorEnabled() = 0;
 	
-	/// \brief Enable/Disable showing the video thumbnail when sharing.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： 设置启用/禁用在共享时显示视频缩略图 .
+	/// \参数：bEnable TRUE 启用. FALSE 禁用.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnableShowVideoThumbnailWhenShare(bool bEnable) = 0;
 	
-	/// \brief Determine if video thumbnail is enabled when sharing.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取启用/禁用在共享时显示视频缩略图
+	/// \返回：TRUE 启用. FALSE 禁用.
 	virtual bool IsShowVideoThumbnailWhenShareEnabled() = 0;
 	
-	/// \brief Enable/Disable placing the video layout next to the shared content in recording file.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置启用/禁用将视频布局放置在记录中的共享内容旁边 
+	/// \参数：bEnable TRUE 启用. FALSE 禁用.
+	/// \返回：如果方法调用成功， 返回值是 SDKErr_Success.
+	/// 如果方法调用失败，返回值是其他错误信息，具体查看SDKError enum.
 	virtual SDKError EnablePlaceVideoNextToShareInRecord(bool bEnable) = 0;
 	
-	/// \brief Determine if placing video next to the shared content in recording file is enabled.
-	/// \return TRUE indicates enabled. FALSE not.
+	/// \描述：获取启用/禁用将视频布局放置在记录中的共享内容旁边 
+	/// \返回：TRUE 启用. FALSE 禁用..
 	virtual bool IsPlaceVideoNextToShareInRecordEnabled() = 0;
 	
 };
 
-/*! \enum SettingsNetWorkType
-    \brief Notify network type.
-    Here are more detailed structural descriptions.
-*/
 enum SettingsNetWorkType 
 {
-	SETTINGS_NETWORK_WIRED	= 0,///<Wired LAN
-	SETTINGS_NETWORK_WIFI	= 1,///<WIFI
-	SETTINGS_NETWORK_PPP	= 2,///<PPP
-	SETTINGS_NETWORK_3G		= 3,///<3G
-	SETTINGS_NETWORK_OTHERS	= 4,///<Others
+	SETTINGS_NETWORK_WIRED	= 0,
+	SETTINGS_NETWORK_WIFI	= 1,
+	SETTINGS_NETWORK_PPP	= 2,
+	SETTINGS_NETWORK_3G		= 3,
+	SETTINGS_NETWORK_OTHERS	= 4,
 
-	SETTINGS_NETWORK_UNKNOWN = -1,///<Unknown network.
+	SETTINGS_NETWORK_UNKNOWN = -1,
 };
 
-/*! \enum SettingConnectionType
-    \brief Notify connection type.
-    Here are more detailed structural descriptions.
-*/
 enum SettingConnectionType
 {
-	SETTINGS_CONNECTION_TYPE_CLOUD,///<Cloud connection.
-	SETTINGS_CONNECTION_TYPE_DIRECT,///<Direct connection.
-	SETTINGS_CONNECTION_TYPE_UNKNOWN = -1,///<Unknown connection.
+	SETTINGS_CONNECTION_TYPE_CLOUD,
+	SETTINGS_CONNECTION_TYPE_DIRECT,
+	SETTINGS_CONNECTION_TYPE_UNKNOWN = -1,
 };
-
-/*! \struct tagOverallStatisticInfo
-    \brief Notify overall statistic information.
-    Here are more detailed structural descriptions.
-*/
 typedef struct tagOverallStatisticInfo
 {
-	SettingsNetWorkType net_work_type_;///<Network type.
-	SettingConnectionType connection_type_;///<Connection type
-	const wchar_t* proxy_addr_;///<Proxy address.
+	SettingsNetWorkType net_work_type_;  	
+	SettingConnectionType connection_type_; 
+	const wchar_t* proxy_addr_;
 	tagOverallStatisticInfo()
 	{
 		net_work_type_ = SETTINGS_NETWORK_UNKNOWN;
@@ -945,20 +891,16 @@ typedef struct tagOverallStatisticInfo
 	}
 }OverallStatisticInfo;
 
-/*! \struct tagAudioSessionStatisticInfo
-    \brief Notify the audio status information.
-    Here are more detailed structural descriptions.
-*/
 typedef struct tagAudioSessionStatisticInfo
 {
-	int frequency_send_;///<Sending frequency, unit: KHz.
-	int frequency_recv_;///<Receiving frequency, unit: KHz.
-	int latency_send_;///<Sending latency, unit: ms.
-	int latency_recv_;///<Receiving latency, unit: ms.
-	int jitter_send_;///<Sending jitter, unit: ms.
-	int jitter_recv_;///<Receiving jitter, unit: ms.
-	float packetloss_send_;///<Sending packet loss, unit: %.
-	float packetloss_recv_;///<Receiving packet loss, unit: %.
+	int frequency_send_; //KHz
+	int frequency_recv_; //KHz
+	int latency_send_;//ms
+	int latency_recv_;//ms
+	int jitter_send_;//ms
+	int jitter_recv_;//ms
+	float packetloss_send_;//%
+	float packetloss_recv_;//%
 
 	tagAudioSessionStatisticInfo()
 	{
@@ -966,24 +908,20 @@ typedef struct tagAudioSessionStatisticInfo
 	}
 }AudioSessionStatisticInfo;
 
-/*! \struct tagASVSessionStatisticInfo
-    \brief Notify video status information.
-    Here are more detailed structural descriptions.
-*/
 typedef struct tagASVSessionStatisticInfo
 {
-	int latency_send_;///<Sending latency, unit: ms.
-	int latency_recv_;///<Receiving latency, unit: ms.
-	int jitter_send_;///<Sending jitter, unit: ms.
-	int jitter_recv_;///<Receiving jitter, unit: ms.
-	float packetloss_send_max_;///<Sending max packet loss, unit: %.
-	float packetloss_recv_max_;///<Receiving max packet loss, unit: %.
-	float packetloss_send_avg_;///<Sending average packet loss, unit: %.
-	float packetloss_recv_avg_;///<Receiving average packet loss, unit: %.
-	int resolution_send_;///<HIWORD->height, LOWORD->width.
-	int resolution_recv_;///<HIWORD->height, LOWORD->width. 
-	int fps_send_;///<Frame per second sending.
-	int fps_recv_;///<Frame per second receiving.
+	int latency_send_;//ms
+	int latency_recv_;//ms
+	int jitter_send_;//ms
+	int jitter_recv_;//ms
+	float packetloss_send_max_;//%
+	float packetloss_recv_max_;//%
+	float packetloss_send_avg_;//%
+	float packetloss_recv_avg_;//%
+	int resolution_send_; //HIWORD->height,LOWORD->width
+	int resolution_recv_; //HIWORD->height,LOWORD->width 
+	int fps_send_;//fps
+	int fps_recv_;//fps
 	tagASVSessionStatisticInfo()
 	{
 		memset(this, 0, sizeof(tagASVSessionStatisticInfo));
@@ -991,72 +929,64 @@ typedef struct tagASVSessionStatisticInfo
 }ASVSessionStatisticInfo;
 
 
-/// \brief Statistic setting interface.
+/// \描述：统计设置接口
 ///
 class IStatisticSettingContext
 {
 public:
-	/// \brief Query overall statistic information.
-	/// \param info_ [out] Overall information. For more details, see \link OverallStatisticInfo \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link OverallStatisticInfo \endlink.
+	/// \描述： 查询统计信息
+	/// \param info_ [out] 统计信息输出,具体查看 OverallStatisticInfo
+	/// 方法调用成功返回SDkErr_Success, 如果调用失败，返回值是其他错误信息，具体查看 SDKError enum.
 	virtual SDKError QueryOverallStatisticInfo(OverallStatisticInfo& info_) = 0;
 
-	/// \brief Query audio statistic information.
-	/// \param info_ [out] Audio information. For more details, see \link AudioSessionStatisticInfo \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link AudioSessionStatisticInfo \endlink.
+	/// \描述： 查询音频信息
+	/// \param info_ [out] 音频信息输出,具体查看 AudioSessionStatisticInfo
+	/// 方法调用成功返回SDkErr_Success, 如果调用失败，返回值是其他错误信息，具体查看 SDKError enum.
 	virtual SDKError QueryAudioStatisticInfo(AudioSessionStatisticInfo& info_) = 0;
 
-	/// \brief Query video statistic information.
-	/// \param info_ [out] Video information. For more details, see \link ASVSessionStatisticInfo \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link ASVSessionStatisticInfo \endlink.
+	/// \描述：查询视频信息
+	/// \param info_ [out] 视频信息输出,具体查看 ASVSessionStatisticInfo
+	/// 方法调用成功返回SDkErr_Success, 如果调用失败，返回值是其他错误信息，具体查看 SDKError enum.
 	virtual SDKError QueryVideoStatisticInfo(ASVSessionStatisticInfo& info_) = 0;
 
-	/// \brief Query share statistic information.
-	/// \param info_ [out] Share information. For more details, see \link ASVSessionStatisticInfo \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///For more details, see \link ASVSessionStatisticInfo \endlink.
+	/// \描述：查询共享信息
+	/// \param info_ [out] 共享信息输出,具体查看 ASVSessionStatisticInfo
+	/// 方法调用成功返回SDkErr_Success, 如果调用失败，返回值是其他错误信息，具体查看 SDKError enum.
 	virtual SDKError QueryShareStatisticInfo(ASVSessionStatisticInfo& info_) = 0;
 };
 
-/// \brief Accessibility setting interface.
+/// \描述：辅助设置接口
 ///
 class IAccessibilitySettingContext
 {
 public:
-	/// \brief Enable/Disable Always Show Meeting Controls in meeting window.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：是否总是在会议窗口中显示会议控制器。
+	/// \参数：bEnable TRUE 表示显示，FALSE 表示不显示。
+	/// \返回：如果方法调用成功， 返回值是SDKErr_Success.
+	/// 如果失败，返回错误信息，具体查看SDKError enum.
 	virtual SDKError EnableAlwaysShowMeetingControls(bool bEnable) = 0;
 
-	/// \brief get the current setting status of Always Show Meeting Controls in meeting window.
-	/// \param bEnable TRUE indicates enabled. FALSE not.
-	/// \return If always show meeting controls is enable, the return value true else false
+	/// \描述：获取当前在会议窗口总是显示会议控制器的状态。
+	/// \参数：bEnable TRUE 表示显示， FALSE 表示不显示
+	/// \返回：如果总是显示，返回true
 	virtual SDKError IsAlwaysShowMeetingControlsEnable(bool& bEnable) = 0;
 };
 
-/// \brief Setting user strategy interface.
+/// \描述：设置用户策略接口
 ///
 class ISettingUIStrategy
 {
 public:
-	/// \brief Hide the link to check the advanced settings on the General Setting page or not.
-	/// \param bDisable TRUE indicates to hide the link.
+	/// \描述：在常规设置标签中显示高级特征。
+	/// \参数：bDisable [in] 表明显示或不显示。
 	virtual void DisableAdvancedFeatures4GeneralSetting(bool bDisable) = 0;
 
-	/// \brief Hide the Account Setting page or not.
-	/// \param bDisable TRUE indicates to hide the account setting page.
+	/// \描述：不显示账户设置标签。
+	/// \参数：bDisable [in] 表显示或不显示。
 	virtual void DisableAccountSettingTabPage(bool bDisable) = 0;
 
-	/// \brief Custome the tab page show or hide
-	/// \param showOption True indicates to show the corresponding tab page for each item.
+	/// \描述：自定义标签页的显示或隐藏
+	/// \参数：showOption True 表示显示相应的标签页。
 	virtual void ConfSettingDialogShownTabPage(SettingDlgShowTabPageOption showOption) = 0;
 };
 /// \brief Virtual background image information interface.
@@ -1142,7 +1072,7 @@ public:
 	/// \brief Get the list of the virtual background images.
 	/// \return If there are images in the list, the return value is a list of the poiters to IVirtualBGImageInfo.
 	///Otherwise return NULL. To get extended error information, see \link IVirtualBGImageInfo \endlink enum.
-	virtual IList<IVirtualBGImageInfo* >* GetBGImageList() = 0;
+	virtual std::vector<IVirtualBGImageInfo*> GetBGImageList() = 0;
 
 	/// \brief Specify an image to be the virtual background image.
 	/// \param pImage Specify the image to use. To get extended error information, see \link IVirtualBGImageInfo \endlink enum.
@@ -1167,63 +1097,63 @@ public:
 	virtual ITestVideoDeviceHelper* GetTestVideoDeviceHelper() = 0;
 };
 
-/// \brief Meeting setting interface.
+/// \描述：会议设置接口
 ///
 class ISettingService
 {
 public:
 
-	/// \brief Display Meeting Setting dialog.
-	/// \param param Specify to display the Meeting Setting dialog. For more details, see \link ShowSettingDlgParam \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示会议设置窗口
+	/// \参数：[in] param 指明显示聊天窗口
+	/// 如果方法调用成功，返回值是SDKErr_Success,如果失败返回值不是 SDKErr_Success，
+	/// 获取详细错误五错误信息查看 SDKError enum.
 	virtual SDKError ShowSettingDlg(ShowSettingDlgParam& param) = 0;
 
-	/// \brief Hide meeting setting dialog.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：隐藏会议设置窗口
+	/// 如果方法调用成功，返回值是SDKErr_Success,如果失败返回值不是 SDKErr_Success，
+	/// 获取详细错误五错误信息查看 SDKError enum.
 	virtual SDKError HideSettingDlg() = 0;
 
-	/// \brief Get general setting interface.
-	/// \return If the function succeeds, the return value is an object pointer to IGeneralSettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IGeneralSettingContext \endlink.
+	/// \描述：获取常规设置接口
+	/// \返回：如果功能调用成功， 返回一个指向IGeneralSettingContext对象的指针。
+	/// 如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IGeneralSettingContext
 	virtual IGeneralSettingContext* GetGeneralSettings() = 0;
 
-	/// \brief Get audio setting interface.
-	/// \return If the function succeeds, the return value an object pointer to IAudioSettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IAudioSettingContext \endlink.
+	/// \描述：获取音频设置接口
+	/// \返回：如果功能调用成功， 返回一个指向IAudioSettingContext对象的指针。
+	/// 如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IAudioSettingContext
 	virtual IAudioSettingContext* GetAudioSettings() = 0;
 
-	/// \brief Get video setting interface.
-	/// \return If the function succeeds, the return value is an object pointer to IVideoSettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IVideoSettingContext \endlink.
+	/// \描述：获取视频设置接口
+	/// \返回：如果功能调用成功， 返回一个指向IVideoSettingContext对象的指针。
+	/// 如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IVideoSettingContext
 	virtual IVideoSettingContext* GetVideoSettings() = 0;
 
-	/// \brief Get recording setting interface.
-	/// \return If the function succeeds, the return value is an object pointer to IRecordingSettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IRecordingSettingContext \endlink.
+	/// \描述：获取录制设置接口
+	/// \返回：如果功能调用成功， 返回一个指向IRecordingSettingContext对象的指针。
+	/// 如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IRecordingSettingContext
 	virtual IRecordingSettingContext* GetRecordingSettings() = 0;
 
-	/// \brief Get statistic settings interface.
-	/// \return If the function succeeds, the return value is an object pointer to IStatisticSettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IStatisticSettingContext \endlink.
+	/// \描述：获取统计设置接口
+	/// \返回：如果功能调用成功， 返回一个指向IStatisticSettingContext对象的指针。
+	/// 如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IStatisticSettingContext
 	virtual IStatisticSettingContext* GetStatisticSettings() = 0;
 
-	/// \brief Get Accessibility settings interface.
-	/// \return If the function succeeds, the return value is an object pointer to IAccessibilitySettingContext.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link IAccessibilitySettingContext \endlink.
+	/// \描述：获取辅助设置接口
+	/// \返回：如果方法调用成功,返回一个指向IAccessibilitySettingContext对象的指针。
+	///	如果失败，返回NULL。
+	/// 获取更多详细介绍，查看 IAccessibilitySettingContext.
 	virtual IAccessibilitySettingContext* GetAccessibilitySettings() = 0;
 
-	/// \brief Get setting user strategy interface.
-	/// \return If the function succeeds, the return value is an object pointer to ISettingUIStrategy.
-	///Otherwise failed, returns NULL.
-	///For more details, see \link ISettingUIStrategy \endlink.
+	/// \描述：获取用户设置策略接口
+	/// \返回：如果方法调用成功， 返回一个指向ISettingUIStrategy对象的指针
+	///	如果失败， 返回NULL。
+	/// 获取更多详细介绍，查看ISettingUIStrategy.
 	virtual ISettingUIStrategy* GetSettingUIStrategy() = 0;
 
 	/// \brief Get virtual background interface.
@@ -1232,5 +1162,5 @@ public:
 	///For more details, see \link IVirtualBGSettingContext \endlink.
 	virtual IVirtualBGSettingContext* GetVirtualBGSettings() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

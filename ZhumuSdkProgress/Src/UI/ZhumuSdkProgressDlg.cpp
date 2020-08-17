@@ -6,7 +6,7 @@
 #include "ZhumuSdkProgress.h"
 #include "ZhumuSdkProgressDlg.h"
 #include "afxdialogex.h"
-#include "zoom_sdk_def.h"
+#include "zhumu_sdk_def.h"
 #include "ZhumuSdkAgency.h"
 #include "BusinessLogic.h"
 #include "plog\Log.h"
@@ -18,7 +18,7 @@
 #define new DEBUG_NEW
 #endif
 
-using namespace ZOOM_SDK_NAMESPACE;
+using namespace ZHUMU_SDK_NAMESPACE;
 
 // 用于应用程序“关于”菜单项的 CAboutDlg 对话框
 
@@ -316,7 +316,7 @@ LRESULT CZhumuSdkProgressDlg::OnInitZhumuSDk(WPARAM wParam, LPARAM lParam)
         CBusinessLogic::GetInstance()->SetAsynchronous(bAsynchronous);
 
         // 拼接初始化参数
-        ZOOM_SDK_NAMESPACE::InitParam zm_param;
+        ZHUMU_SDK_NAMESPACE::InitParam zm_param;
         zm_param.strWebDomain = wstrWbDomain.c_str();
         zm_param.strBrandingName = wstrBandingName.c_str();
         zm_param.strSupportUrl = wstrSupportUrl.c_str();
@@ -504,7 +504,7 @@ LRESULT CZhumuSdkProgressDlg::OnStartAppointmentMeetingZhumuSDK(WPARAM wParam, L
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
-        ZOOM_SDK_NAMESPACE::StartParam startParam;
+        ZHUMU_SDK_NAMESPACE::StartParam startParam;
         startParam.userType = SDK_UT_NORMALUSER;
         startParam.param.normaluserStart.meetingNumber = nMeetingNumber;
         startParam.param.normaluserStart.participantId = wstrParticipantIdTemp.c_str();
@@ -614,7 +614,7 @@ LRESULT CZhumuSdkProgressDlg::OnStartInstantMeetingZhumuSDK(WPARAM wParam, LPARA
 
         CBusinessLogic::GetInstance()->SetReadyMeeting(true);
 
-        ZOOM_SDK_NAMESPACE::StartParam startParam;
+        ZHUMU_SDK_NAMESPACE::StartParam startParam;
         startParam.userType = SDK_UT_NORMALUSER;
         startParam.param.normaluserStart.participantId = wstrParticipantIdTemp.c_str();
         startParam.param.normaluserStart.isVideoOff = bIsVideoOff;
@@ -966,6 +966,7 @@ LRESULT CZhumuSdkProgressDlg::OnSettingMeetingZhumuSDK(WPARAM wParam, LPARAM lPa
     {
         LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
     }
+    return 0;
 }
 
 LRESULT CZhumuSdkProgressDlg::OnDirectSharingZhumu(WPARAM wParam, LPARAM lParam)
@@ -983,6 +984,7 @@ LRESULT CZhumuSdkProgressDlg::OnDirectSharingZhumu(WPARAM wParam, LPARAM lParam)
     {
         return 0;
     }
+    return 0;
 
     // 直接共享
     //SDKError err = CZhumuSdkAgency::GetInstance()->DirectSharing(TODO);
@@ -992,7 +994,7 @@ LRESULT CZhumuSdkProgressDlg::OnDirectSharingZhumu(WPARAM wParam, LPARAM lParam)
 
 void CZhumuSdkProgressDlg::OnBnClickedButton1()
 {
-    ZOOM_SDK_NAMESPACE::InitParam zm_param;
+    ZHUMU_SDK_NAMESPACE::InitParam zm_param;
     zm_param.strWebDomain = L"https://launcher.zhumu.me";
     zm_param.strBrandingName = L"TiYiYun";
     zm_param.emLanguageID = LANGUAGE_Chinese_Simplified;
@@ -1005,7 +1007,7 @@ void CZhumuSdkProgressDlg::OnBnClickedButton1()
 
     {
         CString strMsg;
-        strMsg.Format(_T("%d = ZOOM_SDK_NAMESPACE::InitSDK(zm_param)"), err);
+        strMsg.Format(_T("%d = ZHUMU_SDK_NAMESPACE::InitSDK(zm_param)"), err);
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
     }
 }
@@ -1068,7 +1070,7 @@ void CZhumuSdkProgressDlg::OnBnClickedButton4()
         MessageBox(strMsg, _T("Message"), MB_OKCANCEL | MB_ICONINFORMATION);
     }
 
-    ZOOM_SDK_NAMESPACE::StartParam startParam;
+    ZHUMU_SDK_NAMESPACE::StartParam startParam;
     startParam.userType = SDK_UT_NORMALUSER;
     //startParam.param.normaluserStart.meetingNumber = _ttoi64(strNormalStartMeetingNumber);
     //startParam.param.normaluserStart.vanityID = CUtils::s2ws(strVanityID).c_str();

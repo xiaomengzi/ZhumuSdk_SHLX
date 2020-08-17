@@ -1,79 +1,41 @@
-/*!
-* \file calender_service_interface.h
-* \brief Calendar Service Interface
-* 
-*/
-#ifndef _CALENDER_SERVICE_INTERFACE_H_
-#define _CALENDER_SERVICE_INTERFACE_H_
-#include "zoom_sdk_def.h"
-
-BEGIN_ZOOM_SDK_NAMESPACE
-
-/// \brief Calendar information interface.
+#ifndef ZHUMU_CALENDER_SERVICE_INTERFACE_H_
+#define ZHUMU_CALENDER_SERVICE_INTERFACE_H_
+#include "zhumu_sdk_def.h"
+/// \简介： Zhumu SDK Namespace
+/// 
 ///
+BEGIN_ZHUMU_SDK_NAMESPACE
+
 
 class ICalenderEvent
 {
 public:
-	/// \brief Get the meeting number.
-	/// \return The meeting number.
 	virtual UINT64 GetMeetingNum() = 0;
-	
-	/// \brief Get the ID of calendar.
-	/// \return The ID of calendar.
 	virtual const wchar_t* GetEventID() = 0;
-	
-	/// \brief Get the summary of calendar.
-	/// \return The summary of calendar.
 	virtual const wchar_t* GetSummary() = 0;
-	
-	/// \brief Get the start time of meeting.
-	/// \return The start time of meeting.
 	virtual const wchar_t* GetStartTime() = 0;
-	
-	/// \brief Get the end time of meeting.
-	/// \return The end time of meeting.
 	virtual const wchar_t* GetEndTime() = 0;
-
-	/// \brief Get the email of the meeting creator.
-	/// \return The email of the meeting creator.
 	virtual const wchar_t* GetCreatorEmail() = 0;
-
-	/// \brief Get the name of the meeting creator.
-	/// \return The name of the meeting creator.
 	virtual const wchar_t* GetCreatorName() = 0;
-
-	/// \brief Get the description of the meeting.
-	/// \return The description of the meeting.
 	virtual const wchar_t* GetDescription() = 0;
-
-	virtual ~ICalenderEvent(){};
+	virtual ~ICalenderEvent() {};
 };
-
-/*! \enum CalenderResult
-	\brief The type of calendar result.
-	Here are more detailed structural descriptions.
-*/
 enum CalenderResult
 {
-	CALENDER_SUCCESS,///<Verification successful.
-	CALENDER_AUTH_ERROR,///<Verification failed.
-	CALENDER_WEBAPI_ERROR,///<Web API service error.
-	CALENDER_UNKNOW,///<Unknown error.
+	CALENDER_SUCCESS,
+	CALENDER_AUTH_ERROR,
+	CALENDER_WEBAPI_ERROR,
+	CALENDER_UNKNOW,
 };
 
-/*! \enum CalenderAuthType
-	\brief The type of calendar authority.
-	Here are more detailed structural descriptions.
-*/
 enum CalenderAuthType
 {
-	CalenderAuth_None,///<For initiation.
-	CalenderAuth_OutlookExchage,///<Use OutlookExchange to verify.
-	CalenderAuth_Goole,///<Use Google to verify. This function is currently invalid, hereby only for reservations.
+	CalenderAuth_None,
+	CalenderAuth_OutlookExchage,
+	CalenderAuth_Goole,
 };
 
-/// \brief calendar Service Callback Event.
+/// \描述：日历服务回调事件
 ///
 class ICalenderServiceEvent
 {
@@ -83,22 +45,22 @@ public:
 	/// \param result The result of authority. For more details, see \link CalenderResult \endlink enum.
 	/// \param plstEvents A pointer to the ICalenderEvent* list. For more details, see \link ICalenderEvent \endlink.
 	/// \remarks The plstEvents* will be destroyed once the function calls end.
-	virtual void onCalenderEventsNotifcation(CalenderAuthType type, CalenderResult result, IList<ICalenderEvent* >* plstEvents) = 0;
+	virtual void onCalenderEventsNotifcation(CalenderAuthType type, CalenderResult result, std::vector<ICalenderEvent*> plstEvents) = 0;
 };
 
 /*! \struct tagOutlookExchageAuth
-    \brief The verification of SDK when use the Outlook Exchange.
-    Here are more detailed structural descriptions.
+\描述：outlook exchange的SDK日历认证参数。
+更详细的结构描述。
 */
 typedef struct tagOutlookExchageAuth
 {
-	const wchar_t* serverUrl;///<The URL of server.
-	const wchar_t* userName;///<Username.
-	const wchar_t* password;///<The password of user.
-	const wchar_t* calendaremail;///<The email box of user.
+	const wchar_t* serverUrl;
+	const wchar_t* userName;
+	const wchar_t* password;
+	const wchar_t* calendaremail;
 }OutlookExchageAuth;
 
-/// \brief calendar Service Interface
+/// \描述：日历服务接口
 class ICalenderService
 {
 public:
@@ -131,5 +93,5 @@ public:
 	virtual SDKError RetrieveCalEvents(CalenderAuthType type) = 0;
 };
 ///
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

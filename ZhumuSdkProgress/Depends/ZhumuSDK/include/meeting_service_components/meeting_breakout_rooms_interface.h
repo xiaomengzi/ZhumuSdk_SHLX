@@ -1,70 +1,70 @@
 /*!
-* \file meeting_breakout_rooms_interface.h
-* \brief Meeting Service BreakoutRooms Interface
-* 
+* \文件 meeting_breakout_rooms_interface.h
+* \描述： BreakoutRooms of Meeting Service Interface
+*
 */
-#ifndef _MEETING_BreakoutRooms_INTERFACE_H_
-#define _MEETING_BreakoutRooms_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
-
-BEGIN_ZOOM_SDK_NAMESPACE
-
-/// \brief Meeting breakout rooms information interface.
+#ifndef ZHUMU_MEETING_BreakoutRooms_INTERFACE_H_
+#define ZHUMU_MEETING_BreakoutRooms_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
+#include <vector>
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 class IBreakoutRoomsInfo
 {
 public:
 	virtual ~IBreakoutRoomsInfo() {};
-	/// \brief Get Breakout Room ID.
-	/// \return If the function succeeds, the return is a pointer to the string of Breakout Room ID.
-	///Otherwise failed, the return is NULL.
+	/// \描述：获取分会场ID
+	/// \返回：如果函数成功，则返回值为分会场ID
+	/// 如果函数失败，返回值为NULL。
 	virtual const wchar_t* GetBID() = 0;
 
-	/// \brief Get Breakout Room name.
-	/// \return If the function succeeds, the return is a pointer to the string of Breakout Room name. 
-	///Otherwise failed, the return is NULL.
+	/// \描述： Get Breakout Room name
+	/// \返回：如果函数成功，则返回值是分会场名称。
+	/// 如果函数失败，返回值为NULL。
 	virtual const wchar_t* GetBreakoutRoomName() = 0;
 };
 
-/// \brief Meeting Breakout Room callback event
 class IMeetingBreakoutRoomsEvent
 {
 public:
-	/// \brief Callback event of creating the Breakout Room by the host.
-	/// \param stBID Specify the Breakout Room ID.
-	/// \remarks The host will inform the related attendees to come in the Breakout Room by this callback event once the Room is created.
+	//////////////////Callback for ATTENDEES///////////////////
+	//接收加入BO请求
+
+	/// \描述：分会场开始回调
+	/// \参数：stBID 指定分会场id。
 	virtual void OnBreakoutRoomsStartedNotification(const wchar_t* stBID) = 0;
 };
 
-/// \brief Breakout Rooms controller interface
+/// \描述：分会场管理接口
 ///
 class IMeetingBreakoutRoomsController
 {
 public:
-	/// \brief Breakout room callback event handler.
-	/// \param pEvent A pointer to the IMeetingBreakoutRoomsEvent that receives meeting Breakout out room callback event.
-	///If the function succeeds, the return value is SDKErr_Success. 
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks The event is used by the SDK to pass the callback event to user's application. If this function is not called or failed, the user's application can not retrieve the callback event.
+	/// \描述：设置IBreakoutRoomsEvent通知的处理程序。
+	/// \参数：pEvent 当接收到此消息类型时将调用它。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingBreakoutRoomsEvent* pEvent) = 0;
 
-	/// \brief Join the assigned Breakout Room.
-	/// \param stBID Specify the Breakout Room ID to join.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode. 
+	/// \描述：加入分会场
+	/// \参数：stBID 指定分会场id。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅适用zhumu风格的用户界面模式
 	virtual SDKError JoinBreakoutRoom(const wchar_t* stBID) = 0;
 
-	/// \brief Leave Breakout Room.
-	/// \return If the function succeeds, the return value is SDKErr_Success. 
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
+	/// \描述：离开分会场
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅适用zhumu风格的用户界面模式
 	virtual SDKError LeaveBreakoutRoom() = 0;
 
-	/// \brief Get the list of the Breakout Rooms.
-	/// \return If the function succeeds, the return is a pointer to the list of Breakout Rooms. For more details, see \link IBreakoutRoomsInfo \endlink.
-	///Otherwise failed, the return is NULL.
-	/// \remarks Valid only for ZOOM style user interface mode.
-	virtual IList<IBreakoutRoomsInfo* >* GetBreakoutRoomsInfoList() = 0;
+	/// \描述：获取可以加入的会议室列表
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅适用zhumu风格的用户界面模式
+	virtual std::vector<IBreakoutRoomsInfo* > GetBreakoutRoomsInfoList() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

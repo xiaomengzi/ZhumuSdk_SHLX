@@ -1,36 +1,36 @@
 /*!
-* \file customized_share_render.h
-* \brief ZOOM Custom Video Share Render Interface.
-* 
+* \文件 customized_video_container.h
+* \描述： zhumu 自定义视频显示接口
+*
 */
-#ifndef _ZOOM_CUSTOMIZED_SHARE_RENDER_H_
-#define _ZOOM_CUSTOMIZED_SHARE_RENDER_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_CUSTOMIZED_SHARE_RENDER_H_
+#define ZHUMU_CUSTOMIZED_SHARE_RENDER_H_
+#include "..\zhumu_sdk_def.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
+BEGIN_ZHUMU_SDK_NAMESPACE
 /*! \enum CustomizedViewShareMode
-    \brief View mode of shared render.
-    Here are more detailed structural descriptions.
-*/ 
-enum CustomizedViewShareMode 
+\描述： 共享显示视图模式。
+更详细的结构描述。
+*/
+enum CustomizedViewShareMode
 {
-	CSM_FULLFILL,///View the shared content in full screen mode.
-	CSM_LETTER_BOX,///View the shared content in original size.
+	CSM_FULLFILL, /// 将共享内容扩展到整个窗口大小
+	CSM_LETTER_BOX /// 以原始比例显示共享内容
 };
 
-/// \brief Share render callback event.
+/// \描述： 共享回调事件
 ///
 class ICustomizedShareRenderEvent
 {
 public:
-	/// \brief Callback event the moment received the shared content.
+	/// \描述： 通知应用程序开始接收分享内容
 	virtual void onSharingContentStartRecving() = 0;
 
-	/// \brief Callback event of changed sender or the sharing closes when receiving the shared content.
-	/// \param userid The new sender or the sender of new sharing content.
+	/// \描述： 通知应用程序共享内容的用户id更改
+	/// \参数： userid 共享用户ID 
 	virtual void onSharingSourceUserIDNotification(unsigned int userid) = 0;
 
-	/// \brief Callback event when the App receives the window messages from the sharer. Here are the list of the window messages.
+	/// \描述： 将消息信息传递给app，消息列表如下
 	///WM_MOUSEMOVE
 	///WM_MOUSEENTER
 	///WM_MOUSELEAVE
@@ -42,65 +42,65 @@ public:
 	virtual void onWindowMsgNotification(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 };
 
-/// \brief Share render interface.
+/// \描述： 共享渲染接口
 ///
 class ICustomizedShareRender
 {
 public:
-	/// \brief Set the share render callback event handler.
-	/// \param pEvent A pointer to the ICustomizedShareRenderEvent that receives the share render event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置共享渲染回调事件
+	/// \参数：pEvent 一个指向ICustomizedShareRenderEvent*的指针，该指针接收共享呈现事件。 
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(ICustomizedShareRenderEvent* pEvent) = 0;
 
-	/// \brief Show the shared content received.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： Show share render
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Show() = 0;
 
-	/// \brief Hide the shared content received.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述： Hide share render
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Hide() = 0;
 
-	/// \brief View the sharing content from the specified user ID.
-	/// \param userid Specify the user ID that is sending the sharing content.
-	/// \remarks Call the IMeetingShareController::GetViewableShareSourceList to get the list of users who are sending the sharing. 
-	///Handle the IMeetingShareCtrlEvent::onSharingStatus callback event to know who starts/stops the sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置要查看的共享对象的用户id
+	/// \参数：userid 共享发送方的用户id
+	/// 1.你可以调用IMeetingShareController。获取发送共享用户列表
+	/// 2.处理IMeetingShareCtrlEvent。onSharingStatus回调事件，以知道谁开始/停止共享
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetUserID(unsigned int userid) = 0;
 
-	/// \brief Get the ID of the user who's sending the sharing.
-	/// \return If the function succeeds, the return value is the user ID. 
-	///Otherwise failed, the return value is ZERO(0).
+	/// \描述： 获取正在共享视频的用户ID.
+	/// \返回： 如果方法调用成功, 返回值是用户ID.
+	/// 如果失败，返回值是0.
 	virtual unsigned int GetUserID() = 0;
 
-	/// \brief Reset the dialog size to view the sharing content.
-	/// \param rc Specify the size of the window. The coordinate of the upper left corner of the window corresponds to the client area of the parent window. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：调整共享窗口的大小
+	/// \参数：rc 它包含矩形的客户端坐标，相对于父窗口的客户端区域的左上角。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Resize(RECT rc) = 0;
 
-	/// \brief Set the view mode of watching the sharing.
-	/// \param mode Specify the view mode. For more details, see \link CustomizedViewShareMode \endlink enum. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置共享窗口的模式
+	/// \参数：模式参考CustomizedViewShareMode的详细信息
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetViewMode(CustomizedViewShareMode mode) = 0;
 
-	/// \brief Get the window handle of showing sharing content.
-	/// \return If the function succeeds, the return value is the window handle.
-	///Otherwise failed, the return value is NULL.
+	/// \描述：获取显示窗口的句柄。
+	/// \返回：如果函数成功，返回值是窗口的句柄。
+	/// 如果函数失败，返回值为NULL
 	virtual HWND GetOwnerWnd() = 0;
 
-	/// \brief Redraw the window of showing the sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///Call the function when the parent window gets WM_MOVE windows message.
-	/// \remarks Call the function to complete the redraw work once received the ICustomizedShareRenderEvent::onWindowMsgNotification() callback event and dealt with WM_MOVE. Otherwise there maybe problem with the view.
+	/// \描述： 移动共享窗口
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	///	如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// 需要调用这个api时，父窗口得到WM_MOVE窗口消息。
 	virtual SDKError HandleWindowsMoveMsg() = 0;
-	virtual ~ICustomizedShareRender(){}
+
+	virtual ~ICustomizedShareRender() {}
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 
 #endif

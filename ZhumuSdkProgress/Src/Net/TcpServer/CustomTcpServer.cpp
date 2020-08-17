@@ -111,7 +111,7 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         {
             auto body = root["body"];
             int nRet = CBusinessLogic::GetInstance()->InitZhumuSDK(CUtils::json2Str(body));
-            UINT nTime = TimeUtil::milliseconds();
+            UINT64 nTime = TimeUtil::milliseconds();
             CBusinessLogic::GetInstance()->SetAuthResultReturned(false);
             while (CBusinessLogic::GetInstance()->GetAsynchronous() == false)
             {
@@ -137,7 +137,7 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         {
             auto body = root["body"];
             int nRet = CBusinessLogic::GetInstance()->LoginZhumuSDK(CUtils::json2Str(body));
-            UINT nTime = TimeUtil::milliseconds();
+            UINT64 nTime = TimeUtil::milliseconds();
             CBusinessLogic::GetInstance()->SetLoginResultReturned(false);
             // µÈ´ý³¬Ê±
             while (CBusinessLogic::GetInstance()->GetAsynchronous() == false)

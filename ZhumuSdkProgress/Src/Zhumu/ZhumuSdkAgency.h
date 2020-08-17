@@ -2,12 +2,12 @@
 #define _ZHUMUSDKAGENCY_H
 
 #include <string>
-#include "zoom_sdk.h"
 #include "auth_service_interface.h"
 #include "meeting_service_interface.h"
 #include "setting_service_interface.h"
+#include "zhumu_sdk_def.h"
 
-using namespace ZOOM_SDK_NAMESPACE;
+using namespace ZHUMU_SDK_NAMESPACE;
 
 class CAuthServiceEvent;
 
@@ -27,11 +27,15 @@ private:
     static  CZhumuSdkAgency    *m_pInstance;
 
 public: 
-    // 认证服务回调
+
+    // 认证结果的回调
     virtual void onAuthenticationReturn(AuthResult ret);
+    // 登陆结果回调
     virtual void onLoginRet(LOGINSTATUS ret, IAccountInfo* pAccountInfo);
+    // 登出结果回调
     virtual void onLogout();
-    virtual void onZoomIdentityExpired();
+    // 身份过期，请重新登录或通过REST api生成新的zhumu访问令牌
+    virtual void onIdentityExpired();
     virtual void onZoomAuthIdentityExpired();
 
     // 会议服务回调
@@ -43,7 +47,7 @@ public:
 public:
 
     // 初始化瞩目SDK
-    SDKError InitZhunmuSDK(ZOOM_SDK_NAMESPACE::InitParam& zm_param);
+    SDKError InitZhunmuSDK(ZHUMU_SDK_NAMESPACE::InitParam& zm_param);
 
     // 登录验证
     SDKError AuthSDK(wchar_t *key, wchar_t *secret);
@@ -58,10 +62,10 @@ public:
     SDKError LeaveMeeting();
 
     // 开启预约会议
-    SDKError StartAppointmentMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam);
+    SDKError StartAppointmentMeeting(ZHUMU_SDK_NAMESPACE::StartParam& startParam);
 
     // 开启即时会议
-    SDKError StartInstantMeeting(ZOOM_SDK_NAMESPACE::StartParam& startParam);
+    SDKError StartInstantMeeting(ZHUMU_SDK_NAMESPACE::StartParam& startParam);
 
     // 快速加入会议
     SDKError JoinMeeting(JoinParam& joinParam);

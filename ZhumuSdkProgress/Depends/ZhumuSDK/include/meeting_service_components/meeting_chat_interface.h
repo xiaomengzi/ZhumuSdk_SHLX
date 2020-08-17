@@ -1,113 +1,111 @@
 /*!
 * \file meeting_chat_interface.h
-* \brief Meeting Service Chat Interface. 
-* \remarks Valid for both ZOOM style and user custom interface mode.
+* \描述：会议聊天服务接口
+* \支持zhumu和自定义用户界面模式
 */
-#ifndef _MEETING_CHAT_INTERFACE_H_
-#define _MEETING_CHAT_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_MEETING_CHAT_INTERFACE_H_
+#define ZHUMU_MEETING_CHAT_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
-/// \brief Chat message interface.
+/// \描述：Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
+/// \描述：聊天消息接口
 ///
 class IChatMsgInfo
 {
 public:
-	/// \brief Get the sender ID of the current message.
-	/// \return If the function succeeds, the return value is the sender ID of the current message.
-	///Otherwise failed, the return value is -1.
+	/// \描述：获取发送者用户ID
+	/// \返回：如果函数成功，返回的值是发送者用户id.
+	/// 如果函数失败，则返回值为-1.
 	virtual unsigned int GetSenderUserId() = 0;
 
-	/// \brief Get the sender screen name of the current message.
-	/// \return If the function succeeds, the return value is sender screen name of the current message.
-	///Otherwise failed, the return value is NULL.
-	/// \remarks If the message is sent to all or to all panelists, the return value will be NULL.
+	/// \描述：获取发送者的名字
+	/// \返回：如果函数成功，则返回发送人的名字。
+	/// 如果函数失败，则返回值为NULL.
 	virtual const wchar_t* GetSenderDisplayName() = 0;
 
-	/// \brief Get the receiver ID of the current message.
-	/// \return If the function succeeds, the return value is the receiver ID of the current message.
-	///ZERO(0) indicates that the message is sent to all.
-	///ONE(1) indicates that the messages are sent to all the panelists.
-	///Otherwise failed, the return value is negative ONE(-1).
+	/// \描述: 获取接收方用户id
+	/// \返回：如果函数成功，则返回值为接收者用户id。
+	/// 如果返回值为0，则将此消息是发送给所有人的消息
+	/// 如果函数调用失败，则返回值为-1.
 	virtual unsigned int GetReceiverUserId() = 0;
 
-	/// \brief Get the receiver screen name of the current message.
-	/// \return If the function succeeds, the return value is the receiver screen name of the current message.
-	///Otherwise failed, the return value is the string of length zero(0).
+	/// \描述：获取接收方用户名
+	/// \返回：如果函数成功，则返回值为接收者用户名。
+	/// 如果函数失败，返回值为NULL.
 	virtual const wchar_t* GetReceiverDisplayName() = 0;
 
-	/// \brief Get the content of the current message.
-	/// \return If the function succeeds, the return value is the pointer to the content of the current message.
-	///Otherwise failed, the return value is NULL.
+	/// \描述：获取聊天消息内容
+	/// \返回: 如果函数成功，则返回聊天消息内容
+	/// 如果函数失败，返回值为NULL。
 	virtual const wchar_t* GetContent() = 0;
 
-	/// \brief Get the timestamps of the current message.
-	/// \return If the function succeeds, the return value is the timestamps of the current message. 
+	/// \描述：获取聊天消息的时间戳
+	/// \返回：如果函数成功，则返回聊天消息时间戳。
 	virtual time_t GetTimeStamp() = 0;
 
-	/// \brief Determine if the current message is sent to all. 
-	/// \return TRUE indicates that the current message is sent to all. Otherwise not. 
+	/// \描述：判断是否是发送给所有人的消息
+	/// \返回：如果是true则是发送给所有人的消息，
+	/// 如果是false则不是
 	virtual bool IsChatToAll() = 0;
 
-	/// \brief Determine if the current message is sent to all the panelists.
-	/// \return TRUE indicates that the current message is sent to all the panelists. Otherwise not. 
+	/// \描述：判断是否是发送给讨论小组的所有人的消息
+	/// \返回：如果是true, 是发送给讨论小组的所有人的消息, 否则不是
 	virtual bool IsChatToAllPanelist() = 0;
-
-	/// \brief Determine if the current message is sent to waiting room.
-	/// \return TRUE indicates that the current message is sent to waiting room. Otherwise not.
-	virtual bool IsChatToWaitingroom() = 0;
 
 	virtual ~IChatMsgInfo() {};
 };
 
-/*! \struct NormalMeetingChatStaus
-    \brief The authority to chat in the normal meeting.  
-    Here are more detailed structural descriptions..
+/*! \struct tagNormalMeetingChatStaus
+\描述：正常会议的聊天状态
+更详细的结构描述。
 */
 typedef struct tagNormalMeetingChatStaus
 {
-	bool can_chat_to_all;///<TRUE indicates that the user owns the authority to send message to all.
-	bool can_chat_to_individual;///<TRUE indicates that the user owns the authority to send message to an individual attendee in the meeting.
-	bool is_only_can_chat_to_host;///<TRUE indicates that the user owns the authority to send message only to the host.
+	bool can_chat_to_all;///< 是否能和所有人聊天
+	bool can_chat_to_individual;///< 是否能发起单聊
+	bool is_only_can_chat_to_host;///< 是否只能和主持人聊天
 }NormalMeetingChatStaus;
 
 /*! \struct tagWebinarAttendeeChatStatus
-    \brief The authority to chat for the normal attendee in the webinar.
-    Here are more detailed structural descriptions..
+\描述：网络研讨会参会人聊天状态,仅适用于网络研讨会
+更详细的结构描述。
 */
 typedef struct tagWebinarAttendeeChatStatus
 {
-	bool can_chat;///<TRUE indicates that the attendee can send message to chat. 
-	bool can_chat_to_all_panellist_and_attendee;///<TRUE indicates that the user owns the authority to send message to all the panelists and attendees.
-	bool can_chat_to_all_panellist;///<TRUE indicates that the user owns the authority to send message to all the panelists.
+	bool can_chat;///< 是否能开起聊天
+	bool can_chat_to_all_panellist_and_attendee;///< 是否可以与所有的小组成员和参会者聊天
+	bool can_chat_to_all_panellist;///< 是否可以和所有的小组成员聊天
 }WebinarAttendeeChatStatus;
 
 /*! \struct tagWebinarOtherUserRoleChatStatus
-    \brief The authority to chat for the host, co-host and panelist to chat in webinar.
-    Here are more detailed structural descriptions..
+\描述：网络研讨会的聊天状态，仅用于网络研讨会的主持人/联席主持人/小组成员
+更详细的结构描述。
 */
 typedef struct tagWebinarOtherUserRoleChatStatus
 {
-	bool can_chat_to_all_panellist;///<TRUE indicates that the user owns the authority to send message to all the panelists.
-	bool can_chat_to_all_panellist_and_attendee;///<TRUE indicates that the user owns the authority to send message to all.
-	bool can_chat_to_individual;///<TRUE indicates that the user owns the authority to send message to individual attendee.
+	bool can_chat_to_all_panellist;///< 是否可以和所有的小组成员聊天
+	bool can_chat_to_all_panellist_and_attendee;///< 是否可以和所有的小组成员和参会者聊天
+	bool can_chat_to_individual;///< 是否可以发起单聊
 }WebinarOtherUserRoleChatStatus;
 
 /*! \struct tagChatStatus
-    \brief The authority to chat in the specified meeting.
-    Here are more detailed structural descriptions..
+\描述：当前会议的聊天状态
+更详细的结构描述。
 */
 typedef struct tagChatStatus
 {
 	union
 	{
-		NormalMeetingChatStaus normal_meeting_status;
-		WebinarAttendeeChatStatus webinar_attendee_status;
-		WebinarOtherUserRoleChatStatus webinar_other_status;
-	}ut;///<The ut value depends on the value of the other members in the structure. When the value of is_webinar_meeting is false, the ut value is the NormalMeetingChatStausnormal_meeting_status. When the values of the is_webinar_meeting and the is_webinar_attendee is true, the ut value is WebinarAttendeeChatStatus webinar_attendee_status. The value of is_webinar_meeting is true while the is_webinar_attendee is false, the ut value is WebinarOtherUserRoleChatStatus webinar_other_status.
-	bool is_chat_off;///<TRUE indicates that it is disabled to chat in the specified meeting. 
-	bool is_webinar_attendee;///<TRUE indicates that the owner of the current message is the attendee of the webinar. 
-	bool is_webinar_meeting;///<TRUE indicates that the current meeting is webinar.
+		NormalMeetingChatStaus normal_meeting_status;///< 如果is_webinar_meeting为false，则可用。参考 tagNormalMeetingChatStaus
+		WebinarAttendeeChatStatus webinar_attendee_status;///< 如果is_webinar_meeting为真，is_webinar_attendee为真，则可用。参考 tagWebinarAttendeeChatStatus
+		WebinarOtherUserRoleChatStatus webinar_other_status;///< 如果is_webinar_meeting为真，is_webinar_attendee为假，则可用。参考 tagWebinarOtherUserRoleChatStatus
+	}ut;
+	bool is_chat_off;///< 是否关闭当前会议的聊天
+	bool is_webinar_attendee;///< 是否是网络研讨会参会人角色
+	bool is_webinar_meeting;///< 是否是网络研讨会
 
 	tagChatStatus()
 	{
@@ -120,42 +118,42 @@ typedef struct tagChatStatus
 	}
 }ChatStatus;
 
-/// \brief Meeting chat callback event.
+/// \描述：会议聊天回调事件
 ///
 class IMeetingChatCtrlEvent
 {
 public:
-	/// \brief Chat message callback. This function is used to inform the user once received the message sent by others.
-	/// \param chatMsg An object pointer to the chat message.
-	/// \param content A pointer to the chat message in json format. This parameter is currently invalid, hereby only for reservations. 
+	/// \描述：聊天消息回调事件
+	/// \参数：chatMsg 消息对象. 此参数在此函数调用结束后无效.
+	/// \参数：content json格式的聊天消息，保留.
 	virtual void onChatMsgNotifcation(IChatMsgInfo* chatMsg, const wchar_t* content = NULL) = 0;
 
-	/// \brief The authority of chat changes callback. This function is used to inform the user when the authority of chat changes in the meeting or webinar.
-	/// \param status_ The chat status. For more details, see \link ChatStatus \endlink.
+	/// \描述：聊天状态改变通知回调
+	/// \参数：status_ 聊天状态对象.  此参数在此函数调用结束后无效.
 	virtual void onChatStautsChangedNotification(ChatStatus* status_) = 0;
 };
 
 /*! \enum WebinarChatMsgType
-    \brief The sending message type in webinar.
-    Here are more detailed structural descriptions..
-*/ 
+\描述：网络研讨会聊天消息类型.
+更详细的结构描述。
+*/
 enum WebinarChatMsgType
 {
-	WebinarChatMsgType_None,///<Disable to send message.
-	WebinarChatMsgType_ToAllPanelist,///<Enable to send message to all the panelists.
-	WebinarChatMsgType_ToAllPanelistAndAttendee,///<Enable to send message to all.
-	WebinarChatMsgType_ToIndividualUser,///<Enable to send message to individual attendee.
+	WebinarChatMsgType_None,///< None
+	WebinarChatMsgType_ToAllPanelist,///< 发送消息给所有小组成员
+	WebinarChatMsgType_ToAllPanelistAndAttendee,///< 发送聊天消息给所有的小组成员和参会者
+	WebinarChatMsgType_ToIndividualUser,///< 发送消息给单个用户
 };
 
 /*! \struct tagSendChatItem4Webinar
-    \brief The structure of chat message for webinar.
-    Here are more detailed structural descriptions.
+\描述：网络研讨会信息项
+更详细的结构描述。
 */
-typedef struct tagSendChatItem4Webinar 
+typedef struct tagSendChatItem4Webinar
 {
-	WebinarChatMsgType msgType;///<The authority to send chat message.
-	const wchar_t* content;///<The content of the message.
-	unsigned int userID;///<This member is only used to specify the attendee ID when the authority is WebinarChatMsgType_ToIndividualUser. 
+	WebinarChatMsgType msgType;///< 聊天消息类型
+	const wchar_t* content;///< 消息内容
+	unsigned int userID;///< 发送消息的对象,如果msgType是WebinarChatMsgType_ToIndividualUser时可用
 	tagSendChatItem4Webinar()
 	{
 		msgType = WebinarChatMsgType_None;
@@ -164,35 +162,34 @@ typedef struct tagSendChatItem4Webinar
 	}
 }SendChatItem4Webinar;
 
-/// \brief Meeting chat controller interface
+/// \描述：会议聊天控制器接口
 ///
 class IMeetingChatController
 {
 public:
-	/// \brief Set meeting chat callback event.
-	/// \param pEvent A pointer to the IMeetingChatCtrlEvent to receive chat callback event. For more details, see \link IMeetingChatCtrlEvent \endlink.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remark The event is used by SDK to pass the callback event to user's application. If this function is not called or fails, the user's application can not retrieve the callback event.
+	/// \描述：设置会议聊天回调事件
+	/// \参数：pEvent 一个指向接收聊天事件的IMeetingChatCtrlEvent*的指针。 
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingChatCtrlEvent* pEvent) = 0;
 
-	/// \brief Send chat message in the normal meeting.
-	/// \param receiver Specify the user ID who receives the chat message. The message will be sent to all when the value is zero(0). 
-	/// \param content The content of the chat message. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：发送聊天消息给某人或所有人
+	/// \参数：receiver 聊天消息接收者。如果此参数为零，则将此消息发送给所有人
+	/// \参数：content 聊天消息内容。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SendChatTo(unsigned int receiver, wchar_t* content) = 0;
 
-	/// \brief Send chat message in webinar.
-	/// \param chatIteam An instance of the structure of the chat message. For more details, see \link SendChatItem4Webinar \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	virtual SDKError SendChat4WebinarMeeting(SendChatItem4Webinar& chatIteam) = 0;
+	/// \描述：网络研讨会发送聊天消息给某人或所有人
+	/// \参数：chatIteam 聊天消息项。参考SendChatItem4Webinar
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	virtual SDKError SendChat4WebinarMeeting(SendChatItem4Webinar& chatItem) = 0;
 
-	/// \brief Get the authority status to send current message. 
-	/// \return If the function succeeds, the return value is a pointer to the structure of ChatStatus. For more details, see \link ChatStatus \endlink structure.
-	///Otherwise failed, the return value is NULL. To get extended error information, see \link ChatStatus \endlink.
-	virtual const ChatStatus* GetChatStatus() = 0;
+	/// \描述：获取当前聊天会话的特权状态
+	/// \返回：如果函数成功，则返回值为聊天会话的状态.
+	/// 如果函数失败，返回值是NULL。要获取扩展的错误信息，请参考ChatStatus。
+	virtual const ChatStatus GetChatStatus() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

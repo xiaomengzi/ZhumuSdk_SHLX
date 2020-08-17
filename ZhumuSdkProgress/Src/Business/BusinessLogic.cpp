@@ -3,13 +3,13 @@
 #include "reader.h"
 #include "Utils.h"
 #include "Resource.h"
-#include "zoom_sdk.h"
-#include "zoom_sdk_def.h"
+#include "zhumu_sdk.h"
+#include "zhumu_sdk_def.h"
 #include "plog\Log.h"
 #include "ZhumuSdkAgency.h"
 #include "TcpClient\CustomTcpClient.h"
 
-using namespace ZOOM_SDK_NAMESPACE;
+using namespace ZHUMU_SDK_NAMESPACE;
 
 CBusinessLogic *CBusinessLogic::m_pInstance = nullptr;
 
@@ -530,7 +530,7 @@ void CBusinessLogic::DestroyZhumuSDK()
 /*                   执行结果协议反馈处理函数                             */
 /************************************************************************/
 // 反馈初始化SDK结果
-bool CBusinessLogic::FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret)
+bool CBusinessLogic::FeedbackInitResult(ZHUMU_SDK_NAMESPACE::SDKError ret)
 {
     if (false == m_bAsynchronous)
     {
@@ -561,7 +561,7 @@ bool CBusinessLogic::FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret)
 }
 
 // 反馈认证结果
-bool CBusinessLogic::FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret)
+bool CBusinessLogic::FeedbackAuthResult(ZHUMU_SDK_NAMESPACE::AuthResult ret)
 {
     if (false == m_bAsynchronous)
     {
@@ -592,7 +592,7 @@ bool CBusinessLogic::FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret)
 }
 
 // 反馈登录结果
-bool CBusinessLogic::FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret)
+bool CBusinessLogic::FeedbackLoginResult(ZHUMU_SDK_NAMESPACE::LOGINSTATUS ret)
 {
     if (false == m_bAsynchronous)
     {
@@ -623,7 +623,7 @@ bool CBusinessLogic::FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret)
 }
 
 
-bool CBusinessLogic::FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/)
+bool CBusinessLogic::FeedbackMeetingStatusResult(ZHUMU_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/)
 {
     bool bRet = false;
 
@@ -650,7 +650,7 @@ bool CBusinessLogic::FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStat
     return bRet;
 }
 
-bool CBusinessLogic::FeedbackMeetingSettingResult(SettingServerType settingType, ZOOM_SDK_NAMESPACE::SDKError ret)
+bool CBusinessLogic::FeedbackMeetingSettingResult(SettingServerType settingType, ZHUMU_SDK_NAMESPACE::SDKError ret)
 {
     bool bRet = false;
 
@@ -680,7 +680,7 @@ bool CBusinessLogic::FeedbackMeetingSettingResult(SettingServerType settingType,
 /************************************************************************/
 /*                   瞩目SDK回调处理函数                                 */
 /************************************************************************/
-void CBusinessLogic::AuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret)
+void CBusinessLogic::AuthenticationReturn(ZHUMU_SDK_NAMESPACE::AuthResult ret)
 {
     LOGI << "[" << __FUNCTION__ << "] Authentication Return :" << ret << std::endl;
 
@@ -735,7 +735,7 @@ void CBusinessLogic::LoginReturn(LOGINSTATUS ret, IAccountInfo* pAccountInfo)
     }
 }
 
-void CBusinessLogic::MeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/)
+void CBusinessLogic::MeetingStatusChanged(ZHUMU_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/)
 {
     LOGI << "[" << __FUNCTION__ << "] Meeting Status:" << status << " result:" << iResult << std::endl;
     // 任何状态都回调给上层
@@ -808,7 +808,7 @@ void CBusinessLogic::DirectLogin()
     }
 }
 
-CString CBusinessLogic::GetErrorDescriptionByErrorCode(ZOOM_SDK_NAMESPACE::MeetingFailCode errCode)
+CString CBusinessLogic::GetErrorDescriptionByErrorCode(ZHUMU_SDK_NAMESPACE::MeetingFailCode errCode)
 {
     auto Iter = m_mapMeetFailCode.find(errCode);
     if (Iter != m_mapMeetFailCode.end())

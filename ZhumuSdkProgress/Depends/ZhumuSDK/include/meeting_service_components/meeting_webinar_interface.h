@@ -1,59 +1,61 @@
 /*!
-* \file meeting_webinar_interface.h
-* \brief Meeting Service Webinar Interface.
-* 
+* \文件：meeting_webinar_interface.h
+* \描述：网络研讨会服务接口
+*
 */
 
-#ifndef _MEETING_WEBINAR_INTERFACE_H_
-#define _MEETING_WEBINAR_INTERFACE_H_
-
-BEGIN_ZOOM_SDK_NAMESPACE
-/// \brief Webinar callback event.
+#ifndef ZHUMU_MEETING_WEBINAR_INTERFACE_H_
+#define ZHUMU_MEETING_WEBINAR_INTERFACE_H_
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
+/// \描述： 网络研讨会回调事件
 ///
 class IMeetingWebinarCtrlEvent
 {
 public:
-	/// \brief Callback to promote attendees to panelist.
-	/// \param result If the promotion is successful, the result is zero(0). Otherwise it is an error code.
+	/// \描述：将参与者更改为小组讨论者结果回调
+	/// \参数：result 如果成功，则结果为零，否则为错误码
 	virtual void onPromptAttendee2PanelistResult(int result) = 0;
 
-	/// \brief Callback to demote attendees to panelist.
-	/// \param result If the demotion is successful, the result is zero(0), otherwise an error code.
+	/// \描述：change panlist to attendee result callback
+	/// \参数：result if success, result is zero, otherwise is the error code.
 	virtual void onDepromptPanelist2AttendeeResult(int result) = 0;
 
-	/// \brief Callback to enable the panelist to start the video.
+	/// \描述：允许小组讨论者开始视频结果回调
 	virtual void onAllowPanelistStartVideoNotification() = 0;
 
-	/// \brief Callback to disable the panelist to start the video.
+	/// \描述：禁止小组讨论者开始视频结果回调
 	virtual void onDisallowPanelistStartVideoNotification() = 0;
 
-	/// \brief Callback event that attendees are required to enable the mic in the view-only mode of webinar.
+	/// \描述：自己打开语音通知回调
 	virtual void onSelfAllowTalkNotification() = 0;
 
-	/// \brief Callback event that attendees are required to turn off the mic in the view-only mode of webinar.
+	/// \描述：自己禁止语音通知回调
 	virtual void onSelfDisallowTalkNotification() = 0;
 
-	/// \brief Callback to enable the attendees to chat. Available only for the host and the co-host.
+	/// \描述：允许参会者聊天结果回调
 	virtual void onAllowAttendeeChatNotification() = 0;
 
-	/// \brief Callback to disable the attendees to chat. Available only for the host and the co-host.
+	/// \描述：禁止参会者聊天结果回调
 	virtual void onDisallowAttendeeChatNotification() = 0;
-  
-	/// \brief Attendee will receive this callback if his audio status changes.
-	/// \param userid The ID of the user whose audio status changes.
-	/// \param can_talk True indicates that it is able to use the audio. False not.  
-	/// \param is_muted TRUE indicates muted, FALSE not. This parameter works only when the value of can_talk is TRUE.
+
+	/// \描述：与会者音频状态通知回调
+	/// \参数：userid 哪位与会者的声音状态改变了
+	/// \参数：can_talk 能否说话
+	/// \参数：is_muted 是否静音, 如果 can_talk 是 true, 能说话
 	virtual void onAttendeeAudioStatusNotification(unsigned int userid, bool can_talk, bool is_muted) = 0;
 };
 
 /*! \struct tagWebinarMeetingStatus
-    \brief Webinar Meeting Status.
-    Here are more detailed structural descriptions.
+\描述：网络研讨会聊天信息项
+更详细的结构描述。
 */
 typedef struct tagWebinarMeetingStatus
 {
-	bool allow_panellist_start_video;///<TRUE indicates that the panelist is able to turn on the video. FALSE not.
-	bool allow_attendee_chat;///<TRUE indicates that the attendee is able to chat. FALSE not.
+	bool allow_panellist_start_video;///< 小组成员可以开始视频或不可以
+	bool allow_attendee_chat;///< 参会者是否可以聊天
 	tagWebinarMeetingStatus()
 	{
 		Reset();
@@ -66,78 +68,70 @@ typedef struct tagWebinarMeetingStatus
 	}
 }WebinarMeetingStatus;
 
-/// \brief Webinar controller interface
+/// \描述：网络研讨会控制器接口
 ///
 class IMeetingWebinarController
 {
 public:
-	/// \brief Set webinar controller callback event handler.
-	/// \param pEvent A pointer to the IMeetingWebinarCtrlEvent that receives the webinar callback event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议网络控制器回调事件
+	/// \参数：pEvent 一个指向IMeetingWebinarCtrlEvent*的指针，用于接收网络会议事件。 
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingWebinarCtrlEvent* pEvent) = 0;
 
-	/// \brief Promote the attendee to panelist. Available only for the meeting host.
-	/// \param userid Specifies the user ID to promote.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onPromptAttendee2PanelistResult() callback event.
+	/// \描述：将参会者更改为小组讨论成员，只有会议主持人可以调用此api
+	/// \参数：userid 指定要改变的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError PromptAttendee2Panelist(unsigned int userid) = 0;
 
-	/// \brief Demote the panelist to attendee. Available only for the host.
-	/// \param userid Specifies the user ID to demote.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onDepromptPanelist2AttendeeResult() callback event.
+	/// \描述：将小组讨论者更改为参会者，只有会议主机可以调用此api
+	/// \参数：userid 指定要降级的用户
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DepromptPanelist2Attendee(unsigned int userid) = 0;
 
-	/// \brief Query if the webinar supports the user to use the audio device.
-	/// \return If it supports, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：检查是否支持参会者说话
+	/// \返回：如有支持允许与会者发言, 则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError IsSupportAttendeeTalk() = 0;
 
-	/// \brief The attendee is permitted to use the audio device.
-	/// \param userid Specifies the permitted user ID.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onAllowAttendeeChatNotification() callback event. Available only for the host.
+	/// \描述：允许参会者发言，只有会议主持人可以调用这个api
+	/// \参数：userid 指定要允许的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError AllowAttendeeTalk(unsigned int userid) = 0;
 
-	/// \brief Forbid the attendee to use the audio device.
-	/// \param userid Specifies the forbidden user ID.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onDisallowAttendeeChatNotification() callback event. Available only for the host.
+	/// \描述：静止参会者发言，只有会议主持人可以调用这个api
+	/// \参数：userid 指定要禁用的用户。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DisallowAttendeeTalk(unsigned int userid) = 0;
 
-	/// \brief The panelist is permitted to start the video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onAllowPanelistStartVideoNotification() callback event. Available only for the host.
+	/// \描述：允许小组讨论者启动视频，只有会议主持人可以调用这个api
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError AllowPanelistStartVideo() = 0;
 
-	/// \brief Forbid the panelist to start video.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onDisallowPanelistStartVideoNotification() callback event. Available only for the host.
+	/// \描述：不允许小组讨论者启动视频，只有会议主持人可以调用此api
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DisallowPanelistStartVideo() = 0;
 
-	/// \brief The attendees are permitted to chat.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onAllowAttendeeChatNotification() callback event. Available only for the host.
+	/// \描述：允许参会者聊天，只有会议主持人可以调用这个api
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError AllowAttendeeChat() = 0;
 
-	/// \brief Forbid the attendees to chat.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks If the function succeeds, the user will receive the IMeetingWebinarCtrlEvent::onDisallowAttendeeChatNotification() callback event. Available only for the host.
+	/// \描述：不允许参会者聊天，只有会议主持人可以调用这个api
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DisallowAttendeeChat() = 0;
 
-	/// \brief Get the webinar status.
-	/// \return The status of webinar. For more details, see \link WebinarMeetingStatus \endlink.
+	/// \描述：获取网络研讨会状态。
+	/// \返回：网络研讨会状态。
 	virtual WebinarMeetingStatus* GetWebinarMeetingStatus() = 0;
 };
 
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

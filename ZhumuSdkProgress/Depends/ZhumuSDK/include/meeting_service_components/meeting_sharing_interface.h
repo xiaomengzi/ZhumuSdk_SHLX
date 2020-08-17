@@ -1,38 +1,41 @@
 /*!
-* \file meeting_sharing_interface.h
-* \brief Meeting Service Sharing Interface
-* 
+* \文件：meeting_sharing_interface.h
+* \描述：会议共享服务接口
+*
 */
-#ifndef _MEETING_SHARING_INTERFACE_H_
-#define _MEETING_SHARING_INTERFACE_H_
-#include "..\zoom_sdk_def.h"
-
-BEGIN_ZOOM_SDK_NAMESPACE
+#ifndef ZHUMU_MEETING_SHARING_INTERFACE_H_
+#define ZHUMU_MEETING_SHARING_INTERFACE_H_
+#include "..\zhumu_sdk_def.h"
+#include <vector>
+/// \描述： Zhumu SDK Namespace
+/// 
+///
+BEGIN_ZHUMU_SDK_NAMESPACE
 /*! \enum SharingStatus
-    \brief Sharing status.
-    Here are more detailed structural descriptions..
+\描述：共享状态。
+更详细的结构描述
 */
 enum SharingStatus
 {
-	Sharing_Self_Send_Begin,///<Begin to share by the user himself.
-	Sharing_Self_Send_End,///<Stop sharing by the user.
-	Sharing_Other_Share_Begin,///<Others begin to share.
-	Sharing_Other_Share_End,///<Others stop sharing.
-	Sharing_View_Other_Sharing,///<View the sharing of others.
-	Sharing_Pause,///<Pause sharing.
-	Sharing_Resume,///<Resume sharing.
+	Sharing_Self_Send_Begin,
+	Sharing_Self_Send_End,
+	Sharing_Other_Share_Begin,
+	Sharing_Other_Share_End,
+	Sharing_View_Other_Sharing,
+	Sharing_Pause,
+	Sharing_Resume,
 };
 
 /*! \struct tagViewableShareSource
-    \brief Visible shared source information.
-    Here are more detailed structural descriptions..
+\描述：可查看的共享源信息。
+更详细的结构描述
 */
 typedef struct tagViewableShareSource
 {
-	unsigned int userid;///<User ID.
-	bool isShowingInFirstView;///<Display or not on the primary view.
-	bool isShowingInSecondView;///<Display or not on the secondary view. 
-	bool isCanBeRemoteControl;///<Enable or disable the remote control.
+	unsigned int userid;
+	bool isShowingInFirstView;
+	bool isShowingInSecondView;
+	bool isCanBeRemoteControl;
 	tagViewableShareSource()
 	{
 		userid = 0;
@@ -42,49 +45,48 @@ typedef struct tagViewableShareSource
 	}
 }ViewableShareSource;
 
-/*! \enum ShareType 
-    Type of current sharing received by the user.
-    Here are more detailed structural descriptions..
+/*! \enum 当前共享的类型.
+更详细的结构描述
 */
 enum ShareType
 {
-	SHARE_TYPE_UNKNOWN,///<Type unknown.
-	SHARE_TYPE_AS,///<Type of sharing the application.
-	SHARE_TYPE_DS,///<Type of sharing the desktop.
-	SHARE_TYPE_WB,///<Type of sharing the white-board.
-	SHARE_TYPE_AIRHOST,///<Type of sharing data from the device connected WIFI. 
-	SHARE_TYPE_CAMERA,///<Type of sharing the camera.
-	SHARE_TYPE_DATA,///<Type of sharing the data.
+	SHARE_TYPE_UNKNOWN, //未知
+	SHARE_TYPE_AS,	//共享应用
+	SHARE_TYPE_DS,	//共享桌面
+	SHARE_TYPE_WB,	//白板共享
+	SHARE_TYPE_AIRHOST,	//PC上共享手机设备
+	SHARE_TYPE_CAMERA,	//摄像头共享
+	SHARE_TYPE_DATA,	//数据共享
 };
-/*! \enum AdvanceShareOption 
-    Additional type of current sharing sent to others.
-    Here are more detailed structural descriptions.
+/*! \enum AdvanceShareOption
+当前发送给他人的共享其他类型。
+这里有更详细的结构描述。
 */
 enum AdvanceShareOption
 {
-	AdvanceShareOption_ShareFrame,///<Type of sharing a selected area of desktop.
-	AdvanceShareOption_PureComputerAudio,///<Type of sharing only the computer audio.
-	AdvanceShareOption_ShareCamera,///<Type of sharing the camera.
+	AdvanceShareOption_ShareFrame,///<共享桌面选定区域
+	AdvanceShareOption_PureComputerAudio,///<只共享计算机音频。
+	AdvanceShareOption_ShareCamera,///<共享摄像头
 };
 /*! \struct tagShareInfo
-    \brief Information of current sharing.
-    Here are more detailed structural descriptions.
+\描述：当前共享的信息。
+更详细的结构描述.
 */
 enum MultiShareOption
 {
-	Enable_Multi_Share = 0, ///<Multi-participants can share simultaneously.
-	Enable_Only_HOST_Start_Share, ///<Only host can share at a time.
-	Enable_Only_HOST_Grab_Share, ///<One participant can share at a time, during sharing only host can start a new sharing and the previous sharing will be replaced.
-	Enable_All_Grab_Share, ///<One participant can share at a time, during sharing everyone can start a new sharing and the previous sharing will be replaced.
+	Enable_Multi_Share = 0, ///<多个参与者可以同时共享。
+	Enable_Only_HOST_Start_Share, ///<一次只能由主机共享。
+	Enable_Only_HOST_Grab_Share, ///<一个参与者可以一次分享，分享过程中只有主机可以开始新的分享，之前的分享将被取代。
+	Enable_All_Grab_Share, ///<一个参与者可以一次分享，在分享的过程中，每个人都可以开始一个新的分享，之前的分享将被取代。
 };
 
 typedef struct tagShareInfo
 {
-	ShareType eShareType;///<Type of sharing, see \link ShareType \endlink enum.
+	ShareType eShareType;  //共享类型，参考ShareType
 	union
 	{
-		HWND hwndSharedApp;///<Handle of sharing application or white-board. It is invalid unless the value of the eShareType is SHARE_TYPE_AS or SHARE_TYPE_WB.
-		const wchar_t* monitorID;///<The ID of screen to be shared. It is invalid unless the value of the eShareType is SHARE_TYPE_DS.
+		HWND hwndSharedApp;  //共享应用程序或白板的句柄，仅当eShareType为SHARE_TYPE_AS或SHARE_TYPE_WB时有效
+		const wchar_t* monitorID;  //共享桌面的显示器id，只有当eShareType为SHARE_TYPE_DS时才有效
 	}ut;
 	tagShareInfo()
 	{
@@ -93,243 +95,240 @@ typedef struct tagShareInfo
 	}
 }ShareInfo;
 
-/// \brief Reminder handler of switching from multi-share to single share.
+/// \描述：提醒处理程序从多个共享切换到单个共享。
 ///
 class IShareSwitchMultiToSingleConfirmHandler
 {
 public:
-	/// \brief Cancel to switch multi-share to single share. All sharing will be remained.
+	/// \描述：取消从多共享切换为单共享。所有分享将保留。
 	virtual SDKError Cancel() = 0;
 
-	/// \brief Switch multi-share to single share. All sharing will be remained.
+	/// \描述：将多共享切换为单共享。所有分享将保留。
 	virtual SDKError Confirm() = 0;
 
 	virtual ~IShareSwitchMultiToSingleConfirmHandler() {};
 };
 
-/// \brief Callback event of meeting share controller.
+/// \描述：会议共享控制器的回调事件。
 ///
 class IMeetingShareCtrlEvent
 {
 public:
-	/// \brief Callback event of the changed sharing status. 
-	/// \param status The values of sharing status. For more details, see \link SharingStatus \endlink enum.
-	/// \param userId Sharer ID. 
-	/// \remarks The userId changes according to the status value. When the status value is the Sharing_Self_Send_Begin or Sharing_Self_Send_End, the userId is the user own ID. Otherwise, the value of userId is the sharer ID.
+	/// \描述：共享状态通知回调
+	/// \参数：status 共享状态值。
+	/// \参数：userId 共享用户id
 	virtual void onSharingStatus(SharingStatus status, unsigned int userId) = 0;
 
-	/// \brief Callback event of locked share status.
-	/// \param bLocked TRUE indicates that it is locked. FALSE unlocked.
+	/// \描述：锁定共享状态通知回叫
+	/// \参数：bLocked 指定共享是否被锁定。
 	virtual void onLockShareStatus(bool bLocked) = 0;
 
-	/// \brief Callback event of changed sharing information.
-	/// \param shareInfo Sharing information. For more details, see \link ShareInfo \endlink structure.
+	/// \描述：更改共享信息的回调事件。
+	/// \参数：shareInfo 共享信息。有关详细信息，请参见 ShareInfo 结构。
 	virtual void onShareContentNotification(ShareInfo& shareInfo) = 0;
 
-	/// \brief Callback event of switching multi-participants share to one participant share.
-	/// \param handler_ An object pointer used by user to complete all the related operations. For more details, see \link IShareSwitchMultiToSingleConfirmHandler \endlink.
-	virtual void onMultiShareSwitchToSingleShareNeedConfirm(IShareSwitchMultiToSingleConfirmHandler* handler_) = 0;		
+	/// \描述：将多个参与者共享切换到一个参与者共享的回调事件。
+	/// \参数：handler_ An 用户用来完成所有相关操作的对象指针。有关更多细节，请参见IShareSwitchMultiToSingleConfirmHandler。
+	virtual void onMultiShareSwitchToSingleShareNeedConfirm(IShareSwitchMultiToSingleConfirmHandler* handler_) = 0;
 };
 
-/// \brief Meeting share controller interface.
+/// \描述：会议共享控制器接口
 ///
 class IMeetingShareController
 {
 public:
-	/// \brief Set meeting share controller callback event handler.
-	/// \param pEvent A pointer to the IMeetingShareCtrlEvent that receives sharing event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置会议共享控制器回调事件
+	/// \描述：pEvent 一个指向接收共享事件的IMeetingShareCtrlEvent*的指针。
+	/// \返回: 如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(IMeetingShareCtrlEvent* pEvent) = 0;
-	
-	/// \brief Share the specified application.
-	/// \param hwndSharedApp Specify the window handle of the application to be shared. If the hwndSharedApp can't be shared, the return value is the SDKERR_INVALID_PARAMETER error code. If the hwndSharedApp is NULL, the primary monitor will be shared. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+
+	/// \描述：启动应用程序共享
+	/// \描述：hwndSharedApp 指定要共享哪个窗口。
+	/// 如果hwndSharedApp不能共享，返回SDKERR_INVALID_BRIEF:ETER错误代码。如果hwndSharedApp为空，将显示选择应用程序对话框。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartAppShare(HWND hwndSharedApp) = 0;
 
-	/// \brief Share the specified monitor.
-	/// \param monitorID Specify the monitor ID to be shared. You may get the value via EnumDisplayMonitors System API. If the monitorID is NULL, the primary monitor will be shared. For more details, see szDevice in MONITORINFOEX structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：开始桌面共享
+	/// \描述： monitorID ：指定要共享哪个显示器。使用EnumDisplayMonitors系统api来获取这个值。
+	/// 请参考MONITORINFOEX结构中的szDevice。如果monitorID为空，将显示选择应用程序对话框。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartMonitorShare(const wchar_t* monitorID) = 0;
 
-	/// \brief Start sharing with mobile device. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：开始IOS设备共享。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartAirPlayShare() = 0;
 
-	/// \brief Start sharing with White board.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	///You need to draw your own annotation bar for custom mode when you get the onShareContentNotification with SHARE_TYPE_WB.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：开始白板共享。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
+	/// 如果您在自定义模式下使用我们的sdk，请在使用SHARE_TYPE_WB获得onShareContentNotification时绘制自己的注释栏
 	virtual SDKError StartWhiteBoardShare() = 0;
 
-	/// \brief A dialog box pops up that enable the user to choose the application or window to share.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style mode. 
+	/// \描述：显示分享应用选择窗口。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError ShowSharingAppSelectWnd() = 0;
-	
-	/// \brief Determine if the specified ADVANCE SHARE OPTION is supported. 
-	/// \param option_ The ADVANCE SHARE OPTION to be determined. For more information, see \link AdvanceShareOption \endlink enum.
-	/// \return If it is supported, the return value is SDKErr_Success.
-	///Otherwise not. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+
+	/// \描述： Determine if the specified ADVANCE SHARE OPTION is supported. 
+	/// \描述： option_ The ADVANCE SHARE OPTION to be determined. For more information, see \link AdvanceShareOption \endlink enum.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError IsSupportAdvanceShareOption(AdvanceShareOption option_) = 0;
-	
-	/// \brief Start sharing frame.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+
+	/// \描述：开始共享窗口。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartShareFrame() = 0;
 
-	/// \brief Start sharing only the computer audio.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.	
+	/// \描述：仅开始共享计算机音频。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartSharePureComputerAudio() = 0;
-	
-	/// \brief Start sharing camera.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.	
+
+	/// \描述：开始分享相机。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StartShareCamera() = 0;
-	
-	/// \brief Stop the current sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+
+	/// \描述：停止当前共享。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError StopShare() = 0;
 
-	/// \brief Block the window when sharing in full screen.
-	///Once the function is called, you need to redraw the window to take effect.
-	/// \param bBlock TRUE indicates to block the window when sharing in full screen.
-	/// \param hWnd Specify the window to be blocked.
-	/// \param bChangeWindowStyle If it is FALSE, please call this function either after the StartMonitorShare is called or when you get the callback event of the onSharingStatus with Sharing_Self_Send_Begin. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
-	///It is not suggested to use this function for it will change the property of the window and leads to some unknown errors.
-	///It won't work until the IMeetingShareController::StartMonitorShare() is called if the bChangeWindowStyle is set to FALSE. 
-	///If you want to use the specified window during the share, you need to redraw the window.
-	///Set the bBlock to FALSE before ending the share and call the function for the specified window to resume the property of the window.
+	/// \描述： 屏幕共享中阻止窗口共享
+	/// 这个api将改变窗口的属性。我们不建议使用。
+	/// 调用此api后，需要重新绘制此窗口才能生效。
+	/// \描述： bBlock 从屏幕共享阻止窗口。.
+	/// \描述： hWnd 指定要阻塞哪个窗口。.
+	/// \描述： bChangeWindowStyle 如果为false，请在StartMonitorShare api之后调用此api
+	/// 或者在你用Sharing_Self_Send_Begin获得sharingstatus回调之后。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError BlockWindowFromScreenshare(bool bBlock, HWND hWnd, bool bChangeWindowStyle = true) = 0;
 
-	/// \deprecated This interface is deprecated because Zoom meeting doesn't support this feature anymore. Please stop using it. 
-	/// \brief Lock the current meeting sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：锁定当前会议的共享
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError LockShare() = 0;
 
-	/// \deprecated This interface is deprecated because Zoom meeting doesn't support this feature anymore. Please stop using it.
-	/// \brief Unlock the current meeting sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：解锁当前会议的共享
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError UnlockShare() = 0;
 
-	/// \brief Switch to auto-adjust mode from sharing window by the function when watching the share on the specified view.
-	/// \param type Specify the view you want to set, either primary or secondary. For more details, see \link SDKViewType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
+	/// \描述：在视图共享时，将共享视图窗口切换为适合窗口模式。
+	/// \描述：type 指定要设置的视图，第一个监视器还是第二个监视器。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError SwitchToFitWindowModeWhenViewShare(SDKViewType type) = 0;
 
-	/// \brief Switch the window size to originality by the function when watching the share on the specified view.
-	/// \param type Specify the view you want to set, either primary or secondary. For more details, see \link SDKViewType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
+	/// \描述：在视图共享时，将共享视图窗口切换到原始大小模式。
+	/// \描述：type 指定要设置的视图，第一个监视器还是第二个监视器。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError SwitchToOriginalSizeModeWhenViewShare(SDKViewType type) = 0;
 
-	/// \brief Pause the current sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：暂停当前的分享
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError PauseCurrentSharing() = 0;
 
-	/// \brief Resume the current sharing.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：重新当前共享
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError ResumeCurrentSharing() = 0;
 
-	/// \brief Get the list of all the sharers in the current meeting.
-	/// \return If the function succeeds, the return value is list of user ID.
-	///If the function fails, the return value is NULL.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
-	virtual IList<unsigned int >* GetViewableShareSourceList() = 0;
+	/// \描述：获取当前可见的共享源列表。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
+	virtual std::vector<unsigned int> GetViewableShareSourceList() = 0;
 
-	/// \brief Get the sharing information from the specified sharer.
-	/// \param userid Specify the user ID that you want to get his sharing information.
-	/// \param [out] shareSource Store the viewable sharing information. For more details, see \link ViewableShareSource \endlink structure.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：通过userid获取可查看的共享源。
+	/// \描述：userid 指定要获取的可查看共享源信息。
+	/// \描述：shareSource 存储可查看的共享源信息
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError GetViewabltShareSourceByUserID(unsigned int userid, ViewableShareSource& shareSource) = 0;
 
-	/// \brief View the share from the specified user.
-	/// \param userid Specify the user ID that you want to view his share. 
-	/// \param type Specify the view that you want to display the share, either primary or secondary. For more details, see \link SDKViewType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
+	/// \描述：通过userid共享视图。
+	/// \描述：userid 指定要查看的对象。
+	/// \描述：type 指定要查看共享的哪个视图，第一个监视器还是第二个监视器。
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError ViewShare(unsigned int userid, SDKViewType type) = 0;
 
-	/// \brief Display the dialog of sharing configuration.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid only for ZOOM style user interface mode.
+	/// \描述：显示共享操作对话框.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \仅支持zhumu风格的UI
 	virtual SDKError ShowShareOptionDialog() = 0;
 
-	/// \brief Determine if it is able to share. 
-	/// \return Enable or disable to start sharing.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：判断是否可以开启共享
+	/// \返回：是否可以开启共享
+	/// \支持zhumu风格和自定义UI风格
 	virtual bool CanStartShare() = 0;
 
-	/// \brief Determine if the sharing is locked. 
-	/// \param bLocked TRUE indicates that the sharing is locked. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：查询共享是否被锁定。
+	/// \描述：bLocked 存储共享时候被锁定
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError IsShareLocked(bool& bLocked) = 0;
 
-	/// \brief Determine if the sound of the computer in the current sharing is supported. 
-	/// \param [out] bCurEnableOrNot The parameter is valid only when the return value is TRUE. And TRUE indicates to sharing the sound of the computer for the moment.
-	/// \return If it is TRUE, the value of bCurEnableOrNot can be used to check whether the computer sound is supported or not when sharing. FALSE not.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：查询共享支持共享计算机声音与否。
+	/// \描述：bCurEnableOrNot 存储共享是否支持共享计算机声音
+	/// \返回：支持共享计算机声音与否
+	/// \支持zhumu风格和自定义UI风格
 	virtual bool IsSupportEnableShareComputerSound(bool& bCurEnableOrNot) = 0;
 
-	/// \brief Determine whether to optimize the video fluidity when sharing in full screen mode. 
-	/// \param bCurEnableOrNot This parameter is valid only when the return value is TRUE. And TRUE indicates to optimize video for the moment. 
-	/// \return If it is TRUE, the value of bCurEnableOrNot can be used to check whether to support optimize video fluidity or not. FALSE not.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：查询共享是否支持优化全屏视频剪辑。
+	/// \描述：bCurEnableOrNot 是否支持优化全屏视频剪辑.
+	/// \返回：是否支持优化全屏视频剪辑.
+	/// \支持zhumu风格和自定义UI风格
 	virtual bool IsSupportEnableOptimizeForFullScreenVideoClip(bool& bCurEnableOrNot) = 0;
 
-	/// \brief Set to enable or disable the audio when sharing.
-	/// \param bEnable TRUE indicates to enable. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：启用共享计算机声音.
+	/// \描述：bEnable 是否启用.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError EnableShareComputerSound(bool bEnable) = 0;
 
-	/// \brief Set to enable the video optimization when sharing. 
-	/// \param bEnable TRUE indicates to enable. FALSE not.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks Valid for both ZOOM style and user custom interface mode.
+	/// \描述：启用优化全屏视频剪辑。
+	/// \描述：bEnable 是否启用.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \支持zhumu风格和自定义UI风格
 	virtual SDKError EnableOptimizeForFullScreenVideoClip(bool bEnable) = 0;
 
-	/// \brief Set the options for multi-participants share.
-	/// \param [in] shareOption New options for sharing, see \link MultiShareOption \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置多参与者共享选项
+	/// \描述：shareOption 查看 MultiShareOption enum.
+	/// \返回：如果函数成功，则返回值为SDKErr_Success。
+	/// 如果函数失败，则返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetMultiShareSettingOptions(MultiShareOption shareOption) = 0;
 
 	/// \brief Get the options for multi-participants share.
@@ -349,5 +348,5 @@ public:
 	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
 	virtual SDKError SwitchToShareNextCamera() = 0;
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif

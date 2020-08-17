@@ -1,114 +1,113 @@
 /*!
-* \file customized_annotation.h
-* \brief ZOOM Custom Annotation Interface.
-* 
+* \文件 customized_annotation.h
+* \描述：zhumu自定义标注服务接口
+*
 */
-#ifndef _ZOOM_CUSTOMIZED_ANNOTATION_H_
-#define _ZOOM_CUSTOMIZED_ANNOTATION_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_CUSTOMIZED_ANNOTATION_H_
+#define ZHUMU_CUSTOMIZED_ANNOTATION_H_
+#include "..\zhumu_sdk_def.h"
 #include "..\meeting_service_components\meeting_annotation_interface.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
+BEGIN_ZHUMU_SDK_NAMESPACE
 class ICustomizedShareRender;
 
 /*! \enum CustomizedShareAnnotationStatus
-    \brief Status of custom annotation toolbar. 
-    Here are more detailed structural descriptions..
-*/ 
+\描述：标注状态
+更详细的结构描述。
+*/
 enum CustomizedShareAnnotationStatus
 {
-	CS_ANNO_READYTOUSE,///<The toolbar has been created.
-	CS_ANNO_CLOSE,///<The toolbar will be destroyed.  
+	CS_ANNO_READYTOUSE,//准备使用标注
+	CS_ANNO_CLOSE, //标注关闭
 };
 
-/// \brief Annotation object callback event.
-///                                      
+/// \描述：标注对象回调事件
+///
 class ICustomizedAnnotationObjEvent
 {
 public:
-	/// \brief Callback event that the annotation tool changes.
-	/// \param type_ The type of annotation tool. For more details, see \link AnnotationToolType \endlink enum.
-	virtual void onAnnotationObjToolChange(AnnotationToolType type_) = 0;
+	/// \描述：通知应用程序关于标注工具的更改
+	virtual void onAnnotationObjToolChange(ZhumuSDK::AnnotationToolType type_) = 0;
 };
 
-/// \brief Annotation object interface.
+/// \描述：标注对象接口
 ///
 class ICustomizedAnnotationObj
 {
 public:
-	/// \brief Set annotation object callback event handler.
-	/// \param event_ A pointer to the ICustomizedAnnotationObjEvent that receives annotation object event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置标注对象回调事件
+	/// \参数：pEvent 指向接收标注对象事件的ICustomizedAnnotationObjEvent*的指针。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(ICustomizedAnnotationObjEvent* event_) = 0;
 
-	/// \brief Determine if it is enabled to clear annotations by the specified way. 
-	/// \param type Specify the annotation clear type. For more details, see \link AnnotationClearType \endlink enum.
-	/// \return If the user owns the authority, the return value is SDKErr_Success.
-	///Otherwise not. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：检查能清除标注
+	/// \参数：type 清除标注的类型
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError CanClear(AnnotationClearType type) = 0;
 
-	/// \brief Clear the annotation with the specified type.
-	/// \param type Specify the type to clear annotation. For more details, see \link AnnotationClearType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：清除标注
+	/// \参数：type 清除标注的类型
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Clear(AnnotationClearType type) = 0;
 
-	/// \brief Set the tool to annotate.
-	/// \param type Specify the type of the annotation tool. For more details, see \link AnnotationToolType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置标注工具
+	/// \参数：type 标注工具类型
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetTool(AnnotationToolType type) = 0;
 
-	/// \brief Set the color to annotate.
-	/// \param color Specify the color to annotate, in RGB format.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置标注工具得颜色
+	/// \参数：color 标注工具得颜色
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetColor(unsigned long color) = 0;
-	
-	/// \brief Set the value of line width of annotation tool.
-	/// \param lineWidth The line width of annotation tool.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：设置标注线宽
+	/// \参数：lineWidth 标注工具线宽
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetLineWidth(long lineWidth) = 0;
 
-	/// \brief Get the color of current annotation tool.
-	/// \param [out] color The color to annotate in RGB format.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取标注工具颜色
+	/// \参数：color 当前标注工具得颜色
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetCurColor(unsigned long& color) = 0;
 
-	/// \brief Get the value of line width of the current annotation tool.
-	/// \param [out] lineWidth The width of the current annotation tool. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.										 
+	/// \描述：获取标注工具的线宽
+	/// \参数：lineWidth the current line width of annotation tool
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetCurLineWidth(long& lineWidth) = 0;
 
-	/// \brief Get the type of the current annotation tool.
-	/// \param type Specify the type of the annotation tool. For more details, see \link AnnotationToolType \endlink enum.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：获取标注工具的类型
+	/// \参数：type 标注工具的类型
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError GetCurTool(AnnotationToolType& type) = 0;
 
-	/// \brief Undo the last annotation.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：取消标注
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Undo() = 0;
 
-	/// \brief Redo the annotation that was undone. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：回复上次操作
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Redo() = 0;
 
-	/// \brief Determine if it is enabled to save the screenshot.
-	/// \return If the user owns the authority, the return value is SDKErr_Success.
-	///Otherwise not. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：检查是否保存快照
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError CanSaveSnapshot() = 0;
 
-	/// \brief Save the screenshot in the specified path.
-	/// \param path Specify the path to store the screenshot. If the specified path is wrong, the SDKERR_INVALID_PARAMETER will be returned. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：保存快照
+	/// \参数：path 保存路径
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SaveSnapshot(const wchar_t* path) = 0;
 
 	/// \brief Determine if can do annotate.
@@ -126,47 +125,46 @@ public:
 
 };
 
-/// \brief Annotation controller callback event
+/// \描述： 标注控制器回调事件
 ///
 class ICustomizedAnnotationControllerEvent
 {
 public:
-	/// \brief Callback of destroying the specified annotation object.
-	/// \param obj_ Specify the annotation object to be destroyed. Once destroyed, it can no longer be used.
+	/// \描述：通知应用程序标注对象已被销毁
+	/// \参数：obj_ 指定销毁哪个标注对象
 	virtual void onCustomizedAnnotationObjDestroyed(ICustomizedAnnotationObj* obj_) = 0;
 
-	/// \brief Callback event when the annotation status changes.
-	/// \param share_render_ The annotate status of share_render changes. For more details, see \link ICustomizedShareRender \endlink.
-	/// \param status_ The changed status. For more details, see \link CustomizedShareAnnotationStatus \endlink.
+	/// \描述：通知应用程序标注状态已更改
+	/// \参数：share_render_ 指定更改了哪个共享呈现的标注状态
+	/// \参数：status_ status
 	virtual void onSharingShareAnnotationStatusChanged(ICustomizedShareRender* share_render_, CustomizedShareAnnotationStatus status_) = 0;
 };
 
-/// \brief Annotation controller interface.
+/// \描述： 标注控制器接口
 ///
 class ICustomizedAnnotationController
 {
 public:
-	/// \brief Set annotation controller callback event handler.
-	/// \param event_ A pointer to the ICustomizedAnnotationControllerEvent that receives annotation controller event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：这hi标注控制器回调事件
+	/// \参数：pEvent 指向接收标注控制器事件的ICustomizedAnnotationControllerEvent*的指针。 
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(ICustomizedAnnotationControllerEvent* event_) = 0;
 
-	/// \brief An instance created on the specified render which is an object of ICustomizedShareRender created on the sharing window.
-	/// \param view_share_render Specify the render to receive the shared content. The sharer should set the value to NULL.
-	/// \param pp_obj A pointer to the ICustomizedAnnotationObj*.
-	/// \return If the function succeeds, the return value is SDKErr_Success, and ppMeetingService is not NULL
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
-	/// \remarks It is suggested to call this function if the value of status_ is CS_ANNO_READYTOUSE when you receive the ICustomizedAnnotationControllerEvent::onSharingShareAnnotationStatusChanged.
+	/// \描述：创建标注对象
+	/// \参数：view_share_render 指定标注对象的所有者，如果创建用于开始共享的注释，则传递NULL。
+	/// \参数：pp_obj 一个指向ICustomizedAnnotationObj*的指针，该指针接收ICustomizedAnnotationObj对象。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
+	/// \when you got onSharingShareAnnotationStatusChanged with CS_ANNO_READYTOUSE.
 	virtual SDKError CreateAnnoObj(ICustomizedShareRender* view_share_render, ICustomizedAnnotationObj** pp_obj) = 0;
 
-	/// \brief Destroy the specified annotation object.
-	/// \param anno_obj Specify the annotation tool to be destroyed.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：摧毁注释对象
+	/// \参数：anno_obj 指向要销毁的ICustomizedAnnotationObj的指针。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DestroyAnnoObj(ICustomizedAnnotationObj* anno_obj) = 0;
-	virtual ~ICustomizedAnnotationController(){};
-
-}; 
-END_ZOOM_SDK_NAMESPACE
+	virtual ~ICustomizedAnnotationController() {};
+};
+END_ZHUMU_SDK_NAMESPACE
 #endif

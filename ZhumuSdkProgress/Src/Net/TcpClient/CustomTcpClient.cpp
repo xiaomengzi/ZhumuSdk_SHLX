@@ -37,10 +37,11 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
             // 等待接收服务器反馈
             while (!m_bCanReturn)
             {
-                Sleep(1);
+                Sleep(5);
             }
             // 关闭服务
             StopTcpClient();
+            bRet = true;
         }
         else
         {
@@ -51,6 +52,9 @@ bool CCustomTcpClient::InterfaceCommunicate(const std::string strIp, const int n
     {
         LOGE << "[" << __FUNCTION__ << "] Connect to the server failed! serverIp: " << strIp << " server port: " << nPort << std::endl;
     }
+
+    return bRet;
+
 }
 
 bool CCustomTcpClient::SendContentTcpClient(std::string strContent)

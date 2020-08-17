@@ -85,39 +85,39 @@ public:
     /************************************************************************/
 public:
     // 反馈初始化SDK结果
-    bool FeedbackInitResult(ZOOM_SDK_NAMESPACE::SDKError ret);
+    bool FeedbackInitResult(ZHUMU_SDK_NAMESPACE::SDKError ret);
 
     // 反馈认证结果
-    bool FeedbackAuthResult(ZOOM_SDK_NAMESPACE::AuthResult ret);
+    bool FeedbackAuthResult(ZHUMU_SDK_NAMESPACE::AuthResult ret);
 
     // 反馈登录结果
-    bool FeedbackLoginResult(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret);
+    bool FeedbackLoginResult(ZHUMU_SDK_NAMESPACE::LOGINSTATUS ret);
 
     // 反馈会议状态
-    bool FeedbackMeetingStatusResult(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult = 0);
+    bool FeedbackMeetingStatusResult(ZHUMU_SDK_NAMESPACE::MeetingStatus status, int iResult = 0);
 
     // 反馈会议设置结果
-    bool FeedbackMeetingSettingResult(SettingServerType settingType, ZOOM_SDK_NAMESPACE::SDKError ret);
+    bool FeedbackMeetingSettingResult(SettingServerType settingType, ZHUMU_SDK_NAMESPACE::SDKError ret);
 
     /************************************************************************/
     /*                   瞩目SDK回调处理函数                                 */
     /************************************************************************/
 public:
     // 瞩目SDK 验证回调事件处理
-    void AuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret);
+    void AuthenticationReturn(ZHUMU_SDK_NAMESPACE::AuthResult ret);
 
     // 瞩目SDK 登录回调事件处理
-    void LoginReturn(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
+    void LoginReturn(ZHUMU_SDK_NAMESPACE::LOGINSTATUS ret, ZHUMU_SDK_NAMESPACE::IAccountInfo* pAccountInfo);
 
     // 瞩目SDK 会议回调事件处理
-    void MeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/);
+    void MeetingStatusChanged(ZHUMU_SDK_NAMESPACE::MeetingStatus status, int iResult /*= 0*/);
 
 private:
     // 登录
     void DirectLogin();
 
     // 通过错误码获取错误描述
-    CString GetErrorDescriptionByErrorCode(ZOOM_SDK_NAMESPACE::MeetingFailCode errCode);
+    CString GetErrorDescriptionByErrorCode(ZHUMU_SDK_NAMESPACE::MeetingFailCode errCode);
 public:
     // 注册主窗口句柄
     void RegisterMainDlgHwnd(HWND hWnd);
@@ -187,7 +187,7 @@ private:
     bool                m_bAuthResultReturned;  // 验证结果是否返回 true-已经翻译 false-未返回
     bool                m_bLoginResultReturned; // 登录结果是否返回 true-已经翻译 false-未返回
     CZhumuSdkAgency*    m_pZhumuSdkAgency;
-    std::map<ZOOM_SDK_NAMESPACE::MeetingFailCode, CString> m_mapMeetFailCode;
+    std::map<ZHUMU_SDK_NAMESPACE::MeetingFailCode, CString> m_mapMeetFailCode;
 
 };
 

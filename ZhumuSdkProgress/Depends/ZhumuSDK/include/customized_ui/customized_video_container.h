@@ -1,154 +1,148 @@
 /*!
-* \file customized_video_container.h
-* \brief ZOOM Custom Video Container Interface. 
-* 
+* \文件 customized_video_container.h
+* \描述：zhumu 自定义视频接口
+*
 */
-#ifndef _ZOOM_CUSTOMIZED_VIDEO_CONTAINER_H_
-#define _ZOOM_CUSTOMIZED_VIDEO_CONTAINER_H_
-#include "..\zoom_sdk_def.h"
+#ifndef ZHUMU_CUSTOMIZED_VIDEO_CONTAINER_H_
+#define ZHUMU_CUSTOMIZED_VIDEO_CONTAINER_H_
+#include "..\zhumu_sdk_def.h"
 
-BEGIN_ZOOM_SDK_NAMESPACE
+BEGIN_ZHUMU_SDK_NAMESPACE
 
 /*! \enum VideoRenderElementType
-    \brief Type of the video render element.
-    Here are more detailed structural descriptions.
-*/ 
+\描述： 视频显示元素的类型。
+更详细的结构描述。
+*/
 enum VideoRenderElementType
 {
-	VideoRenderElement_None,///<For initiation.
-	VideoRenderElement_PRVIEW,///<Preview type, see \link IPreviewVideoRenderElement \endlink.
-	VideoRenderElement_ACTIVE,///<Active type, see \link IActiveVideoRenderElement \endlink.
-	VideoRenderElement_NORMAL,///<Normal type, see \link INormalVideoRenderElement \endlink.
+	VideoRenderElement_None, /// 无
+	VideoRenderElement_PRVIEW, ///  IPreviewVideoRenderElement
+	VideoRenderElement_ACTIVE, ///  IActiveVideoRenderElement
+	VideoRenderElement_NORMAL, ///  INormalVideoRenderElement
 };
 
 /*! \enum VideoRenderDataType
-    \brief Data type of the video render element.
-    Here are more detailed structural descriptions.
-*/ 
+\描述： 视频显示元素的数据类型。
+更详细的结构描述。
+*/
 enum VideoRenderDataType
 {
-	VideoRenderData_None,///<For initiation.
-	VideoRenderData_Video,///<Data type including the video data.
-	VideoRenderData_Avatar,///<Data type without video data.
-	VideoRenderData_ScreenName,///<Data type of screen name only.
+	VideoRenderData_None,/// 无
+	VideoRenderData_Video,///视频数据
+	VideoRenderData_Avatar,/// avatar (无视频数据)
+	VideoRenderData_ScreenName,/// screen name (无视频数据)
 };
 
-/// \brief The base class for the video element interface.
+/// \描述：视频元素接口的基类
 ///
 class IVideoRenderElement
 {
 public:
-	/// \brief Get the type of the video render element.
-	/// \return If the function succeeds, the return value is the type of the render element. For more details, see \link VideoRenderElementType \endlink enum.
-	///Otherwise failed, the return value is VideoRenderElement_None.
+	/// \描述：获取视频渲染的类型。
+	/// \返回：如果函数成功，返回值就是呈渲染类型。参考VideoRenderElementType
+	/// 如果函数失败，返回值是VideoRenderElement_None。
 	virtual VideoRenderElementType GetType() = 0;
 
-	/// \brief Get the area where the current render element is.
-	/// \return A RECT structure. The value in the structure corresponding to the coordinate system is the client area of the video container.
-	///The client coordinates corresponds to the client area of the upper-left corner of the parent window.
+	/// \描述：检索视频渲染元素的客户端区域的坐标。
+	/// \返回：接收客户端坐标的矩形结构。
+	/// 户端坐标相对于视频容器的客户端区域的左上角
 	virtual RECT     GetPos() = 0;
 
-	/// \brief Specify a new display area of the current render element.
-	/// \param pos Specify a new area through RECT structure. The value in the structure corresponding to the coordinate system is that of the client area of the video main window. 
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum.
+	/// \描述：更改视频渲染的客户端区域的位置。
+	/// \参数：pos 指定视频在客户端上的渲染的区域位置。
 	virtual SDKError SetPos(RECT pos) = 0;
 
-	/// \brief Show the render element.
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum.
+	/// \描述：显示视频
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Show() = 0;
 
-	/// \brief Hide the render element.
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum.
+	/// \描述：隐藏视频
+	///如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Hide() = 0;
 
-	/// \brief Get the user ID corresponding to the current render element.
-	/// \return The ID of the user.
+	/// \描述：获取视频元素的用户id。
+	/// \返回：指定正在查看用户的用户id。
 	virtual unsigned int GetCurrentRenderUserId() = 0;
 
-	/// \brief Get the data type of the current render element. 
-	/// \return The data type of the current render elements. For more details, see \link VideoRenderDataType \endlink enum.
+	/// \描述：获取视频元素的数据类型。
+	/// \返回：视频元素的数据类型。
 	virtual VideoRenderDataType GetCurrentRenderDataType() = 0;
 
-	/// \brief Set the visibility of the screen name on the current render element. 
-	/// \param enable_show TRUE indicates to show the screen name.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：启用或不启用在视频上显示屏幕名称。
+	/// \参数：enable_show 启用或不启用
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError EnableShowScreenNameOnVideo(bool enable_show) = 0;
-	virtual ~IVideoRenderElement(){}
+	virtual ~IVideoRenderElement() {}
 };
 
-/// \brief The interface to preview the video render element of the participant who joins the meeting before the host.
+/// \描述：预览视频界面(会前)
 /// 
 class IPreviewVideoRenderElement : public IVideoRenderElement
 {
 public:
-	/// \brief Start previewing.
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum.
+	/// \描述： 开始预览
 	virtual SDKError Start() = 0;
 
-	/// \brief Stop previewing.
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum.
+	/// \描述： 停止预览
 	virtual SDKError Stop() = 0;
-	virtual ~IPreviewVideoRenderElement(){}
+	virtual ~IPreviewVideoRenderElement() {}
 };
 
-/// \brief The active video render element interface in the meeting.
+/// \描述：激活视频界面(会议内)
 /// 
 class IActiveVideoRenderElement : public IVideoRenderElement
 {
 public:
-	/// \brief Display the data of the current active user. 
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum 
+	/// \描述：开始查看活动用户的视频/头像/屏幕名称数据
 	virtual SDKError Start() = 0;
 
-	/// \brief Hide the data of the current active user. 
-	/// \return If the function succeeds, the return value is SDKERR_SUCCESS. Otherwise failed,see \link SDKError \endlink enum 
+	/// \描述：停止查看活动用户的视频/头像/屏幕名称数据
 	virtual SDKError Stop() = 0;
-	virtual ~IActiveVideoRenderElement(){}
+	virtual ~IActiveVideoRenderElement() {}
 };
 
-/// \brief Normal video render element interface in the meeting. 
+/// \描述：普通视频界面(会议内)
 /// 
 class INormalVideoRenderElement : public IVideoRenderElement
 {
 public:
-	/// \brief Show the data of the specified user through normal render mode.
-	/// \param userid Specify the user ID.
+	/// \描述：订阅用户的视频/头像/屏幕名称数据
+	/// \参数：userid 指定要查看的用户
 	virtual SDKError Subscribe(unsigned int userid) = 0;
 
-	/// \brief Unsubscribe the data of the specified user.
-	/// \param userid Specify the ID of user that you want to unsubscribe his data.
-	/// \remarks Call Subscribe with the other ID if you want to view his data.
-	///Call the function to stop receiving the data before calling the parent class Hide() function if you no longer want to see the data of the specified user.
+	/// \描述：取消订阅用户的视频/头像/屏幕名称数据
+	/// \参数：userid 指定要取消订阅的用户
+	/// 如果您想切换到其他用户，只需使用其他用户id调用Subscribe
+	/// 如果您想回收视频元素，请在隐藏API之前调用此API
 	virtual SDKError Unsubscribe(unsigned int userid) = 0;
-	virtual ~INormalVideoRenderElement(){}
+	virtual ~INormalVideoRenderElement() {}
 };
 
-/// \brief Callback event of custom video container. 
+/// \描述：视频容器回调事件
 ///
 class ICustomizedVideoContainerEvent
 {
 public:
-	/// \brief The callback will be triggered if the video render element corresponding to the user changes.
-	/// \param pElement The video render element corresponding to the user who is changed.
-	/// \param userid Specify the ID of new user.
+	/// \描述：通知应用程序显示视频的用户id更改
+	/// \参数：pElement 指定更改了哪个视频的用户id 
+	/// \参数：userid 显示视频的新用户id 
 	virtual void onRenderUserChanged(IVideoRenderElement* pElement, unsigned int userid) = 0;
 
-	/// \brief The callback will be triggered if the video render element corresponding to data type changes.
-	/// \param pElement The video render elements corresponding to data type that is changed. 
-	/// \param dataType Specify a new render data type. For more details, see \link VideoRenderDataType \endlink enum. 
+	/// \描述：通知应用程序视频数据类型更改
+	/// \param pElement 指定哪个视频的数据类型更改了
+	/// \param dataType 新的视频数据类型
 	virtual void onRenderDataTypeChanged(IVideoRenderElement* pElement, VideoRenderDataType dataType) = 0;
 
-	/// \brief The callback will be triggered if the size of video container changes. 
-	///The user should redeploy the video render elements displayed once received the callback event.
-	/// \param wnd_client_rect Specify a new display area. The coordinate value of the structure is that of the parent window of the video container.
+	/// \描述：通知应用程序视频窗口的大小变化
+	/// 当收到此消息时，需要布局视频容器的所有视频元素
+	/// \参数：rc 包含矩形的客户端坐标的新视频容器位置，相对于父窗口的客户端区域的左上角。 
 	virtual void onLayoutNotification(RECT wnd_client_rect) = 0;
 
-	/// \brief The callback will be triggered before the video render element is destroyed.
-	/// \param pElement Specify the video render element to be destroyed.
-	/// \remarks The specified video render element will be destroyed once the function calls end. The user should complete the operations to the related video render element.
+	/// \描述：通知应用程序关于视频渲染元素被销毁的消息
+	/// \参数：pElement 指定要销毁哪个呈是视频
 	virtual void onVideoRenderElementDestroyed(IVideoRenderElement* pElement) = 0;
 
-	/// \brief The SDK will pass the window messages to users via the callback. Here are the messages.
+	/// \描述：将消息信息传递给app，消息列表如下，
 	///WM_MOUSEMOVE
 	///WM_MOUSEENTER
 	///WM_MOUSELEAVE
@@ -160,57 +154,55 @@ public:
 	virtual void onWindowMsgNotification(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 };
 
-/// \brief Video container interface.
+/// \描述： Video container interface
 ///
 class ICustomizedVideoContainer
 {
 public:
-	/// \brief Set video container callback event handler.
-	/// \param pEvent A pointer to the ICustomizedVideoContainerEvent that receives video container callback event. 
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：设置视频容器回调事件
+	/// \参数：pEvent 指向接收视频容器事件的ICustomizedVideoContainerEvent*的指针。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError SetEvent(ICustomizedVideoContainerEvent* pEvent) = 0;
-	
-	/// \brief Create a video render element.
-	/// \param [out] ppElement Once the function succeeds, the parameter will store the pointer to the video render element.
-	/// \param type_ Specify the type of the video render element to be created.
-	/// \return If the function succeeds, the return value is SDKErr_Success, the return value of ppElement is not NULL.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+
+	/// \描述：创建视频渲染接口
+	/// \参数：ppElement 一个指向IVideoRenderElement*的指针，它接收IVideoRenderElement对象。
+	/// \参数；type_ IVideoRenderElement的类型
+	/// \返回：如果函数成功，返回值为SDKErr_Success, ppEmbeddedBrowser不为空
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError CreateVideoElement(IVideoRenderElement** ppElement, VideoRenderElementType type_) = 0;
 
-	/// \brief Destroy a video render element.
-	/// \param ppElement Specify the video render element to be destroyed.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：销毁视频渲染元素界面
+	/// \参数：ppElement 指向要销毁的IVideoRenderElement的指针。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DestroyVideoElement(IVideoRenderElement* ppElement) = 0;
 
-	/// \brief Destroy all the video render element.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：销毁所有视频渲染元素
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError DestroyAllVideoElement() = 0;
 
-	/// \brief Show the video container.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：显示视频容器
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Show() = 0;
 
-	/// \brief Hide the video container.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：隐藏视频容器
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Hide() = 0;
 
-	/// \brief Resize the video container in the specified area.
-	/// \param rc Specify a new display area. The coordinate value of the structure is that of the parent window of video container.
-	/// \return If the function succeeds, the return value is SDKErr_Success.
-	///Otherwise failed. To get extended error information, see \link SDKError \endlink enum.
+	/// \描述：调整视频容器的大小
+	/// \参数：rc 它包含矩形的客户端坐标，相对于父窗口的客户端区域的左上角。
+	/// \返回：如果函数成功，返回值为SDKErr_Success。
+	/// 如果函数失败，返回值不是SDKErr_Success。要获得扩展的错误信息，请参考SDKError enum。
 	virtual SDKError Resize(RECT rc) = 0;
 
-	/// \brief Get the list of video render elements in the current container.
-	/// \return If the function succeeds, the return value is the list that stores the video render element.
-	///Otherwise failed, the return list is blank.
-	virtual IList<IVideoRenderElement* >* GetVideoElementList() = 0;
+	/// \描述：获取视频容器的视频元素列表。
+	/// \返回：如果函数成功，返回值是video元素列表。
+	/// 如果函数失败，返回值为NULL。
+	virtual std::vector<IVideoRenderElement* >* GetVideoElementList() = 0;
 
-	virtual ~ICustomizedVideoContainer(){}
+	virtual ~ICustomizedVideoContainer() {}
 };
-END_ZOOM_SDK_NAMESPACE
+END_ZHUMU_SDK_NAMESPACE
 #endif
