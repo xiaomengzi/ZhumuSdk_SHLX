@@ -526,6 +526,72 @@ void CBusinessLogic::DestroyZhumuSDK()
     PostMessage(m_hWndMainDlg, WMUSER_BUSINESS_QUIT, NULL, NULL);
 }
 
+int CBusinessLogic::MeetingCtrlZhumuSDK(std::string strContent)
+{
+    LOGI << "[" << __FUNCTION__ << "] content:" << strContent << std::endl;
+    int nRet = -1;
+
+    if (false == CBusinessLogic::GetInstance()->GetZhumuSdkAlreadyInit())
+    {
+        LOGE << "[" << __FUNCTION__ << "] The SDK is not initialized!" << std::endl;
+        return -1;
+    }
+
+    Json::CharReaderBuilder b;
+    Json::CharReader* reader(b.newCharReader());
+    Json::Value root;
+    JSONCPP_STRING errs;
+    bool ok = reader->parse(strContent.c_str(), strContent.c_str() + strContent.length(), &root, &errs);
+    if (ok && errs.size() == 0)
+    {
+        // 解析字符串，拼接初始化参数
+        bool isfullScreenJoinMeeting = root["fullScreenJoinMeeting"].asBool();
+        CZhumuSdkAgency::GetInstance()->EnableAutoFullScreenVideoWhenJoinMeeting(isfullScreenJoinMeeting);
+
+        bool isEnableHDVideo = root["enableHDVideo"].asBool();
+        CZhumuSdkAgency::GetInstance()->EnableHDVideo(isEnableHDVideo);
+
+        bool isEchoCancellation = root["echoCancellation"].asBool();
+        CZhumuSdkAgency::GetInstance()->EnableEchoCancellation(isEchoCancellation);
+
+        bool isAlwaysShowCtrlBar = root["alwaysShowCtrlBar"].asBool();
+        CZhumuSdkAgency::GetInstance()->EanbleAlwaysDisplayedMeetingCtrlBar(isAlwaysShowCtrlBar);
+
+
+        std::string micDeviceId = CUtils::UTF_82ASCII(root["micDeviceId"].asString());
+        std::string micDeviceName = CUtils::UTF_82ASCII(root["micDeviceName"].asString());
+        CZhumuSdkAgency::GetInstance()->SelectMic(CUtils::s2ws(micDeviceId).c_str(), CUtils::s2ws(micDeviceName).c_str());
+
+        int micVol = root["micVol"].asInt();
+        if (micVol >=0 && micVol <=100)
+        {
+            float fValue = (float)micVol * (float)255 / (float)100;
+            CZhumuSdkAgency::GetInstance()->SetMicVol(fValue);
+        }
+
+        std::string speakerDeviceId = CUtils::UTF_82ASCII(root["speakerDeviceId"].asString());
+        std::string speakerDeviceName = CUtils::UTF_82ASCII(root["speakerDeviceName"].asString());
+        CZhumuSdkAgency::GetInstance()->SelectSpeaker(CUtils::s2ws(speakerDeviceId).c_str(), CUtils::s2ws(speakerDeviceName).c_str());
+
+        int speakerVol = root["speakerVol"].asInt();
+        if (speakerVol >= 0 && speakerVol <= 100)
+        {
+            float fValue = (float)speakerVol * (float)255 / (float)100;
+            CZhumuSdkAgency::GetInstance()->SetSpeakerVol(fValue);
+        }
+
+        std::string cameraDeviceId = CUtils::UTF_82ASCII(root["cameraDeviceId"].asString());
+        CZhumuSdkAgency::GetInstance()->SelectCamera(CUtils::s2ws(cameraDeviceId).c_str());
+        nRet = 0;
+    }
+    else
+    {
+        LOGE << "[" << __FUNCTION__ << "] json reader error! content:[" << strContent << "] " << std::endl;
+    }
+    delete reader;
+    return nRet;
+}
+
 /************************************************************************/
 /*                   执行结果协议反馈处理函数                             */
 /************************************************************************/

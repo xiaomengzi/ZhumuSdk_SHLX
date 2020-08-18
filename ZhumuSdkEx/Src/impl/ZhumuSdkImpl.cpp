@@ -164,6 +164,22 @@ bool CZhumuSdkImpl::StartAppointmentMeeting(ZmStartAppointmentMeetingParam meeti
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
     root["body"] = body;
+    
+    // ¿ØÖÆ×Ö¶Î
+    Json::Value meetingCtrl;
+    meetingCtrl["fullScreenJoinMeeting"] = meetingParam.isFullScreenJoinMeeting;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["echoCancellation"] = meetingParam.isEchoCancellation;
+    meetingCtrl["alwaysShowCtrlBar"] = meetingParam.isAlwaysShowCtrlBar;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["micDeviceId"] = (nullptr == meetingParam.micDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceId);
+    meetingCtrl["micDeviceName"] = (nullptr == meetingParam.micDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceName);
+    meetingCtrl["micVol"] = meetingParam.micVol;
+    meetingCtrl["speakerDeviceId"] = (nullptr == meetingParam.speakerDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceId);
+    meetingCtrl["speakerDeviceName"] = (nullptr == meetingParam.speakerDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceName);
+    meetingCtrl["speakerVol"] = meetingParam.speakerVol;
+    meetingCtrl["sameraDeviceId"] = (nullptr == meetingParam.sameraDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.sameraDeviceId);
+    root["meetingCtrl"] = meetingCtrl;
 
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
@@ -195,6 +211,22 @@ bool CZhumuSdkImpl::StartInstantMeeting(ZmStartInstantMeetingParam meetingParam)
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
     root["body"] = body;
+
+    // ¿ØÖÆ×Ö¶Î
+    Json::Value meetingCtrl;
+    meetingCtrl["fullScreenJoinMeeting"] = meetingParam.isFullScreenJoinMeeting;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["echoCancellation"] = meetingParam.isEchoCancellation;
+    meetingCtrl["alwaysShowCtrlBar"] = meetingParam.isAlwaysShowCtrlBar;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["micDeviceId"] = (nullptr == meetingParam.micDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceId);
+    meetingCtrl["micDeviceName"] = (nullptr == meetingParam.micDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceName);
+    meetingCtrl["micVol"] = meetingParam.micVol;
+    meetingCtrl["speakerDeviceId"] = (nullptr == meetingParam.speakerDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceId);
+    meetingCtrl["speakerDeviceName"] = (nullptr == meetingParam.speakerDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceName);
+    meetingCtrl["speakerVol"] = meetingParam.speakerVol;
+    meetingCtrl["sameraDeviceId"] = (nullptr == meetingParam.sameraDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.sameraDeviceId);
+    root["meetingCtrl"] = meetingCtrl;
 
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
@@ -228,6 +260,22 @@ bool CZhumuSdkImpl::JoinMeeting(ZmJoinMeetingParam meetingParam)
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
     root["body"] = body;
 
+    // ¿ØÖÆ×Ö¶Î
+    Json::Value meetingCtrl;
+    meetingCtrl["fullScreenJoinMeeting"] = meetingParam.isFullScreenJoinMeeting;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["echoCancellation"] = meetingParam.isEchoCancellation;
+    meetingCtrl["alwaysShowCtrlBar"] = meetingParam.isAlwaysShowCtrlBar;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["micDeviceId"] = (nullptr == meetingParam.micDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceId);
+    meetingCtrl["micDeviceName"] = (nullptr == meetingParam.micDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceName);
+    meetingCtrl["micVol"] = meetingParam.micVol;
+    meetingCtrl["speakerDeviceId"] = (nullptr == meetingParam.speakerDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceId);
+    meetingCtrl["speakerDeviceName"] = (nullptr == meetingParam.speakerDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceName);
+    meetingCtrl["speakerVol"] = meetingParam.speakerVol;
+    meetingCtrl["sameraDeviceId"] = (nullptr == meetingParam.sameraDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.sameraDeviceId);
+    root["meetingCtrl"] = meetingCtrl;
+
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 
     //·¢ËÍÊý¾Ý
@@ -259,6 +307,21 @@ bool CZhumuSdkImpl::AnonymityJoinMeeting(ZmAnonymityJoinMeetingParam meetingPara
     body["isAudioOff"] = meetingParam.isAudioOff;
     body["isDirectShareDesktop"] = meetingParam.isDirectShareDesktop;
     root["body"] = body;
+
+    // ¿ØÖÆ×Ö¶Î
+    Json::Value meetingCtrl;
+    meetingCtrl["fullScreenJoinMeeting"] = meetingParam.isFullScreenJoinMeeting;
+    meetingCtrl["enableHDVideo"] = meetingParam.isEnableHDVideo;
+    meetingCtrl["echoCancellation"] = meetingParam.isEchoCancellation;
+    meetingCtrl["alwaysShowCtrlBar"] = meetingParam.isAlwaysShowCtrlBar;
+    meetingCtrl["micDeviceId"] = (nullptr == meetingParam.micDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceId);
+    meetingCtrl["micDeviceName"] = (nullptr == meetingParam.micDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.micDeviceName);
+    meetingCtrl["micVol"] = meetingParam.micVol;
+    meetingCtrl["speakerDeviceId"] = (nullptr == meetingParam.speakerDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceId);
+    meetingCtrl["speakerDeviceName"] = (nullptr == meetingParam.speakerDeviceName) ? "" : CUtils::ASCII2UTF_8(meetingParam.speakerDeviceName);
+    meetingCtrl["speakerVol"] = meetingParam.speakerVol;
+    meetingCtrl["cameraDeviceId"] = (nullptr == meetingParam.cameraDeviceId) ? "" : CUtils::ASCII2UTF_8(meetingParam.cameraDeviceId);
+    root["meetingCtrl"] = meetingCtrl;
 
     std::string strSendConteng = CUtils::ASCII2UTF_8(CUtils::json2Str(root));
 

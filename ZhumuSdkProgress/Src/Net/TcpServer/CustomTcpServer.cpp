@@ -164,24 +164,32 @@ EnHandleResult CCustomTcpServer::OnReceive(ITcpServer* pSender, CONNID dwConnID,
         else if ("StartAppointmentMeeting" == strMethod)
         {
             auto body = root["body"];
+            auto meetingCtrl = root["meetingCtrl"];
+            CBusinessLogic::GetInstance()->MeetingCtrlZhumuSDK(CUtils::json2Str(meetingCtrl));
             int nRet = CBusinessLogic::GetInstance()->StartAppointmentMeetingZhumuSDK(CUtils::json2Str(body));
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("StartInstantMeeting" == strMethod)
         {
             auto body = root["body"];
+            auto meetingCtrl = root["meetingCtrl"];
+            CBusinessLogic::GetInstance()->MeetingCtrlZhumuSDK(CUtils::json2Str(meetingCtrl));
             int nRet = CBusinessLogic::GetInstance()->StartInstantMeetingZhumuSDK(CUtils::json2Str(body));
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("JoinMeeting" == strMethod)
         {
             auto body = root["body"];
+            auto meetingCtrl = root["meetingCtrl"];
+            CBusinessLogic::GetInstance()->MeetingCtrlZhumuSDK(CUtils::json2Str(meetingCtrl));
             int nRet = CBusinessLogic::GetInstance()->JoinMeetingZhumuSDK(CUtils::json2Str(body));
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }
         else if ("AnonymityJoinMeeting" == strMethod)
         {
             auto body = root["body"];
+            auto meetingCtrl = root["meetingCtrl"];
+            CBusinessLogic::GetInstance()->MeetingCtrlZhumuSDK(CUtils::json2Str(meetingCtrl));
             int nRet = CBusinessLogic::GetInstance()->AnonymityJoinMeetingZhumuSDK(CUtils::json2Str(body));
             OnResponse(pSender, dwConnID, strMethod, nRet);
         }

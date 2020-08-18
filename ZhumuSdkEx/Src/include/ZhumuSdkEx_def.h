@@ -209,7 +209,7 @@ typedef struct stZmSdkLoginParam
 
     stZmSdkLoginParam()
     {
-        account = nullptr; 
+        account = nullptr;
         password = nullptr;
     }
 
@@ -225,6 +225,18 @@ typedef struct stZmStartAppointmentMeetingParam
     bool    isVideoOff;             ///<关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isAudioOff;             ///<关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isDirectShareDesktop;   ///<是否直接共享桌面。True表示分享。
+    bool    isFullScreenJoinMeeting;    // 全屏入会
+    bool    isEnableHDVideo;            // 高清视频质量
+    bool    isEchoCancellation;         // 麦克风消除噪音
+    bool    isAlwaysShowCtrlBar;        // 是否一直显示控制栏
+    char*   micDeviceId;                // 麦克风设备ID
+    char*   micDeviceName;              // 麦克风名称
+    int     micVol;                     // 音量。0~100，-1无效值
+    char*   speakerDeviceId;            // 扬声器设备ID
+    char*   speakerDeviceName;          // 扬声器名称
+    int     speakerVol;                 // 音量。0~100，-1无效值
+    char*   sameraDeviceId;             // 摄像头设备ID
+
     stZmStartAppointmentMeetingParam()
     {
         meetingNumber = 0;
@@ -232,6 +244,17 @@ typedef struct stZmStartAppointmentMeetingParam
         isVideoOff = true;
         isAudioOff = false;
         isDirectShareDesktop = false;
+        isFullScreenJoinMeeting = false;
+        isEnableHDVideo = false;
+        isEchoCancellation = false;
+        isAlwaysShowCtrlBar = false;
+        micDeviceId = nullptr;
+        micDeviceName = nullptr;
+        micVol = -1;
+        speakerDeviceId = nullptr;
+        speakerDeviceName = nullptr;
+        speakerVol = -1;
+        sameraDeviceId = nullptr;
     }
 
 }ZmStartAppointmentMeetingParam;
@@ -241,11 +264,22 @@ typedef struct stZmStartAppointmentMeetingParam
 /************************************************************************/
 typedef struct stZmStartInstantMeetingParam
 {
-    char*	meetingTopic;			///< 会议主题
-    char*	meetingParticipants;	///< 会议参与人,通讯录用户Id,以逗号分割 "1039022079703897890,1038722079703891234"
-    bool	isVideoOff;				///< 是否关闭视频
-    bool	isAudioOff;				///< 是否关闭音频
-    bool    isDirectShareDesktop;   ///<是否直接共享桌面。True表示分享。
+    char*	meetingTopic;			    // 会议主题
+    char*	meetingParticipants;	    // 会议参与人,通讯录用户Id,以逗号分割 "1039022079703897890,1038722079703891234"
+    bool	isVideoOff;				    // 是否关闭视频
+    bool	isAudioOff;				    // 是否关闭音频
+    bool    isDirectShareDesktop;       // 是否直接共享桌面。True表示分享。
+    bool    isFullScreenJoinMeeting;    // 全屏入会
+    bool    isEnableHDVideo;            // 高清视频质量
+    bool    isEchoCancellation;         // 麦克风消除噪音
+    bool    isAlwaysShowCtrlBar;        // 是否一直显示控制栏
+    char*   micDeviceId;                // 麦克风设备ID
+    char*   micDeviceName;              // 麦克风名称
+    int     micVol;                     // 音量。0~100，-1无效值
+    char*   speakerDeviceId;            // 扬声器设备ID
+    char*   speakerDeviceName;          // 扬声器名称
+    int     speakerVol;                 // 音量。0~100，-1无效值
+    char*   sameraDeviceId;             // 摄像头设备ID
 
     stZmStartInstantMeetingParam()
     {
@@ -254,6 +288,17 @@ typedef struct stZmStartInstantMeetingParam
         isVideoOff = true;
         isAudioOff = false;
         isDirectShareDesktop = false;
+        isFullScreenJoinMeeting = false;
+        isEnableHDVideo = false;
+        isEchoCancellation = false;
+        isAlwaysShowCtrlBar = false;
+        micDeviceId = nullptr;
+        micDeviceName = nullptr;
+        micVol = -1;
+        speakerDeviceId = nullptr;
+        speakerDeviceName = nullptr;
+        speakerVol = -1;
+        sameraDeviceId = nullptr;
     }
 
 }ZmStartInstantMeetingParam;
@@ -270,6 +315,17 @@ typedef struct stZmJoinMeetingParam
     bool    isVideoOff;             /// 关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isAudioOff;             /// 关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isDirectShareDesktop;   /// 是否直接共享桌面。True表示分享。
+    bool    isFullScreenJoinMeeting;    // 全屏入会
+    bool    isEnableHDVideo;            // 高清视频质量
+    bool    isEchoCancellation;         // 麦克风消除噪音
+    bool    isAlwaysShowCtrlBar;        // 是否一直显示控制栏
+    char*   micDeviceId;                // 麦克风设备ID
+    char*   micDeviceName;              // 麦克风名称
+    int     micVol;                     // 音量。0~100，-1无效值
+    char*   speakerDeviceId;            // 扬声器设备ID
+    char*   speakerDeviceName;          // 扬声器名称
+    int     speakerVol;                 // 音量。0~100，-1无效值
+    char*   sameraDeviceId;             // 摄像头设备ID
 
     stZmJoinMeetingParam()
     {
@@ -279,6 +335,17 @@ typedef struct stZmJoinMeetingParam
         isVideoOff = true;
         isAudioOff = false;
         isDirectShareDesktop = false;
+        isFullScreenJoinMeeting = false;
+        isEnableHDVideo = false;
+        isEchoCancellation = false;
+        isAlwaysShowCtrlBar = false;
+        micDeviceId = nullptr;
+        micDeviceName = nullptr;
+        micVol = -1;
+        speakerDeviceId = nullptr;
+        speakerDeviceName = nullptr;
+        speakerVol = -1;
+        sameraDeviceId = nullptr;
     }
 }ZmJoinMeetingParam;
 
@@ -290,6 +357,17 @@ typedef struct stZmAnonymityJoinMeetingParam
     bool    isVideoOff;             /// 关闭或不关闭视频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isAudioOff;             /// 关闭或不关闭音频。True表示关闭。另外，这个标志会受到会议属性的影响。
     bool    isDirectShareDesktop;   /// 是否直接共享桌面。True表示分享。
+    bool    isFullScreenJoinMeeting;    // 全屏入会
+    bool    isEnableHDVideo;            // 高清视频质量
+    bool    isEchoCancellation;         // 麦克风消除噪音
+    bool    isAlwaysShowCtrlBar;        // 是否一直显示控制栏
+    char*   micDeviceId;                // 麦克风设备ID
+    char*   micDeviceName;              // 麦克风名称
+    int     micVol;                     // 音量。0~100，-1无效值
+    char*   speakerDeviceId;            // 扬声器设备ID
+    char*   speakerDeviceName;          // 扬声器名称
+    int     speakerVol;                 // 音量。0~100，-1无效值
+    char*   cameraDeviceId;             // 摄像头设备ID
 
     stZmAnonymityJoinMeetingParam()
     {
@@ -299,6 +377,17 @@ typedef struct stZmAnonymityJoinMeetingParam
         isVideoOff = true;
         isAudioOff = false;
         isDirectShareDesktop = false;
+        isFullScreenJoinMeeting = false;
+        isEnableHDVideo = false;
+        isEchoCancellation = false;
+        isAlwaysShowCtrlBar = false;
+        micDeviceId = nullptr;
+        micDeviceName = nullptr;
+        micVol = -1;
+        speakerDeviceId = nullptr;
+        speakerDeviceName = nullptr;
+        speakerVol = -1;
+        cameraDeviceId = nullptr;
     }
 }ZmAnonymityJoinMeetingParam;
 

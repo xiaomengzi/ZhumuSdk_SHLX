@@ -72,13 +72,15 @@ public:
 
     // 设置默认摄像头
     int SelectCameraZhumuSDK(std::string strContent);
-
-
+    
     // 直接共享
     int DirectSharingZhumu(std::string strContent);
 
     // 销毁瞩目SDK
     void DestroyZhumuSDK();
+
+    // 会议设置
+    int MeetingCtrlZhumuSDK(std::string strContent);
 
     /************************************************************************/
     /*                   执行结果协议反馈处理函数                             */
